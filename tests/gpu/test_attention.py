@@ -39,10 +39,12 @@ def check(q, k, v, sm_scale=None):
     snapshot = [t.clone() for t in (q, k, v)]
     out, lse = causal_attention(q, k, v, sm_scale, return_lse=True)
     expected, ref_lse = reference.causal_attention(q, k, v, scale, return_lse=True)
-    baseline = F.scaled_dot_product_attention(q, k, v, is_causal=True, scale=scale)
+    # PyTorch's flash op rejects a strided last dim; baselines get contiguous copies (same values).
+    cq, ck, cv = (t.contiguous() for t in (q, k, v))
+    baseline = F.scaled_dot_product_attention(cq, ck, cv, is_causal=True, scale=scale)
     for name, actual, base, ref, dtype in (
             ('output', out, baseline, expected, q.dtype),
-            ('lse', lse, torch_lse(q, k, v, scale).float(), ref_lse, torch.float32)):
+            ('lse', lse, torch_lse(cq, ck, cv, scale).float(), ref_lse, torch.float32)):
         result = compare_accuracy(actual, base, ref, dtype)
         assert result.passed, (
             f'{name}: shape={tuple(q.shape)} dtype={q.dtype} scale={scale} '
@@ -98,7 +100,7 @@ def test_strided_views(dtype, layout):
         q, k, v = (random((b, 2 * h, s + 5, d), dtype, i)[:, ::2, 3:s + 3] for i in range(3))
     else:
         q, k, v = (random((b, h, s, 2 * d), dtype, i)[..., ::2] for i in range(3))
-    assert not q.is_contiguous()
+    assert not all(t.is_contiguous() for t in (q, k, v))
     check(q, k, v)
 
 
