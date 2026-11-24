@@ -1,0 +1,29 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "kernelforge"
+version = "0.0.1"
+description = "Triton GPU kernels with reproducible correctness and performance measurement"
+readme = "README.md"
+requires-python = ">=3.10,<3.13"
+dependencies = ["torch==2.8.0", "pydantic>=2,<3"]
+
+[project.optional-dependencies]
+dev = ["pytest>=8,<9", "ruff>=0.11,<1"]
+report = ["matplotlib>=3.8,<4"]
+
+[project.scripts]
+kernelforge = "kernelforge.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = ["gpu: requires NVIDIA CUDA and Triton", "interp: Linux Triton interpreter", "slow: large allocation or long runtime"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
