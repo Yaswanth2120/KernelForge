@@ -37,7 +37,7 @@ Paste the full short pytest summary and any failures back for review. A skipped 
 pending validation, not a pass. Softmax remains unaccepted until the full GPU matrix passes.
 The path threshold was measured with `python scripts/measure_path_threshold.py --op softmax|layer_norm --out ...` (three
 launches, ~6 minutes on the A100); rerun it after changing either kernel.
-`bench <suite>` is reserved and currently fails without writing measurements.
+`bench <suite>` runs the copy probe once, then three launches of the suite, then the report.
 `package` archives results and environment information. Save the archive before destroying a rental.
 Use a cheaper sm_80+ GPU for correctness; final measurements require A100 80GB SXM4,
 three independent process launches, and telemetry. `setup`, `test`, and `package` were verified
