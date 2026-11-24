@@ -268,3 +268,14 @@ Force pushes and deletion of main are blocked. The previous plan limitation no l
   ~6% at 32768 on the single path (0.62 ms -> 0.62 ms; 0.69 ms -> 0.73 ms).
 - Irregular widths remain 1.6-2.5x slower than neighbouring powers of two on both paths
   (unchanged observation; analysis deferred to K7).
+
+## 2026-11-24 — K4 LayerNorm benchmark result
+
+- A100-SXM4-80GB, commit 9852793 (bench launched on the clean LayerNorm branch tip), three
+  launches, no clock drops; reuses BW_copy = 1757.9 GB/s measured on the same machine and day.
+- Criterion 3: all 9 pre-registered cases PASS (ratios 0.981-0.999).
+- Sweep (not pass/fail): faster than F.layer_norm for power-of-two N <= 32768 (1.10-2.68x);
+  slower at N >= 65536 (0.78-0.92x; looped path reads three times) and at irregular widths
+  1000 (fp16/bf16) and 31337 (all dtypes; bf16 at 88.7 GB/s, 0.17x torch). Causes go to K7.
+- Byte accounting: 2*M*N*elem + N*(w_elem + b_elem), weight and bias in the input dtype,
+  stats not returned. Accuracy on benchmark inputs passes the frozen rule for all 39 cases.
