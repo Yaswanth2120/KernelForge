@@ -34,15 +34,27 @@ def affine(shape, kind, dtype):
             'both': (weight, bias), 'mixed': (weight, bias)}[kind]
 
 
-def check(x, shape, weight=None, bias=None, eps=1e-5):
-    """Frozen error rule on output and stats, contract, input preservation, determinism."""
+def same_dtype(parameter, dtype):
+    """PyTorch's CUDA LayerNorm rejects fp32 affine with half input, so its baseline casts."""
+    return None if parameter is None else parameter.to(dtype)
+
+
+def check(x, shape, weight=None, bias=None, eps=1e-5, torch_stats=True):
+    """Frozen error rule on output and stats, contract, input preservation, determinism.
+
+    With torch_stats=False the stats are compared to the fp32 reference directly (same rule's
+    floor, exact non-finite pattern) because PyTorch's own stats are not a valid baseline there.
+    """
     shape = (shape,) if isinstance(shape, int) else tuple(shape)
     leading = x.shape[:x.ndim - len(shape)]
     snapshot = x.clone()
     out, mean, rstd = layer_norm(x, shape, weight, bias, eps, return_stats=True)
-    baseline, base_mean, base_rstd = torch.ops.aten.native_layer_norm(x, shape, weight, bias, eps)
+    baseline, base_mean, base_rstd = torch.ops.aten.native_layer_norm(
+        x, shape, same_dtype(weight, x.dtype), same_dtype(bias, x.dtype), eps)
     expected, ref_mean, ref_rstd = reference.layer_norm(x, shape, weight, bias, eps,
                                                         return_stats=True)
+    if not torch_stats:
+        base_mean, base_rstd = ref_mean, ref_rstd
     for name, actual, base, ref, dtype in (
             ('output', out, baseline, expected, x.dtype),
             ('mean', mean, base_mean.reshape(leading).float(), ref_mean, torch.float32),
@@ -57,8 +69,12 @@ def check(x, shape, weight=None, bias=None, eps=1e-5):
     assert out.shape == x.shape and out.dtype == x.dtype and out.is_contiguous()
     assert mean.shape == leading and mean.dtype == torch.float32 and rstd.dtype == torch.float32
     torch.testing.assert_close(x, snapshot, rtol=0, atol=0, equal_nan=True)
+    repeated, _, _ = layer_norm(x, shape, weight, bias, eps, return_stats=True)
+    assert torch.equal(out.view(torch.uint8), repeated.view(torch.uint8)), 'Nondeterministic output'
+    # return_stats=False is a separately compiled/tuned variant: same rule, not bitwise equality.
     plain = layer_norm(x, shape, weight, bias, eps)
-    assert torch.equal(out.view(torch.uint8), plain.view(torch.uint8)), 'Nondeterministic output'
+    result = compare_accuracy(plain, baseline, expected, x.dtype)
+    assert result.passed, f'no-stats output: kernel_max_abs={result.kernel.max_abs}'
     return out, mean, rstd
 
 
@@ -132,7 +148,9 @@ def test_nan_and_inf_propagate(dtype, n):
     x[0, n // 2] = torch.nan
     x[1, 0] = torch.inf
     x[2] = torch.nan
-    out, mean, _ = check(x, n)
+    # PyTorch reports mean NaN for a +inf row (its Welford update computes inf - inf); the fp32
+    # reference and this kernel give +inf, so stats are checked against the reference here.
+    out, mean, _ = check(x, n, torch_stats=False)
     assert torch.isnan(out[:3]).all() and torch.isfinite(out[3]).all()
     assert torch.isnan(mean[0])
 

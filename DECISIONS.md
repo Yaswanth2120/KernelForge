@@ -197,3 +197,31 @@ Force pushes and deletion of main are blocked. The previous plan limitation no l
 - Result (A100, git e72400d, three launches, no clock drops): BW_copy 1757.9 GB/s (Triton copy;
   0.862 of datasheet). All 9 selected softmax cases PASS criterion 2 (ratios 0.984-0.993).
   KernelForge was faster than torch.softmax in all 39 sweep cases (1.02x-2.92x).
+
+## 2026-11-24 — LayerNorm path threshold: protocol stated before measuring
+
+- The LayerNorm limit was first set to 65536 by borrowing the softmax measurement. That does not
+  transfer: the LayerNorm single path keeps x and the centered row live, and at 65536 each
+  single-block variant took minutes in ptxas. The GPU test run was stopped before finishing
+  (11 earlier failures were fixed; see the next entry); no LayerNorm result depends on 65536.
+- Script renamed to `scripts/measure_path_threshold.py` with `--op softmax|layer_norm`; the
+  softmax entries above refer to its earlier name. Same widths, dtypes, >= 512 MiB inputs, three
+  fresh processes, autotune before timing. LayerNorm uses same-dtype weight and bias.
+- Rule (stated now, before any LayerNorm timing): LAYER_NORM_SINGLE_BLOCK_LIMIT = the largest
+  decision N where single p50 <= 1.01 x looped p50 (median of three launch medians) for every
+  dtype, at that N and every smaller decision N. This is the softmax tie band, adopted up front.
+
+## 2026-11-24 — LayerNorm first GPU run: 11 failures and their fixes
+
+- Approximate `/` and `sqrt` (Triton's default fast-math lowering) shifted the mean of constant
+  rows (93/31 != 3 exactly) and gave 2-ulp rstd error at N=262144 (allowed 2.381e-7, got
+  2.384e-7). Statistics now use `tl.div_rn` and `tl.sqrt_rn` (IEEE round-to-nearest).
+- PyTorch's CUDA `native_layer_norm` rejects fp32 weight/bias with fp16/bf16 input. The
+  same-dtype torch baseline casts the parameters to the input dtype; the reference keeps fp32.
+- PyTorch returns mean NaN for a row containing +inf (its Welford update hits inf - inf); the
+  fp32 reference and this kernel return +inf. For that test, stats are compared to the reference
+  with the same floor and an exact non-finite pattern, which is stricter, not looser.
+- My determinism check compared `return_stats=True` with `return_stats=False` outputs bitwise.
+  Those are separately compiled and tuned variants whose reduction order may differ by one ulp.
+  The spec requires the same call twice to be bitwise identical; the test now does exactly that
+  and checks the no-stats output with the frozen tolerance rule instead.

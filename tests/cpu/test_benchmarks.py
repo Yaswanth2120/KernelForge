@@ -47,7 +47,7 @@ def softmax_fixture(raw, env, kernel_ms, launches=3):
     per_launch = []
     for index in range(launches):
         records = []
-        for case in suites.softmax_sweep():
+        for case in suites.row_sweep():
             records.append(softmax_record(case, 'kernelforge', kernel_ms + index * 1e-3, index, env))
             records.append(softmax_record(case, 'torch', kernel_ms * 1.1, index, env))
         per_launch.append(records)
@@ -59,7 +59,7 @@ def softmax_fixture(raw, env, kernel_ms, launches=3):
 
 
 def test_sweep_contains_every_selected_case_at_registered_size():
-    sweep = suites.softmax_sweep()
+    sweep = suites.row_sweep()
     selected = [{k: v for k, v in case.items() if k != 'selected'}
                 for case in sweep if case['selected']]
     assert selected == suites.selected_rows()
@@ -163,3 +163,27 @@ def test_cli_report_exit_code_reflects_criteria(tmp_path):
     assert (tmp_path / 'out_good' / 'performance_report.md').exists()
     bad = _fresh(tmp_path, 'bad', A100, kernel_ms=2.0)
     assert main(['report', '--raw', str(bad), '--out', str(tmp_path / 'out_bad')]) == 1
+
+
+def test_report_evaluates_layer_norm_criterion_with_affine_bytes(tmp_path):
+    raw = _fresh(tmp_path, 'ln', A100, kernel_ms=1.0)
+    per_launch = []
+    for index in range(3):
+        records = []
+        for case in suites.row_sweep():
+            for impl, ms in (('kernelforge', 2.0), ('torch', 1.0)):
+                records.append(benchmark(lambda: None, FixedTimer(ms), op='layer_norm', impl=impl,
+                                         case=case, launch_index=index, env=A100, copy_gbps=1000.0,
+                                         byte_accounting=gpu_runner.layer_norm_bytes,
+                                         baseline_call=f'{impl}(x)'))
+        per_launch.append(records)
+    write_launches(raw / 'layer_norm', per_launch)
+    markdown, failures = report.render(raw)
+    # Softmax passes (9) and LayerNorm at 2 ms (~537 GB/s, ratio ~0.54) fails all 9 cases.
+    assert failures == 9
+    criterion3 = markdown.split('## Pre-registered criterion 3')[1].split('## Memory-copy')[0]
+    assert criterion3.count('| FAIL | 3 |') == 9
+    assert '### LayerNorm slower than F.layer_norm' in markdown
+    # fp16 N=2048: 2*M*N*2 + N*(2+2) bytes.
+    case = {'M': 131072, 'N': 2048, 'dtype': 'fp16', 'selected': True}
+    assert gpu_runner.layer_norm_bytes(case) == 2 * 131072 * 2048 * 2 + 2048 * 4

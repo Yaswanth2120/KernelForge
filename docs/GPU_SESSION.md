@@ -35,7 +35,7 @@ bash scripts/gpu_session.sh package
 
 Paste the full short pytest summary and any failures back for review. A skipped int64 test is
 pending validation, not a pass. Softmax remains unaccepted until the full GPU matrix passes.
-The path threshold was measured with `python scripts/measure_softmax_threshold.py` (three
+The path threshold was measured with `python scripts/measure_path_threshold.py --op softmax|layer_norm --out ...` (three
 launches, ~6 minutes on the A100); rerun it after changing either kernel.
 `bench <suite>` is reserved and currently fails without writing measurements.
 `package` archives results and environment information. Save the archive before destroying a rental.
