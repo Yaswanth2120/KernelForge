@@ -258,3 +258,13 @@ Force pushes and deletion of main are blocked. The previous plan limitation no l
   against the reference (PyTorch's own mean is NaN for the +inf row).
 - The LayerNorm threshold measured at 464eba1 used the old looped kernel and is superseded;
   it is re-measured with the same pre-stated rule (1% tie band) at the commit below.
+
+## 2026-11-24 — LayerNorm path threshold re-measured with the redesigned kernels
+
+- Commit 9852793, A100-SXM4-80GB, three launches, no clock drops, same pre-stated 1% rule:
+  limit stays 32768 (`reports/raw/layer_norm_threshold/`; the superseded 464eba1 data is kept in
+  `reports/raw/layer_norm_threshold_464eba1_superseded/`). Single/looped ratios: N<=16384
+  0.83-0.96; 32768 0.64-0.79; 65536 1.11-1.23. The fp64 row sum costs ~1% at N<=8192 and
+  ~6% at 32768 on the single path (0.62 ms -> 0.62 ms; 0.69 ms -> 0.73 ms).
+- Irregular widths remain 1.6-2.5x slower than neighbouring powers of two on both paths
+  (unchanged observation; analysis deferred to K7).
