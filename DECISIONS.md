@@ -314,3 +314,17 @@ Force pushes and deletion of main are blocked. The previous plan limitation no l
   informational default-backend cells), and future runs store the kernel name in metadata.
   Every named capture was PyTorch's flash_fwd_kernel.
 - Accuracy on benchmark inputs (batch 0, heads 0-1): 32/32 PASS.
+
+## 2026-11-24 — K7 profiling
+
+- ncu: ERR_NVGPUCTRPERM (RmProfilingAdminOnly=1, no CAP_SYS_ADMIN in the rented container); no
+  hardware counters. Fallbacks used: torch.profiler traces, Triton compile metadata, roofline-lite,
+  and four controlled experiments (`reports/raw/profiling/`, analysis in docs/PROFILING.md).
+- The K4 alignment hypothesis for slow irregular LayerNorm widths was tested and refuted. The
+  cause remains "not understood"; the leading untested hypothesis is runtime-N mask alignment.
+- The profiling script's compile-metadata capture did not record BLOCK constants, so spill counts
+  are reported per kernel family, not matched to N. Attention produced no torch.profiler kernel
+  events in that capture; attention evidence comes from the tile sweep and compile metadata.
+- Interpreter (K0 open item): on Linux CPU, `TRITON_INTERPRET=1` ran the masked-copy probe for
+  fp32/fp16/bf16 (`reports/raw/interpreter_probe.txt`). The public ops require CUDA tensors, so
+  `interp` CI tests of the real kernels would need wrapper changes; none were added.

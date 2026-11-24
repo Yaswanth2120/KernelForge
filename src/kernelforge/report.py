@@ -407,6 +407,81 @@ def attention_losses(groups):
     return lines + (below or ["None of the measured cases."]) + [""]
 
 
+def _load_profiling(raw_dir, name):
+    path = Path(raw_dir) / "profiling" / f"{name}.json"
+    return json.loads(path.read_text())["result"] if path.exists() else None
+
+
+def profiling_section(raw_dir, copy_summary):
+    """Numbers from scripts/profile_kernels.py; interpretation lives in docs/PROFILING.md."""
+    lines = ["## Profiling findings", "", ("Narrative and analysis: docs/PROFILING.md. Experiment "
+             "timings are single-process do_bench medians (controlled comparisons, not criteria)."),
+             ""]
+    ncu = _load_profiling(raw_dir, "ncu_probe")
+    if ncu is None:
+        return lines + ["Not measured.", ""]
+    denied = "ERR_NVGPUCTRPERM" in ncu.get("stdout_tail", "") + ncu.get("stderr_tail", "")
+    lines += [(f"- Nsight Compute: return code {ncu.get('returncode')}; "
+              f"{'ERR_NVGPUCTRPERM (counter access denied)' if denied else 'see raw output'}. "
+              "No hardware-counter metrics were collected."), ""]
+    if copy_summary is not None:
+        ridge = PEAK_TFLOPS * 1e12 / (copy_summary["bw_copy_gbps"] * 1e9)
+        lines += [(f"- Roofline ridge point: {PEAK_TFLOPS:.0f} TFLOPS / BW_copy "
+                  f"{copy_summary['bw_copy_gbps']:.0f} GB/s = {ridge:.0f} FLOP/byte. Softmax and "
+                  "LayerNorm (< 3 FLOP/byte) are memory bound; causal attention (S/4 FLOP/byte, "
+                  "512-2048 for the selected S) is compute bound."), ""]
+    traces = _load_profiling(raw_dir, "traces") or []
+    if traces:
+        lines += ["### Kernel traces (torch.profiler)", "",
+                  "| call | kernel | us | grid | block | regs/thread | shared B | est. occupancy % |",
+                  "|---|---|---|---|---|---|---|---|"]
+        lines += [f"| {t['op']} | `{t['name'][:60]}` | {t['us']:.0f} | {t['grid']} | {t['block']} | "
+                  f"{t['registers_per_thread']} | {t['shared_memory']} | {t['occupancy_pct']} |"
+                  for t in traces]
+        lines.append("")
+    alignment = _load_profiling(raw_dir, "alignment") or []
+    if alignment:
+        lines += ["### Experiment: natural vs 64-aligned row stride (same N)", "",
+                  "| op | N | dtype | natural ms | aligned ms |", "|---|---|---|---|---|"]
+        cells = {}
+        for row in alignment:
+            cells.setdefault((row["op"], row["N"], row["dtype"]), {})[row["layout"]] = row["ms_p50"]
+        lines += [f"| {op} | {n} | {dtype} | {v['natural']:.3f} | {v['aligned']:.3f} |"
+                  for (op, n, dtype), v in cells.items()]
+        lines.append("")
+    warps = _load_profiling(raw_dir, "warps") or []
+    if warps:
+        lines += ["### Experiment: LayerNorm single path, forced num_warps (fp16, BLOCK = N)", "",
+                  "| N | num_warps | ms | GB/s |", "|---|---|---|---|"]
+        lines += [f"| {w['N']} | {w['num_warps']} | {w['ms_p50']:.3f} | {w['gbps']:.0f} |"
+                  for w in warps]
+        lines.append("")
+    tiles = _load_profiling(raw_dir, "attention_tiles") or []
+    if tiles:
+        lines += ["### Experiment: attention tiles forced (4x32x4096, bf16)", "",
+                  "| D | BLOCK_M | BLOCK_N | warps | stages | TFLOPS |", "|---|---|---|---|---|---|"]
+        lines += [f"| {t['D']} | {t['BLOCK_M']} | {t['BLOCK_N']} | {t['num_warps']} | "
+                  f"{t['num_stages']} | {t['tflops']:.1f} |" if "tflops" in t else
+                  f"| {t['D']} | {t['BLOCK_M']} | {t['BLOCK_N']} | {t['num_warps']} | "
+                  f"{t['num_stages']} | {t.get('error')} |"
+                  for t in sorted(tiles, key=lambda t: (t["D"], -t.get("tflops", 0)))]
+        lines.append("")
+    compiled = _load_profiling(raw_dir, "compiled") or []
+    if compiled:
+        lines += ["### Compiled variants (Triton metadata)", "",
+                  "| kernel | variants | with spills | max spills | max shared B |",
+                  "|---|---|---|---|---|"]
+        kinds = {}
+        for c in compiled:
+            kinds.setdefault(c["kernel"], []).append(c)
+        for kind, rows in kinds.items():
+            spills = [c["spills"] or 0 for c in rows]
+            lines.append(f"| {kind} | {len(rows)} | {sum(1 for x in spills if x)} | {max(spills)} | "
+                         f"{max(c['shared_bytes'] or 0 for c in rows)} |")
+        lines.append("")
+    return lines
+
+
 def telemetry_section(all_groups):
     """Start/end nvidia-smi samples per launch, flagging lowered clocks or throttling."""
     lines = ["## GPU telemetry per launch", "",
@@ -517,12 +592,13 @@ def render(raw_dir, plots_dir=None):
         lines += autotune_section(groups[op], op)
     lines += attention_sweep(attention) + attention_accuracy_section(raw_dir)
     lines += attention_memory_section(raw_dir, plots_dir) + attention_autotune_section(attention)
+    lines += profiling_section(raw_dir, copy_summary)
     lines += ["## Where we lose and why", ""]
     for op in ROW_OPS:
         lines += where_we_lose(groups[op], op)
     lines += attention_losses(attention)
-    lines += [("Explanations require profiling evidence; see docs/PROFILING.md (K7). Until then "
-               "the cause is recorded as not yet understood."), ""]
+    lines += [("Evidence-backed explanations, and the cases still not understood, are in "
+              "docs/PROFILING.md (section \"Where we lose\")."), ""]
     lines += telemetry_section({"copy": load_groups(raw_dir, "copy"), **groups,
                                 "causal_attention": attention})
     lines += ["## Reproduction", "", "```sh", "bash scripts/gpu_session.sh setup",

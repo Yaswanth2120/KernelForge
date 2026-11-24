@@ -1,0 +1,81 @@
+{
+  "env": {
+    "device": "NVIDIA A100-SXM4-80GB",
+    "torch": "2.8.0+cu128",
+    "triton": "3.4.0"
+  },
+  "result": [
+    {
+      "op": "softmax N=8192 fp16 (kernelforge)",
+      "name": "_single_softmax",
+      "us": 606.428,
+      "grid": [
+        32768,
+        1,
+        1
+      ],
+      "block": [
+        256,
+        1,
+        1
+      ],
+      "registers_per_thread": 48,
+      "shared_memory": 32,
+      "occupancy_pct": 63
+    },
+    {
+      "op": "softmax N=8192 fp16 (torch)",
+      "name": "void at::native::(anonymous namespace)::cunn_SoftMaxForwardReg<c10::Half, float, c10::Half, at::nati",
+      "us": 1828.464,
+      "grid": [
+        32768,
+        1,
+        1
+      ],
+      "block": [
+        1024,
+        1,
+        1
+      ],
+      "registers_per_thread": 35,
+      "shared_memory": 128,
+      "occupancy_pct": 50
+    },
+    {
+      "op": "layer_norm N=8192 fp16 (kernelforge)",
+      "name": "_single_layer_norm",
+      "us": 608.637,
+      "grid": [
+        32768,
+        1,
+        1
+      ],
+      "block": [
+        256,
+        1,
+        1
+      ],
+      "registers_per_thread": 64,
+      "shared_memory": 64,
+      "occupancy_pct": 50
+    },
+    {
+      "op": "layer_norm N=8192 fp16 (torch)",
+      "name": "void at::native::(anonymous namespace)::vectorized_layer_norm_kernel<c10::Half, float>(int, float, c",
+      "us": 981.298,
+      "grid": [
+        32768,
+        1,
+        1
+      ],
+      "block": [
+        32,
+        4,
+        1
+      ],
+      "registers_per_thread": 31,
+      "shared_memory": 24,
+      "occupancy_pct": 100
+    }
+  ]
+}
