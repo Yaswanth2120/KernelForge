@@ -37,3 +37,45 @@ The owner clarified that KernelForge must be public. This supersedes the initial
 visibility choice. The repository is now public, and main-branch protection is enabled:
 pull requests, current passing Python 3.10–3.12 checks, and administrator enforcement.
 Force pushes and deletion of main are blocked. The previous plan limitation no longer applies.
+
+## 2026-11-23 — CPU correctness and measurement foundation
+
+- Reference functions return fp32 by default, with an explicit fp64 option for CPU self-tests.
+  They promote the same original inputs before computing; they never regenerate inputs in higher
+  precision. LayerNorm uses centered population variance and supports affine parameters independently,
+  trailing multidimensional shapes, empty leading dimensions, and optional statistics.
+  Returned statistics use the selected reference precision. Reference eps must be finite and positive.
+- The attention reference materializes S×S scores and is intended only for small correctness cases.
+  It uses an inclusive causal mask, supports scale=0, and optionally returns natural-log LSE.
+  This reference is not a memory-efficient implementation or a custom GPU operation.
+- Error comparisons convert outputs and reference to fp32. Maximum absolute error is accepted iff
+  it is <= max(2.0 * PyTorch maximum absolute error, 2.0 * epsilon(dtype) * max(abs(reference))).
+  Relative error ignores abs(reference) < 1e-8. Matching NaN locations and matching signed infinities
+  are required for both the candidate and baseline; finite entries supply the numeric error metrics
+  and reference magnitude. Any nonfinite mismatch fails regardless of the numeric threshold.
+  Empty tensors have zero errors; all-zero references and exact baselines give a zero threshold.
+  These constants implement the original policy; no performance or accuracy targets changed.
+- Accounting uses decimal GB/s and TFLOPS, with times in milliseconds. Missing affine parameters
+  contribute zero bytes. Attention retains the frozen 2*B*H*S²*D approximation, including its
+  omission of the exact diagonal correction; the accounting is not silently changed to S*(S+1).
+- Timer.measure returns p20/p50/p80 milliseconds. Raw-sample helpers use inclusive linear
+  interpolation at positions (n-1)*q. A real timer may supply do_bench's quantiles directly;
+  the installed source still needs review before any GPU benchmark.
+- Pydantic validates schema identity, required environment/telemetry/autotune fields, ordered finite
+  positive times, nonnegative integer counts, and derived rates. Additional fields for FLOPs,
+  TFLOPS, measured copy bandwidth, baseline call text, and invalid configurations extend the
+  original record without changing its schema identifier or required original keys.
+  Use model_dump_json(by_alias=True) to emit the required JSON key `schema`.
+  Unmeasured tuning duration is null rather than an invented zero.
+- Aggregation requires exactly three records with indices {0,1,2} and matching operation,
+  implementation, case, work counts, environment, copy baseline, and baseline call. It retains
+  all source records, reports the median of process medians and their min/max, and computes
+  rates from that median. Summary quantiles are medians of the corresponding per-launch
+  quantiles, not pooled-sample quantiles. Distinct indices cannot prove distinct processes;
+  actual process isolation remains the GPU runner's responsibility.
+- Observed on macOS ARM64 / PyTorch 2.8.0: CPU SDPA FlashAttention with is_causal=True and
+  scale=0 produced 384 NaNs for shape (1,1,7,64), while the forced math backend and explicit
+  reference produced none and agreed exactly. The fp64 CPU self-test explicitly forces SDPA
+  MATH, retains zero-scale coverage, and checks other scales too. This is an upstream/backend
+  finding, not a custom kernel result. The math baseline is not used as a performance substitute
+  for the required GPU FlashAttention baseline.

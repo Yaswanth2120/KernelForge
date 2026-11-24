@@ -26,10 +26,12 @@ Kernels are not implemented yet, and supported GPU calls currently raise `NotImp
 - [x] Editable install and CPU checks verified
 - [x] CPU-safe imports and unavailable-GPU errors verified
 - [x] Pre-registered suites verified
+- [x] CPU references, tolerance policy, accounting, and fake-timer harness verified
 - [ ] GPU kernels validated
 - [ ] A100 measurements collected
 
 No performance results are available. Targets and measurement rules are frozen in [PREREG.md](PREREG.md).
+CPU helpers and their contracts are described in [validation](docs/VALIDATION.md).
 See [GPU setup](docs/GPU_SESSION.md), [profiling](docs/PROFILING.md), and [contributing](CONTRIBUTING.md).
 
 ## Limitations
