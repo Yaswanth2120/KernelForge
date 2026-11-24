@@ -225,3 +225,16 @@ Force pushes and deletion of main are blocked. The previous plan limitation no l
   Those are separately compiled and tuned variants whose reduction order may differ by one ulp.
   The spec requires the same call twice to be bitwise identical; the test now does exactly that
   and checks the no-stats output with the frozen tolerance rule instead.
+
+## 2026-11-24 — LayerNorm path threshold: measured result
+
+- A100-SXM4-80GB, git 464eba1, three launches, no clock drops
+  (`reports/raw/layer_norm_threshold/`). Single/looped ratios: N<=4096 0.989-1.010;
+  8192-32768 0.730-0.955 (single faster); 65536 1.396-1.543 (single slower).
+- Pre-stated rule (1% tie band) gives LAYER_NORM_SINGLE_BLOCK_LIMIT = 32768 (was a borrowed,
+  unmeasured 65536). N=1024 fp16 was 1.010, inside the band. No frozen case changes path:
+  pre-registered N (2048/4096/8192) use the single path under both values.
+- Observed, not yet explained: irregular widths 4097 and 8193 are 2-4x slower than 4096/8192 on
+  BOTH LayerNorm paths in fp16/bf16 (e.g. 4097 fp16: single 1.89 ms, looped 1.53 ms vs 0.62 ms
+  at 4096). Softmax at 4097 does not show this. Hypothesis for K7: unaligned rows with runtime
+  N/row_stride prevent vectorized loads. Not a pre-registered shape.

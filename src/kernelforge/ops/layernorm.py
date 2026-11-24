@@ -5,8 +5,9 @@ from kernelforge.errors import GPUUnavailableError
 
 from ._common import require_gpu, softmax_grid
 
-# Provisional: mirrors the measured softmax crossover (DECISIONS.md); not a LayerNorm measurement.
-LAYER_NORM_SINGLE_BLOCK_LIMIT = 65536
+# Measured on A100-SXM4-80GB (2026-11-24) with the pre-stated 1% tie-band rule; see DECISIONS.md
+# and reports/raw/layer_norm_threshold/. At 65536 the single path was 40-54% slower.
+LAYER_NORM_SINGLE_BLOCK_LIMIT = 32768
 
 
 def _normalized_size(x, normalized_shape):
