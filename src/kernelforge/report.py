@@ -185,22 +185,60 @@ def autotune_section(groups):
 
 
 def where_we_lose(groups):
-    """Cases slower than torch or below the 0.80 ratio; causes await profiling evidence."""
-    lines = ["## Where we lose and why", ""]
-    losses = []
+    """Cases slower than torch, and sweep cases below the 0.80 ratio, listed separately."""
+    slower, below = [], []
     for case in suites.softmax_sweep():
         ours, _ = groups.get(_key("softmax", "kernelforge", case), (None, []))
         theirs, _ = groups.get(_key("softmax", "torch", case), (None, []))
         if ours is None or theirs is None:
             continue
-        below_ratio = ours.ratio_to_copy is not None and ours.ratio_to_copy < SOFTMAX_RATIO_THRESHOLD
-        if ours.gbps < theirs.gbps or below_ratio:
-            losses.append(f"- softmax N={case['N']} {case['dtype']}: {ours.gbps:.1f} GB/s vs torch "
-                          f"{theirs.gbps:.1f} GB/s (n=3)."
-                          f"{' Below the 0.80 ratio.' if below_ratio else ''}")
-    if not losses:
-        return lines + ["No measured softmax case is slower than torch or below 0.80.", ""]
-    return lines + losses + ["", "Cause: not yet analyzed; see the profiling section (K7).", ""]
+        name = f"N={case['N']} {case['dtype']}"
+        if ours.gbps < theirs.gbps:
+            slower.append(f"- {name}: {ours.gbps:.1f} GB/s vs torch {theirs.gbps:.1f} GB/s (n=3).")
+        if ours.ratio_to_copy is not None and ours.ratio_to_copy < SOFTMAX_RATIO_THRESHOLD:
+            below.append(f"- {name}{' (selected)' if case['selected'] else ''}: ratio "
+                         f"{ours.ratio_to_copy:.3f}, {ours.gbps:.1f} GB/s (n=3).")
+    lines = ["## Where we lose and why", "", "### Softmax slower than torch.softmax", ""]
+    lines += slower or ["None of the measured cases."]
+    lines += ["", "### Softmax below the 0.80 bandwidth ratio", ""]
+    lines += below or ["None of the measured cases."]
+    lines += ["", ("Explanations require profiling evidence; see docs/PROFILING.md (K7). Until "
+              "then the cause is recorded as not yet understood."), ""]
+    return lines
+
+
+def telemetry_section(all_groups):
+    """Start/end nvidia-smi samples per launch, flagging lowered clocks or throttling."""
+    lines = ["## GPU telemetry per launch", "",
+             ("Flagged when the end SM clock is below 97% of max or a non-idle throttle reason "
+             "is active."), "", ("| suite | launch | start SM/mem MHz, W, C | end SM/mem MHz, W, C |"
+             " end throttle reasons | flag |"), "|---|---|---|---|---|---|"]
+    seen = False
+    for suite, groups in all_groups.items():
+        launches = {}
+        for _, group in groups.values():
+            for record in group:
+                launches.setdefault(record.launch_index, record.gpu_telemetry)
+        for index, telemetry in sorted(launches.items()):
+            seen = True
+            sample = telemetry.model_dump()
+
+            def describe(point):
+                return (f"{point.get('clocks.sm', '?')}/{point.get('clocks.mem', '?')}, "
+                        f"{point.get('power.draw', '?')}, {point.get('temperature.gpu', '?')}")
+
+            flag = "CLOCK DROP" if gpu_clock_drop(sample) else "ok"
+            lines.append(f"| {suite} | {index} | {describe(sample['start'])} | "
+                         f"{describe(sample['end'])} | "
+                         f"{sample['end'].get('clocks_throttle_reasons.active', '?')} | {flag} |")
+    return (lines if seen else lines[:2] + ["No telemetry recorded."]) + [""]
+
+
+def gpu_clock_drop(telemetry):
+    """Shared clock-drop rule (defined with the runner that samples telemetry)."""
+    from kernelforge.bench.gpu_runner import clock_drop
+
+    return clock_drop(telemetry)
 
 
 def plot_softmax(groups, copy_summary, plots_dir):
@@ -267,6 +305,7 @@ def render(raw_dir, plots_dir=None):
             lines += [f"![Softmax effective bandwidth](plots/{plot.name})", ""]
     lines += accuracy_section(raw_dir) + memory_section(softmax_groups)
     lines += autotune_section(softmax_groups) + where_we_lose(softmax_groups)
+    lines += telemetry_section({"copy": load_groups(raw_dir, "copy"), "softmax": softmax_groups})
     lines += ["## Not yet measured", "", ("LayerNorm (K4), causal attention (K6), and profiling "
               "(K7) sections are added when their measurements exist."), "",
               "## Reproduction", "", "```sh", "bash scripts/gpu_session.sh setup",
