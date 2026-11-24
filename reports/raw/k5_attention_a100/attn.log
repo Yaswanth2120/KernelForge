@@ -1,0 +1,46 @@
+................................................................FF..FF.. [ 91%]
+.......                                                                  [100%]
+=================================== FAILURES ===================================
+___________________ test_strided_views[mixed_layouts-dtype0] ___________________
+tests/gpu/test_attention.py:101: in test_strided_views
+    assert not q.is_contiguous()
+E   AssertionError: assert not True
+E    +  where True = <built-in method is_contiguous of Tensor object at 0x7783cfc5f6b0>()
+E    +    where <built-in method is_contiguous of Tensor object at 0x7783cfc5f6b0> = tensor([[[[-0.9248, -0.4253, -2.6445,  ...,  0.1210,  0.4729, -1.0820],\n          [-0.0334, -0.9736,  0.9561,  ..., -0...          [-0.4143, -1.6240, -0.7329,  ..., -0.1315,  0.8799, -1.4561]]]],\n       device='cuda:0', dtype=torch.float16).is_contiguous
+___________________ test_strided_views[mixed_layouts-dtype1] ___________________
+tests/gpu/test_attention.py:101: in test_strided_views
+    assert not q.is_contiguous()
+E   AssertionError: assert not True
+E    +  where True = <built-in method is_contiguous of Tensor object at 0x7783cfbce670>()
+E    +    where <built-in method is_contiguous of Tensor object at 0x7783cfbce670> = tensor([[[[-0.9258, -0.4258, -2.6406,  ...,  0.1211,  0.4727, -1.0859],\n          [-0.0334, -0.9727,  0.9570,  ..., -0...         [-0.4141, -1.6250, -0.7344,  ..., -0.1318,  0.8789, -1.4531]]]],\n       device='cuda:0', dtype=torch.bfloat16).is_contiguous
+_________________ test_strided_views[last_dim_strided-dtype0] __________________
+tests/gpu/test_attention.py:102: in test_strided_views
+    check(q, k, v)
+tests/gpu/test_attention.py:45: in check
+    ('lse', lse, torch_lse(q, k, v, scale).float(), ref_lse, torch.float32)):
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/gpu/test_attention.py:32: in torch_lse
+    return torch.ops.aten._scaled_dot_product_flash_attention(
+../kf-venv/lib/python3.12/site-packages/torch/_ops.py:1243: in __call__
+    return self._op(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+E   RuntimeError: Input tensor must have contiguous last dimension
+_________________ test_strided_views[last_dim_strided-dtype1] __________________
+tests/gpu/test_attention.py:102: in test_strided_views
+    check(q, k, v)
+tests/gpu/test_attention.py:45: in check
+    ('lse', lse, torch_lse(q, k, v, scale).float(), ref_lse, torch.float32)):
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/gpu/test_attention.py:32: in torch_lse
+    return torch.ops.aten._scaled_dot_product_flash_attention(
+../kf-venv/lib/python3.12/site-packages/torch/_ops.py:1243: in __call__
+    return self._op(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+E   RuntimeError: Input tensor must have contiguous last dimension
+------------------ generated xml file: /root/scratch/attn.xml ------------------
+=========================== short test summary info ============================
+FAILED tests/gpu/test_attention.py::test_strided_views[mixed_layouts-dtype0]
+FAILED tests/gpu/test_attention.py::test_strided_views[mixed_layouts-dtype1]
+FAILED tests/gpu/test_attention.py::test_strided_views[last_dim_strided-dtype0]
+FAILED tests/gpu/test_attention.py::test_strided_views[last_dim_strided-dtype1]
+4 failed, 75 passed, 1 deselected in 1002.69s (0:16:42)
