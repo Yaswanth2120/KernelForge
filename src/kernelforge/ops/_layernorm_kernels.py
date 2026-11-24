@@ -24,6 +24,16 @@ def _row_id():
 
 
 @triton.jit
+def _row_mean(total, N):
+    """Row mean from an fp64 sum, rounded once to fp32.
+
+    The sum is the only cancellation-prone statistic (e.g. 32769 values summing to ~0); fp64 keeps
+    it exact to fp32 precision, and constant rows stay exactly centered (93/31 == 3).
+    """
+    return (total / N).to(tl.float32)
+
+
+@triton.jit
 def _rstd(m2, count, eps):
     """1/sqrt(M2/n + eps) with IEEE round-to-nearest ops; the default `/` and sqrt are approximate."""
     return tl.div_rn(tl.full((), 1., tl.float32), tl.sqrt_rn(tl.div_rn(m2, count) + eps))
@@ -53,8 +63,7 @@ def _single_layer_norm(X, Y, W, B, MEAN, RSTD, M, N, row_stride, eps,
     active = (row < M) & (offsets < N)
     x = tl.load(X + row * row_stride + offsets, mask=active, other=0.).to(tl.float32)
     count = tl.full((), N, tl.float32)
-    # Exact division keeps constant rows exactly centered (e.g. 93/31 == 3).
-    mean = tl.div_rn(tl.sum(x, axis=0), count)
+    mean = _row_mean(tl.sum(x.to(tl.float64), axis=0), N)
     centered = tl.where(active, x - mean, 0.)
     rstd = _rstd(tl.sum(centered * centered, axis=0), count, eps)
     _store_outputs(Y, row, offsets, active, centered, rstd, W, B, N, HAS_WEIGHT, HAS_BIAS)
@@ -70,30 +79,33 @@ def _single_layer_norm(X, Y, W, B, MEAN, RSTD, M, N, row_stride, eps,
 def _looped_layer_norm(X, Y, W, B, MEAN, RSTD, M, N, row_stride, eps,
                        HAS_WEIGHT: tl.constexpr, HAS_BIAS: tl.constexpr, STATS: tl.constexpr,
                        BLOCK: tl.constexpr):
-    """Merge per-tile (count, mean, M2) with Chan's formula, then reread and normalize."""
+    """Two-pass centered statistics with per-lane accumulators, then a normalizing pass.
+
+    Each lane sums its own columns across tiles (fp64 for the mean, fp32 for centered squares)
+    and one tree reduction finishes the row, so no scalar running total is rounded at the scale
+    of the whole row. Three reads, one write.
+    """
     row = _row_id()
     columns = tl.arange(0, BLOCK).to(tl.int64)
-    count = tl.full((), 0., tl.float32)
-    mean = tl.full((), 0., tl.float32)
-    m2 = tl.full((), 0., tl.float32)
+    x_row = X + row * row_stride
+    count = tl.full((), N, tl.float32)
+    sums = tl.zeros([BLOCK], tl.float64)
+    for tile in range(tl.cdiv(N, BLOCK)):
+        offsets = tl.cast(tile, tl.int64) * BLOCK + columns
+        sums += tl.load(x_row + offsets, mask=(row < M) & (offsets < N), other=0.).to(tl.float64)
+    mean = _row_mean(tl.sum(sums, axis=0), N)
+    squares = tl.zeros([BLOCK], tl.float32)
     for tile in range(tl.cdiv(N, BLOCK)):
         offsets = tl.cast(tile, tl.int64) * BLOCK + columns
         active = (row < M) & (offsets < N)
-        x = tl.load(X + row * row_stride + offsets, mask=active, other=0.).to(tl.float32)
-        tile_count = tl.minimum(N - tile * BLOCK, BLOCK).to(tl.float32)
-        tile_mean = tl.div_rn(tl.sum(x, axis=0), tile_count)
-        tile_centered = tl.where(active, x - tile_mean, 0.)
-        tile_m2 = tl.sum(tile_centered * tile_centered, axis=0)
-        total = count + tile_count
-        delta = tile_mean - mean
-        mean = mean + delta * tl.div_rn(tile_count, total)
-        m2 = m2 + tile_m2 + delta * delta * tl.div_rn(count * tile_count, total)
-        count = total
-    rstd = _rstd(m2, count, eps)
+        x = tl.load(x_row + offsets, mask=active, other=0.).to(tl.float32)
+        centered = tl.where(active, x - mean, 0.)
+        squares += centered * centered
+    rstd = _rstd(tl.sum(squares, axis=0), count, eps)
     for tile in range(tl.cdiv(N, BLOCK)):
         offsets = tl.cast(tile, tl.int64) * BLOCK + columns
         active = (row < M) & (offsets < N)
-        x = tl.load(X + row * row_stride + offsets, mask=active, other=0.).to(tl.float32)
+        x = tl.load(x_row + offsets, mask=active, other=0.).to(tl.float32)
         _store_outputs(Y, row, offsets, active, x - mean, rstd, W, B, N, HAS_WEIGHT, HAS_BIAS)
     if STATS:
         tl.store(MEAN + row, mean, mask=row < M)

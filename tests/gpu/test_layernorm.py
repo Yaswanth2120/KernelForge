@@ -39,12 +39,8 @@ def same_dtype(parameter, dtype):
     return None if parameter is None else parameter.to(dtype)
 
 
-def check(x, shape, weight=None, bias=None, eps=1e-5, torch_stats=True):
-    """Frozen error rule on output and stats, contract, input preservation, determinism.
-
-    With torch_stats=False the stats are compared to the fp32 reference directly (same rule's
-    floor, exact non-finite pattern) because PyTorch's own stats are not a valid baseline there.
-    """
+def check(x, shape, weight=None, bias=None, eps=1e-5):
+    """Frozen error rule on output and stats, contract, input preservation, determinism."""
     shape = (shape,) if isinstance(shape, int) else tuple(shape)
     leading = x.shape[:x.ndim - len(shape)]
     snapshot = x.clone()
@@ -53,8 +49,6 @@ def check(x, shape, weight=None, bias=None, eps=1e-5, torch_stats=True):
         x, shape, same_dtype(weight, x.dtype), same_dtype(bias, x.dtype), eps)
     expected, ref_mean, ref_rstd = reference.layer_norm(x, shape, weight, bias, eps,
                                                         return_stats=True)
-    if not torch_stats:
-        base_mean, base_rstd = ref_mean, ref_rstd
     for name, actual, base, ref, dtype in (
             ('output', out, baseline, expected, x.dtype),
             ('mean', mean, base_mean.reshape(leading).float(), ref_mean, torch.float32),
@@ -148,11 +142,16 @@ def test_nan_and_inf_propagate(dtype, n):
     x[0, n // 2] = torch.nan
     x[1, 0] = torch.inf
     x[2] = torch.nan
-    # PyTorch reports mean NaN for a +inf row (its Welford update computes inf - inf); the fp32
-    # reference and this kernel give +inf, so stats are checked against the reference here.
-    out, mean, _ = check(x, n, torch_stats=False)
+    out, mean, rstd = layer_norm(x, n, return_stats=True)
+    _, ref_mean, ref_rstd = reference.layer_norm(x, n, return_stats=True)
     assert torch.isnan(out[:3]).all() and torch.isfinite(out[3]).all()
-    assert torch.isnan(mean[0])
+    # PyTorch reports mean NaN for the +inf row (its Welford update hits inf - inf), so the
+    # non-finite stats are checked against the fp32 reference: NaN vs +inf must match exactly.
+    for actual, ref in ((mean[:3], ref_mean[:3]), (rstd[:3], ref_rstd[:3])):
+        assert torch.equal(torch.isnan(actual), torch.isnan(ref))
+        assert torch.equal(torch.isinf(actual), torch.isinf(ref))
+        assert torch.equal(actual[torch.isinf(ref)], ref[torch.isinf(ref)])
+    check(x[3:], n)  # the finite row under the usual torch-relative rule
 
 
 @pytest.mark.gpu
