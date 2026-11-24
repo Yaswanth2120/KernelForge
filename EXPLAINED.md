@@ -46,7 +46,7 @@ Reject calls without a supported runtime. The optional device is forwarded to th
 
 ## `src/kernelforge/ops/attention.py:causal_attention`
 
-Public interface reserved for the upcoming kernel implementation. Its result is used by the calling interface or diagnostic; it makes no kernel correctness claim.
+Computes softmax(q kᵀ · scale) v where query i only sees keys j <= i, for (B, H, S, D) fp16/bf16 tensors, without ever building the S x S score matrix. `return_lse=True` also returns each row's log-sum-exp in fp32. It never calls PyTorch attention.
 
 ## `src/kernelforge/ops/layernorm.py:layer_norm`
 
@@ -673,3 +673,31 @@ For rows too long for one block, the program walks the row in tiles three times:
 ## `src/kernelforge/ops/_layernorm_kernels.py:launch_layer_norm`
 
 Picks the single or looped path from N and the measured limit, passes dummy pointers for absent weight, bias, and stats (their code is compiled out), launches, and records the autotuned winner.
+
+## `src/kernelforge/ops/attention.py:_prepare`
+
+Validates shapes, dtypes, head dim (32/64/128), device, and the grid limit on B*H, and picks the default scale 1/sqrt(D). Batch, head, and sequence strides are passed through untouched; only a tensor whose last dim is strided is copied.
+
+## `src/kernelforge/ops/_attention_kernels.py:_prune_blocks`
+
+Keeps only autotune configs with BLOCK_N <= BLOCK_M, because the kernel splits keys at the start of the query block and that split must land on a key-block boundary. It also drops query blocks much larger than S, which would be mostly padding.
+
+## `src/kernelforge/ops/_attention_kernels.py:_attend_blocks`
+
+The online-softmax inner loop. For each key block it computes scores (already multiplied by scale·log2(e)), raises the running row maximum m if needed, rescales the old sum l and accumulator by 2^(m_old - m_new), and adds 2^(score - m_new) and its product with V. Only the diagonal stage applies the causal and sequence-end masks.
+
+Why exp2: `exp(x) = 2^(x·log2 e)`, and the GPU has a fast native 2^x instruction. Folding log2(e) into the scale once means every exponential is a plain `exp2`, with no extra multiply per element.
+
+Why online softmax works: if a later block raises the maximum from m to m', every earlier term exp(s - m) must become exp(s - m'), which is the same as multiplying the whole old sum (and accumulator) by exp(m - m'). So the row never needs to be seen all at once.
+
+## `src/kernelforge/ops/_attention_kernels.py:_causal_attention`
+
+One program handles BLOCK_M queries of one (batch, head). Keys before the query block are visible to every query in it, so that stage runs without masks. Keys inside the block's span get the j <= i mask. Keys after it are above the diagonal for every query in the block, so they are skipped entirely, which is about half the work. At the end it divides by l and stores the rows that exist.
+
+## `src/kernelforge/ops/_attention_kernels.py:launch_causal_attention`
+
+Launches one program per (query block, batch·head), records the autotuned winner, and, when a new tuning happened, which configs were valid or invalid (for example, too much shared memory at D=128).
+
+## `src/kernelforge/ops/_attention_kernels.py:_is_failed`
+
+Triton records a config that failed to compile or launch with infinite time; this turns that into an "invalid" status.
