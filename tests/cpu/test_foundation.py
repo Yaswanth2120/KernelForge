@@ -37,10 +37,10 @@ def test_unavailable_gpu(monkeypatch, operation, args):
         operation(*args)
 
 
-def test_supported_gpu_stub(monkeypatch):
+def test_unimplemented_layer_norm_on_supported_gpu(monkeypatch):
     monkeypatch.setattr('kernelforge.ops._common.is_triton_available', lambda: True)
     with pytest.raises(NotImplementedError):
-        softmax(None)
+        layer_norm(None, 1)
 
 
 def test_registered_suites():

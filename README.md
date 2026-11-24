@@ -19,7 +19,8 @@ kernelforge doctor
 
 `doctor` prints diagnostics and exits 3 when a supported GPU environment is unavailable.
 Imports work on CPU machines; operation calls raise `GPUUnavailableError` there.
-Kernels are not implemented yet, and supported GPU calls currently raise `NotImplementedError`.
+Softmax has a Triton implementation awaiting NVIDIA validation. LayerNorm and attention
+remain explicit stubs that raise `NotImplementedError` on supported GPU calls.
 
 ## Status
 
@@ -27,10 +28,13 @@ Kernels are not implemented yet, and supported GPU calls currently raise `NotImp
 - [x] CPU-safe imports and unavailable-GPU errors verified
 - [x] Pre-registered suites verified
 - [x] CPU references, tolerance policy, accounting, and fake-timer harness verified
-- [ ] GPU kernels validated
+- [x] Softmax CPU interface and resource-pruning policy verified
+- [ ] Softmax GPU correctness accepted
+- [ ] LayerNorm and attention GPU kernels validated
 - [ ] A100 measurements collected
 
-No performance results are available. Targets and measurement rules are frozen in [PREREG.md](PREREG.md).
+GPU tests written, NOT run: the 130-case softmax matrix in `tests/gpu/test_softmax.py`.
+No kernel correctness or performance claim is made. No performance results are available. Targets and measurement rules are frozen in [PREREG.md](PREREG.md).
 CPU helpers and their contracts are described in [validation](docs/VALIDATION.md).
 See [GPU setup](docs/GPU_SESSION.md), [profiling](docs/PROFILING.md), and [contributing](CONTRIBUTING.md).
 

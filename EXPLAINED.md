@@ -38,11 +38,11 @@ Return the exact installed timer source for manual review on the GPU host. Its r
 
 ## `src/kernelforge/ops/_common.py:is_triton_available`
 
-Check the CUDA runtime and lazily import Triton. Its result is used by the calling interface or diagnostic; it makes no kernel correctness claim.
+Check the CUDA runtime and lazily import Triton. It can check the input tensor’s device explicitly, and returns false when the supported runtime is unavailable.
 
 ## `src/kernelforge/ops/_common.py:require_gpu`
 
-Reject calls without a supported runtime. Its result is used by the calling interface or diagnostic; it makes no kernel correctness claim.
+Reject calls without a supported runtime. The optional device is forwarded to the single availability check, while the default call preserves the CPU-safe error behavior.
 
 ## `src/kernelforge/ops/attention.py:causal_attention`
 
@@ -54,7 +54,7 @@ Public interface reserved for the upcoming kernel implementation. Its result is 
 
 ## `src/kernelforge/ops/softmax.py:softmax`
 
-Public interface reserved for the upcoming kernel implementation. Its result is used by the calling interface or diagnostic; it makes no kernel correctness claim.
+Normalize the final dimension with fp32 accumulation and same-dtype output. An empty leading dimension returns without loading Triton kernels; a nonempty CUDA input dispatches under its own device context.
 
 ## `tests/cpu/test_foundation.py:test_import_without_triton`
 
@@ -64,9 +64,9 @@ Checks import without triton. A failure raises an assertion or exception so regr
 
 Checks unavailable gpu. A failure raises an assertion or exception so regressions remain visible.
 
-## `tests/cpu/test_foundation.py:test_supported_gpu_stub`
+## `tests/cpu/test_foundation.py:test_unimplemented_layer_norm_on_supported_gpu`
 
-Checks supported gpu stub. A failure raises an assertion or exception so regressions remain visible.
+This test checks that LayerNorm remains an explicit stub on a mocked supported runtime. Softmax now has its own interface contract tests because its intended behavior changed.
 
 ## `tests/cpu/test_foundation.py:test_registered_suites`
 
@@ -329,3 +329,171 @@ Build a synthetic measurement record with optional test-specific fields. It call
 ## `tests/cpu/test_harness.py:test_missing_schema_identity_is_rejected`
 
 This test rejects a serialized record whose schema identity is absent. It prevents the parser from silently assigning a known schema to unidentified data.
+
+## `src/kernelforge/ops/_common.py:softmax_grid`
+
+Split logical row IDs over CUDA's first two grid dimensions. The GPU row mapper widens IDs before flattening this grid, and masks any padded final rows.
+
+## `src/kernelforge/ops/_common.py:prune_softmax_configs`
+
+Keep structurally useful configurations that compile and fit device resources. It records reasons and exposed resource metadata, rejects an entirely invalid search space, and leaves unexpected compiler errors visible.
+
+## `src/kernelforge/ops/softmax.py:_prepare_input`
+
+Validate tensor metadata and copy only when the final dimension is strided. Unit-stride leading views are preserved; other final-dimension layouts are made contiguous before dispatch.
+
+## `src/kernelforge/ops/_softmax_kernels.py:_row_location`
+
+Map a two-dimensional grid ID to an int64 logical row and input offset. Unflattening the row through leading shapes and strides supports transposed or broadcast views without assuming a single uniform row stride.
+
+## `src/kernelforge/ops/_softmax_kernels.py:_prune`
+
+Compile candidates without executing them and retain resource-fit evidence. The resulting diagnostic records describe resource fit, not numerical correctness, and need a real owner-run GPU session.
+
+## `src/kernelforge/ops/_softmax_kernels.py:_prune_single`
+
+Prune the row-in-registers autotune candidates. Its block is derived from N, and its compiler callback checks each surviving warp count.
+
+## `src/kernelforge/ops/_softmax_kernels.py:_prune_looped`
+
+Prune the online-normalizer autotune candidates. Each candidate supplies its own bounded tile width and warp count before timing.
+
+## `src/kernelforge/ops/_softmax_kernels.py:_single_softmax`
+
+Keep one padded row in a program and perform a stable fp32 reduction. Masked negative-infinity padding contributes zero to a finite row’s denominator, and masked stores preserve the original width.
+
+## `src/kernelforge/ops/_softmax_kernels.py:_looped_softmax`
+
+Compute an online normalizer in bounded tiles, then reread and normalize. It guards all-negative-infinity prefixes and carries a compensated fp32 sum, then rereads the row to write probabilities with int64 offsets.
+
+## `src/kernelforge/ops/_softmax_kernels.py:launch_softmax`
+
+Launch a path and retain its winning configuration for later GPU artifacts. The tuning key includes layout, dtype, and device, while winner metadata is recorded only after the launch returns.
+
+## `src/kernelforge/ops/_softmax_kernels.py:compile_config`
+
+Load a candidate's compiled handles so resource failures precede tuning. The pinned private handle initializer checks resources and exposes register, spill, and shared-memory metadata without running the candidate kernel.
+
+## `tests/cpu/test_softmax_interface.py:test_valid_metadata_preserves_input`
+
+This test checks valid metadata preserves input. It checks host-side behavior using CPU tensors or fake compilation results, without executing Triton.
+
+## `tests/cpu/test_softmax_interface.py:test_leading_strides_are_preserved`
+
+This test checks leading strides are preserved. It checks host-side behavior using CPU tensors or fake compilation results, without executing Triton.
+
+## `tests/cpu/test_softmax_interface.py:test_last_dimension_copy`
+
+This test checks last dimension copy. It checks host-side behavior using CPU tensors or fake compilation results, without executing Triton.
+
+## `tests/cpu/test_softmax_interface.py:test_invalid_metadata`
+
+This test checks invalid metadata. It checks host-side behavior using CPU tensors or fake compilation results, without executing Triton.
+
+## `tests/cpu/test_softmax_interface.py:test_sparse_layout_rejected`
+
+This test checks sparse layout rejected. It checks host-side behavior using CPU tensors or fake compilation results, without executing Triton.
+
+## `tests/cpu/test_softmax_interface.py:test_cpu_tensor_rejected_with_mocked_runtime`
+
+This test checks cpu tensor rejected with mocked runtime. It checks host-side behavior using CPU tensors or fake compilation results, without executing Triton.
+
+## `tests/cpu/test_softmax_interface.py:test_device_specific_availability`
+
+This test checks device specific availability. It checks host-side behavior using CPU tensors or fake compilation results, without executing Triton.
+
+## `tests/cpu/test_softmax_interface.py:test_grid_dimensions`
+
+This test checks grid dimensions. It checks host-side behavior using CPU tensors or fake compilation results, without executing Triton.
+
+## `tests/cpu/test_softmax_interface.py:test_grid_rejects_invalid_counts`
+
+This test checks grid rejects invalid counts. It checks host-side behavior using CPU tensors or fake compilation results, without executing Triton.
+
+## `tests/cpu/test_softmax_interface.py:fake_config`
+
+Describe a candidate without importing Triton. The plain object lets CPU policy tests exercise candidate selection without loading a CUDA compiler.
+
+## `tests/cpu/test_softmax_interface.py:test_resource_pruning_and_evidence`
+
+This test checks resource pruning and evidence. It checks host-side behavior using CPU tensors or fake compilation results, without executing Triton.
+
+## `tests/cpu/test_softmax_interface.py:test_no_valid_configuration_reports_failure`
+
+This test checks no valid configuration reports failure. It checks host-side behavior using CPU tensors or fake compilation results, without executing Triton.
+
+## `tests/cpu/test_softmax_interface.py:test_unexpected_compiler_error_propagates`
+
+This test checks unexpected compiler error propagates. It checks host-side behavior using CPU tensors or fake compilation results, without executing Triton.
+
+## `tests/cpu/test_softmax_interface.py:test_fixed_block_pruning`
+
+This test checks fixed block pruning. It checks host-side behavior using CPU tensors or fake compilation results, without executing Triton.
+
+## `tests/cpu/test_softmax_interface.py:compile_candidate`
+
+Simulate one expected resource failure and one successful compilation. The test checks that only recognized resource failures are skipped and that usable candidate metadata is retained.
+
+## `tests/cpu/test_softmax_interface.py:fail`
+
+Represent a compiler bug that must not be hidden as resource pruning. The pruning policy must propagate this exception so a compiler bug cannot masquerade as a rejected resource configuration.
+
+## `tests/gpu/test_softmax.py:supported_gpu`
+
+Skip GPU tests on hosts without the required NVIDIA runtime. A skipped case remains pending and is never evidence of kernel correctness.
+
+## `tests/gpu/test_softmax.py:random_input`
+
+Create reproducible low-precision inputs directly on the GPU. A fixed CUDA generator seed makes the original typed input reproducible for both the custom operation and its PyTorch comparisons.
+
+## `tests/gpu/test_softmax.py:check_result`
+
+Check the frozen error rule, output contract, input preservation, and bitwise repeatability. Failures print candidate, PyTorch, and allowed errors; repeated outputs are compared as bytes so matching NaN values can still be checked for determinism.
+
+## `tests/gpu/test_softmax.py:test_dtype_shape_matrix`
+
+This test checks dtype shape matrix. It is written for the owner’s NVIDIA session and has not been run here.
+
+## `tests/gpu/test_softmax.py:test_layouts`
+
+This test checks layouts. It is written for the owner’s NVIDIA session and has not been run here.
+
+## `tests/gpu/test_softmax.py:test_extreme_scales_and_constants`
+
+This test checks extreme scales and constants. It is written for the owner’s NVIDIA session and has not been run here.
+
+## `tests/gpu/test_softmax.py:test_infinities_nan_and_empty_prefix`
+
+This test checks infinities nan and empty prefix. It is written for the owner’s NVIDIA session and has not been run here.
+
+## `tests/gpu/test_softmax.py:test_looped_nan_locations`
+
+This test checks looped nan locations. It is written for the owner’s NVIDIA session and has not been run here.
+
+## `tests/gpu/test_softmax.py:test_empty_leading_dimensions`
+
+This test checks empty leading dimensions. It is written for the owner’s NVIDIA session and has not been run here.
+
+## `tests/gpu/test_softmax.py:test_cuda_argument_errors`
+
+This test checks cuda argument errors. It is written for the owner’s NVIDIA session and has not been run here.
+
+## `tests/gpu/test_softmax.py:test_autotune_metadata`
+
+This test checks autotune metadata. It is written for the owner’s NVIDIA session and has not been run here.
+
+## `tests/gpu/test_softmax.py:test_int64_offsets_over_two_billion_elements`
+
+This test checks int64 offsets over two billion elements. It is written for the owner’s NVIDIA session and has not been run here.
+
+## `tests/gpu/conftest.py:pytest_sessionfinish`
+
+Save configuration diagnostics only if a real softmax backend was loaded. CPU-only runs leave no artifact, and GPU artifacts retain pytest’s exit code so failures cannot be presented as a passing session.
+
+## `tests/cpu/test_softmax_interface.py:test_unusable_runtime_returns_false`
+
+This test checks that invalid devices and missing Triton produce a false availability result. It uses mocked runtime functions and never opens a GPU context.
+
+## `tests/cpu/test_softmax_interface.py:unavailable`
+
+This helper raises a selected fake environment error for the availability test. It lets the test check both device rejection and import failure without needing CUDA or Triton installed.

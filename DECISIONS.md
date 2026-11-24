@@ -79,3 +79,43 @@ Force pushes and deletion of main are blocked. The previous plan limitation no l
   MATH, retains zero-scale coverage, and checks other scales too. This is an upstream/backend
   finding, not a custom kernel result. The math baseline is not used as a performance substitute
   for the required GPU FlashAttention baseline.
+
+## 2026-11-23 — Softmax implementation pending NVIDIA validation
+
+- Implement softmax only. GPU tests written, NOT run: tests/gpu/test_softmax.py (130 cases).
+  CPU policy tests do not compile Triton or prove kernel correctness. Keep the implementation PR
+  in draft until owner-run GPU evidence is available; do not advance to performance measurement.
+- SOFTMAX_SINGLE_BLOCK_LIMIT is provisionally 8192 columns. This bounds the single-program row
+  while keeping all selected bandwidth widths on that path; it is NOT a measured crossover.
+  The required measured justification is unfinished. Any threshold update must be dated here,
+  with its measured reason; no frozen shape, accuracy rule, or performance criterion was changed.
+- Map logical rows through all leading shape/stride dimensions rather than reshaping the input,
+  which could silently copy a leading-dimension transpose. Copy a strided final dimension with
+  contiguous(), and always allocate a contiguous same-dtype output. An empty leading dimension
+  returns without importing the kernel module. N=0/scalars and unsupported dtypes are rejected.
+- Availability checks accept an optional device so a CUDA input is checked on its own GPU.
+  The default availability interface and the other operations' behavior remain unchanged.
+- Cast program IDs before all row/grid stride arithmetic, and cast large-row tile offsets to
+  int64. Split rows into a second grid dimension above CUDA's x-grid limit and mask tail rows.
+- Use fp32 max/exp/sum arithmetic. The looped path uses the published online normalizer
+  recurrence, followed by an output pass, with a compensated scalar sum and disabled FP fusion.
+  An all-negative-infinity prefix uses a temporary zero shift until a finite maximum arrives;
+  final all-negative-infinity rows still produce NaNs. These numerical choices await GPU tests.
+- Autotune warps {1,2,4,8,16}; derive single blocks from N and consider loop blocks {1024,2048,4096}.
+  num_stages=1 is explicit: no measured loop-pipeline choice exists, and these kernels contain no
+  dot operations. Include N/dtype/device/rows/layout in the tuning key to avoid sharing a winner
+  across different layouts or GPUs. No winner or speed is claimed before actual execution.
+- Prune configurations with excess idle threads; precompile and initialize handles for the rest.
+  Catch only Triton's resource, compile-time assertion, and ptxas failures. Record valid/pruned/
+  invalid configs plus exposed register/spill/shared metadata; unexpected compiler errors propagate.
+  If all configurations fail, report all reasons instead of launching an invalid fallback.
+  The private _init_handles API was reviewed in the pinned upstream 3.4.0 source, but not executed.
+- The previous CPU test assumed softmax was a stub. That intended behavior changed: host-side
+  softmax validation/copy/pruning tests replace that assumption; the remaining stub assertion now
+  checks LayerNorm. No correctness test or tolerance was weakened to make a kernel pass.
+- The owner-run GPU script accepts pytest flags, rejects unavailable GPU environments with code 3,
+  saves JUnit output, and saves autotune diagnostics only when the GPU backend was actually loaded.
+  Slow int64 cases need >8 GiB for input/output plus 2 GiB headroom; memory-based skips remain
+  pending, not passes. The full matrix includes both single and looped int64 paths.
+- The looped algorithm physically reads twice and writes once. Keep the registered 2*M*N*elem_size
+  effective-bandwidth formula unchanged and disclose the difference from physical traffic in docs.
