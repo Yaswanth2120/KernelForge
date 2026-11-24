@@ -157,3 +157,20 @@ Force pushes and deletion of main are blocked. The previous plan limitation no l
   the constant changes and the reason is recorded here; frozen PREREG shapes and criteria do not.
 - Commit 2bc1e64 pushed this script with lint errors and without this entry (a shell chaining
   mistake); the follow-up commit fixes lint and adds this entry before any measurement ran.
+
+## 2026-11-24 — Softmax path threshold: measured result and post-hoc tie band
+
+- Measured (A100-SXM4-80GB, 3 launches, no clock drops; `reports/raw/softmax_threshold/`):
+  N<=4096 single/looped ratios 0.990-1.005 (both ~0.62 ms, ~1.73 TB/s); N=8192..65536 single
+  is faster in every dtype (ratios 0.686-0.952); informational widths agree (0.654-0.951).
+- The pre-stated strict rule returned NO value: at N=1024 single was 0.5% (fp16) and 0.3% (bf16)
+  slower, i.e. 3.1 us and 2.0 us on 0.62 ms, about 2-3 ticks of the ~1 us event quantization.
+  Taken literally it would select the looped path everywhere, which the data contradict.
+- Changed rule (decided AFTER seeing the data; original rule above is kept): differences
+  within 1% count as ties, and ties keep the single path because it reads HBM once instead of
+  twice. 1% (~6 us) exceeds the timer tick and the largest launch-to-launch range seen (~0.5%).
+  Any tie band >= 0.5% gives the same result.
+- Result: SOFTMAX_SINGLE_BLOCK_LIMIT 8192 -> 65536 (the largest tested width). N > 65536 was not
+  measured and stays on the looped path. Pre-registered shapes (N in 2048/4096/8192) use the
+  single path under both values, so no frozen case, criterion, or tolerance changed.
+- GPU tests are parametrized on the constant and were rerun with the new value.

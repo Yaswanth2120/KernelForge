@@ -5,8 +5,9 @@ from kernelforge.errors import GPUUnavailableError
 
 from ._common import require_gpu, softmax_grid
 
-# Provisional until measured on the owner's GPU; not a performance claim.
-SOFTMAX_SINGLE_BLOCK_LIMIT = 8192
+# Measured on A100-SXM4-80GB (2026-11-24): the single path tied or beat the looped path at every
+# tested N up to 65536; see DECISIONS.md and reports/raw/softmax_threshold/.
+SOFTMAX_SINGLE_BLOCK_LIMIT = 65536
 
 
 def _prepare_input(x, dim):

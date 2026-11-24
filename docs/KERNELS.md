@@ -29,8 +29,10 @@ and stores. Slow tests cover both row paths with more than 2^31 fp16 elements.
 
 ### Row-in-registers path
 
-For N <= `SOFTMAX_SINGLE_BLOCK_LIMIT` (currently **8192, provisional**), one program holds a
-row padded to the next power of two. Values are converted to fp32 before reductions.
+For N <= `SOFTMAX_SINGLE_BLOCK_LIMIT` (**65536**, measured on the A100; see DECISIONS.md),
+one program holds a row padded to the next power of two. At N <= 4096 both paths reach the same
+~1.73 TB/s; from 8192 to 65536 the single path was 5-31% faster because the looped path reads
+each row from HBM twice. Larger N was not measured, so the looped path keeps N > 65536. Values are converted to fp32 before reductions.
 
 ```text
 input logical rows                  one program per row
