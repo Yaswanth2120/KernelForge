@@ -123,3 +123,83 @@ Source review is not a substitute for compilation or execution on the owner's GP
 The threshold must be justified by future measurements; neither path is accepted as correct or
 fast until owner-provided GPU output supports it. Benchmarking, accuracy tables, and performance
 criteria evaluation remain pending.
+
+## LayerNorm forward
+
+### Math and contract
+
+For each row x of length N (the trailing `normalized_shape` dims, flattened):
+
+```text
+mean = sum(x) / N                      (row sum in fp64, rounded once to fp32)
+var  = sum((x - mean)^2) / N           (population variance, centered: never E[x^2] - E[x]^2)
+rstd = 1 / sqrt(var + eps)             (IEEE div_rn / sqrt_rn)
+y    = (x - mean) * rstd * weight + bias   (weight, bias optional; fp32 or the input dtype)
+```
+
+Output has the input's dtype and shape; `return_stats=True` adds fp32 `mean` and `rstd` with the
+leading shape. The wrapper flattens to (M, N): a view when the leading dims collapse to a single
+row stride, otherwise a copy, and a non-unit-stride trailing block is copied. Row offsets use
+int64 (`row * row_stride`), and rows above CUDA's x-grid limit spill into a second grid dimension.
+
+### Single-block path (N <= 32768)
+
+```text
+program r:   x[r, 0:N] --load (masked, pad 0)--> registers [BLOCK = next_pow2(N)]
+             sum (fp64) -> mean;  where(mask, x - mean, 0) -> centered
+             sum(centered^2) -> var -> rstd
+             centered * rstd * w + b --store (masked)--> y[r, 0:N]
+```
+
+One HBM read and one write per element. The masked padding is zero and is also zeroed after
+centering, so padding never contributes to the variance.
+
+### Looped path (N > 32768)
+
+```text
+program r:   pass 1: tiles of BLOCK columns      lane sums (fp64) += x      -> tree sum -> mean
+             pass 2: same tiles, reread x        lane sums += (x - mean)^2  -> tree sum -> rstd
+             pass 3: same tiles, reread x        write (x - mean) * rstd * w + b
+```
+
+Three reads and one write. Each lane accumulates only its own columns (N / BLOCK values), and a
+single tree reduction finishes the row, so no running scalar is rounded at the whole row's scale.
+An earlier design merged per-tile (count, mean, M2) with Chan et al.'s parallel-variance formula
+in two reads; on the A100 it turned a +inf row's mean into NaN and lost ~2 ulp of rstd at
+N = 262144, so it was replaced (DECISIONS.md, 2026-11-24).
+
+### Numerical choices
+
+- Triton lowers fp32 `/` and `sqrt` to fast approximate instructions by default. With them, a
+  constant row 3,3,...,3 (N=31) got mean 93/31 != 3, and rstd amplified the tiny residue into a
+  5e-5 output error. `tl.div_rn` / `tl.sqrt_rn` fixed it.
+- The row sum is the only cancellation-prone statistic (e.g. 32769 normal values summing to
+  ~0.005*N). Summing in fp64 matched PyTorch's accuracy on that case; centered squares do not
+  cancel and stay in fp32. Stored statistics are fp32 as specified.
+- NaN anywhere in a row makes the row NaN; +inf gives mean +inf (matching the fp32 reference;
+  PyTorch reports NaN there) and a NaN output row, as in PyTorch.
+
+### Threshold and autotuning
+
+The single/looped switch is 32768, measured on the A100 with a rule fixed before measuring
+(largest N where the single path is within 1% of, or faster than, the looped path for every
+dtype at that N and below). At 65536 the single path is 10-23% slower: it keeps x and the
+centered row live and spills registers. Autotune: num_warps {1, 2, 4, 8, 16} (more threads than
+padded columns pruned), looped BLOCK {1024, 2048, 4096}; keyed on N, the weight/bias/stats
+flags, and (automatically) tensor dtypes. Triton's autotuner skips configs that fail to compile
+or launch.
+
+### Known limits
+
+Irregular widths (4097, 8193) were 1.6-2.5x slower than neighbouring powers of two on both
+paths in fp16/bf16 during the threshold sweep; the cause is analyzed in docs/PROFILING.md.
+
+### Provenance
+
+The normalization is the standard LayerNorm definition (Ba, Kiros, Hinton,
+[Layer Normalization](https://arxiv.org/abs/1607.06450)); the
+[Triton layer-norm tutorial](https://triton-lang.org/main/getting-started/tutorials/05-layer-norm.html)
+was read as a reference. The two-pass centered variance is the textbook stable method
+(Chan, Golub, LeVeque, *Algorithms for computing the sample variance*, 1983, also the source of
+the superseded merge formula). The code was written for this project's layouts, mixed-precision
+affine, statistics output, looped path, and int64 indexing; tutorial code was not pasted.

@@ -238,3 +238,33 @@ Force pushes and deletion of main are blocked. The previous plan limitation no l
   BOTH LayerNorm paths in fp16/bf16 (e.g. 4097 fp16: single 1.89 ms, looped 1.53 ms vs 0.62 ms
   at 4096). Softmax at 4097 does not show this. Hypothesis for K7: unaligned rows with runtime
   N/row_stride prevent vectorized loads. Not a pre-registered shape.
+
+## 2026-11-24 — LayerNorm looped path redesigned after GPU accuracy failures
+
+- GPU run at ca704df: 163 passed, 5 failed, all on the looped path (N > 32768):
+  (a) a +inf row's mean became NaN, because Chan's merge computes finite - inf on the next tile;
+  (b) rstd at N=262144 was 2 ulp off (allowed ~1.99 ulp) and a multi-dim N=131100 fp32 output
+  was 2.86e-6 vs 2.54e-6 allowed, because scalar running statistics were rounded at the scale
+  of the whole row across 64+ tiles.
+- Looped path is now a per-lane two-pass centered design (the spec allows "two-pass centered"):
+  lane sums across tiles, then one tree reduction for the mean; lane sums of (x - mean)^2 for
+  the variance; then a normalizing pass. Three reads + one write (was two reads + one write).
+- Both paths sum the row in fp64 and round the mean once to fp32. Reason: a bf16 row of 32769
+  normals with mean ~0.005 had mean error 7.0e-10 vs PyTorch 2.3e-10 (allowed 4.66e-10); the
+  sum is the only cancellation-prone statistic. Stored statistics remain fp32 as specified.
+- My previous inf-row test compared finite-row stats to the reference with only the eps floor,
+  which no summation order can meet for cancellation-heavy means. The test now checks the
+  finite row with the usual PyTorch-relative rule and the NaN/+inf rows' stats pattern exactly
+  against the reference (PyTorch's own mean is NaN for the +inf row).
+- The LayerNorm threshold measured at 464eba1 used the old looped kernel and is superseded;
+  it is re-measured with the same pre-stated rule (1% tie band) at the commit below.
+
+## 2026-11-24 — LayerNorm path threshold re-measured with the redesigned kernels
+
+- Commit 9852793, A100-SXM4-80GB, three launches, no clock drops, same pre-stated 1% rule:
+  limit stays 32768 (`reports/raw/layer_norm_threshold/`; the superseded 464eba1 data is kept in
+  `reports/raw/layer_norm_threshold_464eba1_superseded/`). Single/looped ratios: N<=16384
+  0.83-0.96; 32768 0.64-0.79; 65536 1.11-1.23. The fp64 row sum costs ~1% at N<=8192 and
+  ~6% at 32768 on the single path (0.62 ms -> 0.62 ms; 0.69 ms -> 0.73 ms).
+- Irregular widths remain 1.6-2.5x slower than neighbouring powers of two on both paths
+  (unchanged observation; analysis deferred to K7).
