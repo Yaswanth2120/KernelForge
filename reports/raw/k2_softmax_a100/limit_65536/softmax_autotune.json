@@ -1,0 +1,8410 @@
+{
+  "kind": "kernelforge.softmax.autotune.v1",
+  "pytest_exit_code": 0,
+  "configurations": [
+    {
+      "path": "single",
+      "N": 1,
+      "DTYPE": "torch.float16",
+      "DEVICE": 0,
+      "M": 3,
+      "LEADING_SHAPE": [
+        3
+      ],
+      "LEADING_STRIDES": [
+        1
+      ],
+      "configs": [
+        {
+          "block": 1,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 12,
+          "spills": 0,
+          "shared_bytes": 0
+        },
+        {
+          "block": 1,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "pruned",
+          "reason": "more threads than padded columns"
+        },
+        {
+          "block": 1,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "pruned",
+          "reason": "more threads than padded columns"
+        },
+        {
+          "block": 1,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "pruned",
+          "reason": "more threads than padded columns"
+        },
+        {
+          "block": 1,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "pruned",
+          "reason": "more threads than padded columns"
+        }
+      ],
+      "best_config": {
+        "block": 1,
+        "num_warps": 1,
+        "num_stages": 1
+      }
+    },
+    {
+      "path": "single",
+      "N": 1,
+      "DTYPE": "torch.bfloat16",
+      "DEVICE": 0,
+      "M": 3,
+      "LEADING_SHAPE": [
+        3
+      ],
+      "LEADING_STRIDES": [
+        1
+      ],
+      "configs": [
+        {
+          "block": 1,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 12,
+          "spills": 0,
+          "shared_bytes": 0
+        },
+        {
+          "block": 1,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "pruned",
+          "reason": "more threads than padded columns"
+        },
+        {
+          "block": 1,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "pruned",
+          "reason": "more threads than padded columns"
+        },
+        {
+          "block": 1,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "pruned",
+          "reason": "more threads than padded columns"
+        },
+        {
+          "block": 1,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "pruned",
+          "reason": "more threads than padded columns"
+        }
+      ],
+      "best_config": {
+        "block": 1,
+        "num_warps": 1,
+        "num_stages": 1
+      }
+    },
+    {
+      "path": "single",
+      "N": 1,
+      "DTYPE": "torch.float32",
+      "DEVICE": 0,
+      "M": 3,
+      "LEADING_SHAPE": [
+        3
+      ],
+      "LEADING_STRIDES": [
+        1
+      ],
+      "configs": [
+        {
+          "block": 1,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 12,
+          "spills": 0,
+          "shared_bytes": 0
+        },
+        {
+          "block": 1,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "pruned",
+          "reason": "more threads than padded columns"
+        },
+        {
+          "block": 1,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "pruned",
+          "reason": "more threads than padded columns"
+        },
+        {
+          "block": 1,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "pruned",
+          "reason": "more threads than padded columns"
+        },
+        {
+          "block": 1,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "pruned",
+          "reason": "more threads than padded columns"
+        }
+      ],
+      "best_config": {
+        "block": 1,
+        "num_warps": 1,
+        "num_stages": 1
+      }
+    },
+    {
+      "path": "single",
+      "N": 2,
+      "DTYPE": "torch.float16",
+      "DEVICE": 0,
+      "M": 3,
+      "LEADING_SHAPE": [
+        3
+      ],
+      "LEADING_STRIDES": [
+        2
+      ],
+      "configs": [
+        {
+          "block": 2,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 14,
+          "spills": 0,
+          "shared_bytes": 0
+        },
+        {
+          "block": 2,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "pruned",
+          "reason": "more threads than padded columns"
+        },
+        {
+          "block": 2,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "pruned",
+          "reason": "more threads than padded columns"
+        },
+        {
+          "block": 2,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "pruned",
+          "reason": "more threads than padded columns"
+        },
+        {
+          "block": 2,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "pruned",
+          "reason": "more threads than padded columns"
+        }
+      ],
+      "best_config": {
+        "block": 2,
+        "num_warps": 1,
+        "num_stages": 1
+      }
+    },
+    {
+      "path": "single",
+      "N": 2,
+      "DTYPE": "torch.bfloat16",
+      "DEVICE": 0,
+      "M": 3,
+      "LEADING_SHAPE": [
+        3
+      ],
+      "LEADING_STRIDES": [
+        2
+      ],
+      "configs": [
+        {
+          "block": 2,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 14,
+          "spills": 0,
+          "shared_bytes": 0
+        },
+        {
+          "block": 2,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "pruned",
+          "reason": "more threads than padded columns"
+        },
+        {
+          "block": 2,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "pruned",
+          "reason": "more threads than padded columns"
+        },
+        {
+          "block": 2,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "pruned",
+          "reason": "more threads than padded columns"
+        },
+        {
+          "block": 2,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "pruned",
+          "reason": "more threads than padded columns"
+        }
+      ],
+      "best_config": {
+        "block": 2,
+        "num_warps": 1,
+        "num_stages": 1
+      }
+    },
+    {
+      "path": "single",
+      "N": 2,
+      "DTYPE": "torch.float32",
+      "DEVICE": 0,
+      "M": 3,
+      "LEADING_SHAPE": [
+        3
+      ],
+      "LEADING_STRIDES": [
+        2
+      ],
+      "configs": [
+        {
+          "block": 2,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 14,
+          "spills": 0,
+          "shared_bytes": 0
+        },
+        {
+          "block": 2,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "pruned",
+          "reason": "more threads than padded columns"
+        },
+        {
+          "block": 2,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "pruned",
+          "reason": "more threads than padded columns"
+        },
+        {
+          "block": 2,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "pruned",
+          "reason": "more threads than padded columns"
+        },
+        {
+          "block": 2,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "pruned",
+          "reason": "more threads than padded columns"
+        }
+      ],
+      "best_config": {
+        "block": 2,
+        "num_warps": 1,
+        "num_stages": 1
+      }
+    },
+    {
+      "path": "single",
+      "N": 3,
+      "DTYPE": "torch.float16",
+      "DEVICE": 0,
+      "M": 3,
+      "LEADING_SHAPE": [
+        3
+      ],
+      "LEADING_STRIDES": [
+        3
+      ],
+      "configs": [
+        {
+          "block": 4,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 16,
+          "spills": 0,
+          "shared_bytes": 0
+        },
+        {
+          "block": 4,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "pruned",
+          "reason": "more threads than padded columns"
+        },
+        {
+          "block": 4,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "pruned",
+          "reason": "more threads than padded columns"
+        },
+        {
+          "block": 4,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "pruned",
+          "reason": "more threads than padded columns"
+        },
+        {
+          "block": 4,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "pruned",
+          "reason": "more threads than padded columns"
+        }
+      ],
+      "best_config": {
+        "block": 4,
+        "num_warps": 1,
+        "num_stages": 1
+      }
+    },
+    {
+      "path": "single",
+      "N": 3,
+      "DTYPE": "torch.bfloat16",
+      "DEVICE": 0,
+      "M": 3,
+      "LEADING_SHAPE": [
+        3
+      ],
+      "LEADING_STRIDES": [
+        3
+      ],
+      "configs": [
+        {
+          "block": 4,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 16,
+          "spills": 0,
+          "shared_bytes": 0
+        },
+        {
+          "block": 4,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "pruned",
+          "reason": "more threads than padded columns"
+        },
+        {
+          "block": 4,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "pruned",
+          "reason": "more threads than padded columns"
+        },
+        {
+          "block": 4,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "pruned",
+          "reason": "more threads than padded columns"
+        },
+        {
+          "block": 4,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "pruned",
+          "reason": "more threads than padded columns"
+        }
+      ],
+      "best_config": {
+        "block": 4,
+        "num_warps": 1,
+        "num_stages": 1
+      }
+    },
+    {
+      "path": "single",
+      "N": 3,
+      "DTYPE": "torch.float32",
+      "DEVICE": 0,
+      "M": 3,
+      "LEADING_SHAPE": [
+        3
+      ],
+      "LEADING_STRIDES": [
+        3
+      ],
+      "configs": [
+        {
+          "block": 4,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 16,
+          "spills": 0,
+          "shared_bytes": 0
+        },
+        {
+          "block": 4,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "pruned",
+          "reason": "more threads than padded columns"
+        },
+        {
+          "block": 4,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "pruned",
+          "reason": "more threads than padded columns"
+        },
+        {
+          "block": 4,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "pruned",
+          "reason": "more threads than padded columns"
+        },
+        {
+          "block": 4,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "pruned",
+          "reason": "more threads than padded columns"
+        }
+      ],
+      "best_config": {
+        "block": 4,
+        "num_warps": 1,
+        "num_stages": 1
+      }
+    },
+    {
+      "path": "single",
+      "N": 31,
+      "DTYPE": "torch.float16",
+      "DEVICE": 0,
+      "M": 3,
+      "LEADING_SHAPE": [
+        3
+      ],
+      "LEADING_STRIDES": [
+        31
+      ],
+      "configs": [
+        {
+          "block": 32,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 18,
+          "spills": 0,
+          "shared_bytes": 0
+        },
+        {
+          "block": 32,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "pruned",
+          "reason": "more threads than padded columns"
+        },
+        {
+          "block": 32,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "pruned",
+          "reason": "more threads than padded columns"
+        },
+        {
+          "block": 32,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "pruned",
+          "reason": "more threads than padded columns"
+        },
+        {
+          "block": 32,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "pruned",
+          "reason": "more threads than padded columns"
+        }
+      ],
+      "best_config": {
+        "block": 32,
+        "num_warps": 1,
+        "num_stages": 1
+      }
+    },
+    {
+      "path": "single",
+      "N": 31,
+      "DTYPE": "torch.bfloat16",
+      "DEVICE": 0,
+      "M": 3,
+      "LEADING_SHAPE": [
+        3
+      ],
+      "LEADING_STRIDES": [
+        31
+      ],
+      "configs": [
+        {
+          "block": 32,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 18,
+          "spills": 0,
+          "shared_bytes": 0
+        },
+        {
+          "block": 32,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "pruned",
+          "reason": "more threads than padded columns"
+        },
+        {
+          "block": 32,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "pruned",
+          "reason": "more threads than padded columns"
+        },
+        {
+          "block": 32,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "pruned",
+          "reason": "more threads than padded columns"
+        },
+        {
+          "block": 32,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "pruned",
+          "reason": "more threads than padded columns"
+        }
+      ],
+      "best_config": {
+        "block": 32,
+        "num_warps": 1,
+        "num_stages": 1
+      }
+    },
+    {
+      "path": "single",
+      "N": 31,
+      "DTYPE": "torch.float32",
+      "DEVICE": 0,
+      "M": 3,
+      "LEADING_SHAPE": [
+        3
+      ],
+      "LEADING_STRIDES": [
+        31
+      ],
+      "configs": [
+        {
+          "block": 32,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 18,
+          "spills": 0,
+          "shared_bytes": 0
+        },
+        {
+          "block": 32,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "pruned",
+          "reason": "more threads than padded columns"
+        },
+        {
+          "block": 32,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "pruned",
+          "reason": "more threads than padded columns"
+        },
+        {
+          "block": 32,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "pruned",
+          "reason": "more threads than padded columns"
+        },
+        {
+          "block": 32,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "pruned",
+          "reason": "more threads than padded columns"
+        }
+      ],
+      "best_config": {
+        "block": 32,
+        "num_warps": 1,
+        "num_stages": 1
+      }
+    },
+    {
+      "path": "single",
+      "N": 127,
+      "DTYPE": "torch.float16",
+      "DEVICE": 0,
+      "M": 3,
+      "LEADING_SHAPE": [
+        3
+      ],
+      "LEADING_STRIDES": [
+        127
+      ],
+      "configs": [
+        {
+          "block": 128,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 18,
+          "spills": 0,
+          "shared_bytes": 0
+        },
+        {
+          "block": 128,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 22,
+          "spills": 0,
+          "shared_bytes": 8
+        },
+        {
+          "block": 128,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 17,
+          "spills": 0,
+          "shared_bytes": 16
+        },
+        {
+          "block": 128,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "pruned",
+          "reason": "more threads than padded columns"
+        },
+        {
+          "block": 128,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "pruned",
+          "reason": "more threads than padded columns"
+        }
+      ],
+      "best_config": {
+        "block": 128,
+        "num_warps": 1,
+        "num_stages": 1
+      }
+    },
+    {
+      "path": "single",
+      "N": 127,
+      "DTYPE": "torch.bfloat16",
+      "DEVICE": 0,
+      "M": 3,
+      "LEADING_SHAPE": [
+        3
+      ],
+      "LEADING_STRIDES": [
+        127
+      ],
+      "configs": [
+        {
+          "block": 128,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 18,
+          "spills": 0,
+          "shared_bytes": 0
+        },
+        {
+          "block": 128,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 22,
+          "spills": 0,
+          "shared_bytes": 8
+        },
+        {
+          "block": 128,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 17,
+          "spills": 0,
+          "shared_bytes": 16
+        },
+        {
+          "block": 128,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "pruned",
+          "reason": "more threads than padded columns"
+        },
+        {
+          "block": 128,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "pruned",
+          "reason": "more threads than padded columns"
+        }
+      ],
+      "best_config": {
+        "block": 128,
+        "num_warps": 1,
+        "num_stages": 1
+      }
+    },
+    {
+      "path": "single",
+      "N": 127,
+      "DTYPE": "torch.float32",
+      "DEVICE": 0,
+      "M": 3,
+      "LEADING_SHAPE": [
+        3
+      ],
+      "LEADING_STRIDES": [
+        127
+      ],
+      "configs": [
+        {
+          "block": 128,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 20,
+          "spills": 0,
+          "shared_bytes": 0
+        },
+        {
+          "block": 128,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 20,
+          "spills": 0,
+          "shared_bytes": 8
+        },
+        {
+          "block": 128,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 20,
+          "spills": 0,
+          "shared_bytes": 16
+        },
+        {
+          "block": 128,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "pruned",
+          "reason": "more threads than padded columns"
+        },
+        {
+          "block": 128,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "pruned",
+          "reason": "more threads than padded columns"
+        }
+      ],
+      "best_config": {
+        "block": 128,
+        "num_warps": 1,
+        "num_stages": 1
+      }
+    },
+    {
+      "path": "single",
+      "N": 1023,
+      "DTYPE": "torch.float16",
+      "DEVICE": 0,
+      "M": 3,
+      "LEADING_SHAPE": [
+        3
+      ],
+      "LEADING_STRIDES": [
+        1023
+      ],
+      "configs": [
+        {
+          "block": 1024,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 57,
+          "spills": 0,
+          "shared_bytes": 0
+        },
+        {
+          "block": 1024,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 32,
+          "spills": 0,
+          "shared_bytes": 8
+        },
+        {
+          "block": 1024,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 28,
+          "spills": 0,
+          "shared_bytes": 16
+        },
+        {
+          "block": 1024,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 23,
+          "spills": 0,
+          "shared_bytes": 32
+        },
+        {
+          "block": 1024,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 24,
+          "spills": 0,
+          "shared_bytes": 64
+        }
+      ],
+      "best_config": {
+        "block": 1024,
+        "num_warps": 1,
+        "num_stages": 1
+      }
+    },
+    {
+      "path": "single",
+      "N": 1023,
+      "DTYPE": "torch.bfloat16",
+      "DEVICE": 0,
+      "M": 3,
+      "LEADING_SHAPE": [
+        3
+      ],
+      "LEADING_STRIDES": [
+        1023
+      ],
+      "configs": [
+        {
+          "block": 1024,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 57,
+          "spills": 0,
+          "shared_bytes": 0
+        },
+        {
+          "block": 1024,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 32,
+          "spills": 0,
+          "shared_bytes": 8
+        },
+        {
+          "block": 1024,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 28,
+          "spills": 0,
+          "shared_bytes": 16
+        },
+        {
+          "block": 1024,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 23,
+          "spills": 0,
+          "shared_bytes": 32
+        },
+        {
+          "block": 1024,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 24,
+          "spills": 0,
+          "shared_bytes": 64
+        }
+      ],
+      "best_config": {
+        "block": 1024,
+        "num_warps": 1,
+        "num_stages": 1
+      }
+    },
+    {
+      "path": "single",
+      "N": 1023,
+      "DTYPE": "torch.float32",
+      "DEVICE": 0,
+      "M": 3,
+      "LEADING_SHAPE": [
+        3
+      ],
+      "LEADING_STRIDES": [
+        1023
+      ],
+      "configs": [
+        {
+          "block": 1024,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 64,
+          "spills": 0,
+          "shared_bytes": 0
+        },
+        {
+          "block": 1024,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 32,
+          "spills": 0,
+          "shared_bytes": 8
+        },
+        {
+          "block": 1024,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 28,
+          "spills": 0,
+          "shared_bytes": 16
+        },
+        {
+          "block": 1024,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 23,
+          "spills": 0,
+          "shared_bytes": 32
+        },
+        {
+          "block": 1024,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 24,
+          "spills": 0,
+          "shared_bytes": 64
+        }
+      ],
+      "best_config": {
+        "block": 1024,
+        "num_warps": 2,
+        "num_stages": 1
+      }
+    },
+    {
+      "path": "single",
+      "N": 1025,
+      "DTYPE": "torch.float16",
+      "DEVICE": 0,
+      "M": 3,
+      "LEADING_SHAPE": [
+        3
+      ],
+      "LEADING_STRIDES": [
+        1025
+      ],
+      "configs": [
+        {
+          "block": 2048,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 64,
+          "spills": 0,
+          "shared_bytes": 0
+        },
+        {
+          "block": 2048,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 32,
+          "spills": 0,
+          "shared_bytes": 8
+        },
+        {
+          "block": 2048,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 29,
+          "spills": 0,
+          "shared_bytes": 16
+        },
+        {
+          "block": 2048,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 24,
+          "spills": 0,
+          "shared_bytes": 32
+        },
+        {
+          "block": 2048,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 23,
+          "spills": 0,
+          "shared_bytes": 64
+        }
+      ],
+      "best_config": {
+        "block": 2048,
+        "num_warps": 4,
+        "num_stages": 1
+      }
+    },
+    {
+      "path": "single",
+      "N": 1025,
+      "DTYPE": "torch.bfloat16",
+      "DEVICE": 0,
+      "M": 3,
+      "LEADING_SHAPE": [
+        3
+      ],
+      "LEADING_STRIDES": [
+        1025
+      ],
+      "configs": [
+        {
+          "block": 2048,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 64,
+          "spills": 0,
+          "shared_bytes": 0
+        },
+        {
+          "block": 2048,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 32,
+          "spills": 0,
+          "shared_bytes": 8
+        },
+        {
+          "block": 2048,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 29,
+          "spills": 0,
+          "shared_bytes": 16
+        },
+        {
+          "block": 2048,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 24,
+          "spills": 0,
+          "shared_bytes": 32
+        },
+        {
+          "block": 2048,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 23,
+          "spills": 0,
+          "shared_bytes": 64
+        }
+      ],
+      "best_config": {
+        "block": 2048,
+        "num_warps": 4,
+        "num_stages": 1
+      }
+    },
+    {
+      "path": "single",
+      "N": 1025,
+      "DTYPE": "torch.float32",
+      "DEVICE": 0,
+      "M": 3,
+      "LEADING_SHAPE": [
+        3
+      ],
+      "LEADING_STRIDES": [
+        1025
+      ],
+      "configs": [
+        {
+          "block": 2048,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 64,
+          "spills": 0,
+          "shared_bytes": 0
+        },
+        {
+          "block": 2048,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 32,
+          "spills": 0,
+          "shared_bytes": 8
+        },
+        {
+          "block": 2048,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 28,
+          "spills": 0,
+          "shared_bytes": 16
+        },
+        {
+          "block": 2048,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 24,
+          "spills": 0,
+          "shared_bytes": 32
+        },
+        {
+          "block": 2048,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 22,
+          "spills": 0,
+          "shared_bytes": 64
+        }
+      ],
+      "best_config": {
+        "block": 2048,
+        "num_warps": 16,
+        "num_stages": 1
+      }
+    },
+    {
+      "path": "single",
+      "N": 2048,
+      "DTYPE": "torch.float16",
+      "DEVICE": 0,
+      "M": 3,
+      "LEADING_SHAPE": [
+        3
+      ],
+      "LEADING_STRIDES": [
+        2048
+      ],
+      "configs": [
+        {
+          "block": 2048,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 77,
+          "spills": 0,
+          "shared_bytes": 0
+        },
+        {
+          "block": 2048,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 47,
+          "spills": 0,
+          "shared_bytes": 8
+        },
+        {
+          "block": 2048,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 32,
+          "spills": 0,
+          "shared_bytes": 16
+        },
+        {
+          "block": 2048,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 25,
+          "spills": 0,
+          "shared_bytes": 32
+        },
+        {
+          "block": 2048,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 21,
+          "spills": 0,
+          "shared_bytes": 64
+        }
+      ],
+      "best_config": {
+        "block": 2048,
+        "num_warps": 4,
+        "num_stages": 1
+      }
+    },
+    {
+      "path": "single",
+      "N": 2048,
+      "DTYPE": "torch.bfloat16",
+      "DEVICE": 0,
+      "M": 3,
+      "LEADING_SHAPE": [
+        3
+      ],
+      "LEADING_STRIDES": [
+        2048
+      ],
+      "configs": [
+        {
+          "block": 2048,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 79,
+          "spills": 0,
+          "shared_bytes": 0
+        },
+        {
+          "block": 2048,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 47,
+          "spills": 0,
+          "shared_bytes": 8
+        },
+        {
+          "block": 2048,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 32,
+          "spills": 0,
+          "shared_bytes": 16
+        },
+        {
+          "block": 2048,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 25,
+          "spills": 0,
+          "shared_bytes": 32
+        },
+        {
+          "block": 2048,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 20,
+          "spills": 0,
+          "shared_bytes": 64
+        }
+      ],
+      "best_config": {
+        "block": 2048,
+        "num_warps": 4,
+        "num_stages": 1
+      }
+    },
+    {
+      "path": "single",
+      "N": 2048,
+      "DTYPE": "torch.float32",
+      "DEVICE": 0,
+      "M": 3,
+      "LEADING_SHAPE": [
+        3
+      ],
+      "LEADING_STRIDES": [
+        2048
+      ],
+      "configs": [
+        {
+          "block": 2048,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 88,
+          "spills": 0,
+          "shared_bytes": 0
+        },
+        {
+          "block": 2048,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 46,
+          "spills": 0,
+          "shared_bytes": 8
+        },
+        {
+          "block": 2048,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 32,
+          "spills": 0,
+          "shared_bytes": 16
+        },
+        {
+          "block": 2048,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 25,
+          "spills": 0,
+          "shared_bytes": 32
+        },
+        {
+          "block": 2048,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 23,
+          "spills": 0,
+          "shared_bytes": 64
+        }
+      ],
+      "best_config": {
+        "block": 2048,
+        "num_warps": 2,
+        "num_stages": 1
+      }
+    },
+    {
+      "path": "single",
+      "N": 4096,
+      "DTYPE": "torch.float16",
+      "DEVICE": 0,
+      "M": 3,
+      "LEADING_SHAPE": [
+        3
+      ],
+      "LEADING_STRIDES": [
+        4096
+      ],
+      "configs": [
+        {
+          "block": 4096,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 141,
+          "spills": 0,
+          "shared_bytes": 0
+        },
+        {
+          "block": 4096,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 80,
+          "spills": 0,
+          "shared_bytes": 8
+        },
+        {
+          "block": 4096,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 47,
+          "spills": 0,
+          "shared_bytes": 16
+        },
+        {
+          "block": 4096,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 32,
+          "spills": 0,
+          "shared_bytes": 32
+        },
+        {
+          "block": 4096,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 25,
+          "spills": 0,
+          "shared_bytes": 64
+        }
+      ],
+      "best_config": {
+        "block": 4096,
+        "num_warps": 16,
+        "num_stages": 1
+      }
+    },
+    {
+      "path": "single",
+      "N": 4096,
+      "DTYPE": "torch.bfloat16",
+      "DEVICE": 0,
+      "M": 3,
+      "LEADING_SHAPE": [
+        3
+      ],
+      "LEADING_STRIDES": [
+        4096
+      ],
+      "configs": [
+        {
+          "block": 4096,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 142,
+          "spills": 0,
+          "shared_bytes": 0
+        },
+        {
+          "block": 4096,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 80,
+          "spills": 0,
+          "shared_bytes": 8
+        },
+        {
+          "block": 4096,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 47,
+          "spills": 0,
+          "shared_bytes": 16
+        },
+        {
+          "block": 4096,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 32,
+          "spills": 0,
+          "shared_bytes": 32
+        },
+        {
+          "block": 4096,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 24,
+          "spills": 0,
+          "shared_bytes": 64
+        }
+      ],
+      "best_config": {
+        "block": 4096,
+        "num_warps": 8,
+        "num_stages": 1
+      }
+    },
+    {
+      "path": "single",
+      "N": 4096,
+      "DTYPE": "torch.float32",
+      "DEVICE": 0,
+      "M": 3,
+      "LEADING_SHAPE": [
+        3
+      ],
+      "LEADING_STRIDES": [
+        4096
+      ],
+      "configs": [
+        {
+          "block": 4096,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 150,
+          "spills": 0,
+          "shared_bytes": 0
+        },
+        {
+          "block": 4096,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 80,
+          "spills": 0,
+          "shared_bytes": 8
+        },
+        {
+          "block": 4096,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 47,
+          "spills": 0,
+          "shared_bytes": 16
+        },
+        {
+          "block": 4096,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 32,
+          "spills": 0,
+          "shared_bytes": 32
+        },
+        {
+          "block": 4096,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 26,
+          "spills": 0,
+          "shared_bytes": 64
+        }
+      ],
+      "best_config": {
+        "block": 4096,
+        "num_warps": 8,
+        "num_stages": 1
+      }
+    },
+    {
+      "path": "single",
+      "N": 4097,
+      "DTYPE": "torch.float16",
+      "DEVICE": 0,
+      "M": 3,
+      "LEADING_SHAPE": [
+        3
+      ],
+      "LEADING_STRIDES": [
+        4097
+      ],
+      "configs": [
+        {
+          "block": 8192,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 168,
+          "spills": 0,
+          "shared_bytes": 0
+        },
+        {
+          "block": 8192,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 80,
+          "spills": 0,
+          "shared_bytes": 8
+        },
+        {
+          "block": 8192,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 48,
+          "spills": 0,
+          "shared_bytes": 16
+        },
+        {
+          "block": 8192,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 32,
+          "spills": 0,
+          "shared_bytes": 32
+        },
+        {
+          "block": 8192,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 32,
+          "spills": 0,
+          "shared_bytes": 64
+        }
+      ],
+      "best_config": {
+        "block": 8192,
+        "num_warps": 4,
+        "num_stages": 1
+      }
+    },
+    {
+      "path": "single",
+      "N": 4097,
+      "DTYPE": "torch.bfloat16",
+      "DEVICE": 0,
+      "M": 3,
+      "LEADING_SHAPE": [
+        3
+      ],
+      "LEADING_STRIDES": [
+        4097
+      ],
+      "configs": [
+        {
+          "block": 8192,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 168,
+          "spills": 0,
+          "shared_bytes": 0
+        },
+        {
+          "block": 8192,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 80,
+          "spills": 0,
+          "shared_bytes": 8
+        },
+        {
+          "block": 8192,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 48,
+          "spills": 0,
+          "shared_bytes": 16
+        },
+        {
+          "block": 8192,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 32,
+          "spills": 0,
+          "shared_bytes": 32
+        },
+        {
+          "block": 8192,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 32,
+          "spills": 0,
+          "shared_bytes": 64
+        }
+      ],
+      "best_config": {
+        "block": 8192,
+        "num_warps": 4,
+        "num_stages": 1
+      }
+    },
+    {
+      "path": "single",
+      "N": 4097,
+      "DTYPE": "torch.float32",
+      "DEVICE": 0,
+      "M": 3,
+      "LEADING_SHAPE": [
+        3
+      ],
+      "LEADING_STRIDES": [
+        4097
+      ],
+      "configs": [
+        {
+          "block": 8192,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 168,
+          "spills": 0,
+          "shared_bytes": 0
+        },
+        {
+          "block": 8192,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 96,
+          "spills": 0,
+          "shared_bytes": 8
+        },
+        {
+          "block": 8192,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 48,
+          "spills": 0,
+          "shared_bytes": 16
+        },
+        {
+          "block": 8192,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 32,
+          "spills": 0,
+          "shared_bytes": 32
+        },
+        {
+          "block": 8192,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 32,
+          "spills": 0,
+          "shared_bytes": 64
+        }
+      ],
+      "best_config": {
+        "block": 8192,
+        "num_warps": 4,
+        "num_stages": 1
+      }
+    },
+    {
+      "path": "single",
+      "N": 65535,
+      "DTYPE": "torch.float16",
+      "DEVICE": 0,
+      "M": 3,
+      "LEADING_SHAPE": [
+        3
+      ],
+      "LEADING_STRIDES": [
+        65535
+      ],
+      "configs": [
+        {
+          "block": 65536,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 64,
+          "spills": 5490,
+          "shared_bytes": 0
+        },
+        {
+          "block": 65536,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 32,
+          "spills": 2636,
+          "shared_bytes": 8
+        },
+        {
+          "block": 65536,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 32,
+          "spills": 1330,
+          "shared_bytes": 16
+        },
+        {
+          "block": 65536,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 255,
+          "spills": 188,
+          "shared_bytes": 32
+        },
+        {
+          "block": 65536,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 128,
+          "spills": 114,
+          "shared_bytes": 64
+        }
+      ],
+      "best_config": {
+        "block": 65536,
+        "num_warps": 16,
+        "num_stages": 1
+      }
+    },
+    {
+      "path": "single",
+      "N": 65535,
+      "DTYPE": "torch.bfloat16",
+      "DEVICE": 0,
+      "M": 3,
+      "LEADING_SHAPE": [
+        3
+      ],
+      "LEADING_STRIDES": [
+        65535
+      ],
+      "configs": [
+        {
+          "block": 65536,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 64,
+          "spills": 5498,
+          "shared_bytes": 0
+        },
+        {
+          "block": 65536,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 32,
+          "spills": 2636,
+          "shared_bytes": 8
+        },
+        {
+          "block": 65536,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 32,
+          "spills": 1330,
+          "shared_bytes": 16
+        },
+        {
+          "block": 65536,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 255,
+          "spills": 188,
+          "shared_bytes": 32
+        },
+        {
+          "block": 65536,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 128,
+          "spills": 114,
+          "shared_bytes": 64
+        }
+      ],
+      "best_config": {
+        "block": 65536,
+        "num_warps": 16,
+        "num_stages": 1
+      }
+    },
+    {
+      "path": "single",
+      "N": 65535,
+      "DTYPE": "torch.float32",
+      "DEVICE": 0,
+      "M": 3,
+      "LEADING_SHAPE": [
+        3
+      ],
+      "LEADING_STRIDES": [
+        65535
+      ],
+      "configs": [
+        {
+          "block": 65536,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 64,
+          "spills": 4112,
+          "shared_bytes": 0
+        },
+        {
+          "block": 65536,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 32,
+          "spills": 2142,
+          "shared_bytes": 8
+        },
+        {
+          "block": 65536,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 32,
+          "spills": 1100,
+          "shared_bytes": 16
+        },
+        {
+          "block": 65536,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 255,
+          "spills": 162,
+          "shared_bytes": 32
+        },
+        {
+          "block": 65536,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 128,
+          "spills": 98,
+          "shared_bytes": 64
+        }
+      ],
+      "best_config": {
+        "block": 65536,
+        "num_warps": 16,
+        "num_stages": 1
+      }
+    },
+    {
+      "path": "single",
+      "N": 65536,
+      "DTYPE": "torch.float16",
+      "DEVICE": 0,
+      "M": 3,
+      "LEADING_SHAPE": [
+        3
+      ],
+      "LEADING_STRIDES": [
+        65536
+      ],
+      "configs": [
+        {
+          "block": 65536,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 64,
+          "spills": 3762,
+          "shared_bytes": 0
+        },
+        {
+          "block": 65536,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 32,
+          "spills": 2560,
+          "shared_bytes": 8
+        },
+        {
+          "block": 65536,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 32,
+          "spills": 1198,
+          "shared_bytes": 16
+        },
+        {
+          "block": 65536,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 255,
+          "spills": 90,
+          "shared_bytes": 32
+        },
+        {
+          "block": 65536,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 128,
+          "spills": 92,
+          "shared_bytes": 64
+        }
+      ],
+      "best_config": {
+        "block": 65536,
+        "num_warps": 8,
+        "num_stages": 1
+      }
+    },
+    {
+      "path": "single",
+      "N": 65536,
+      "DTYPE": "torch.bfloat16",
+      "DEVICE": 0,
+      "M": 3,
+      "LEADING_SHAPE": [
+        3
+      ],
+      "LEADING_STRIDES": [
+        65536
+      ],
+      "configs": [
+        {
+          "block": 65536,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 64,
+          "spills": 3448,
+          "shared_bytes": 0
+        },
+        {
+          "block": 65536,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 32,
+          "spills": 2466,
+          "shared_bytes": 8
+        },
+        {
+          "block": 65536,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 32,
+          "spills": 1166,
+          "shared_bytes": 16
+        },
+        {
+          "block": 65536,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 255,
+          "spills": 66,
+          "shared_bytes": 32
+        },
+        {
+          "block": 65536,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 128,
+          "spills": 68,
+          "shared_bytes": 64
+        }
+      ],
+      "best_config": {
+        "block": 65536,
+        "num_warps": 8,
+        "num_stages": 1
+      }
+    },
+    {
+      "path": "single",
+      "N": 65536,
+      "DTYPE": "torch.float32",
+      "DEVICE": 0,
+      "M": 3,
+      "LEADING_SHAPE": [
+        3
+      ],
+      "LEADING_STRIDES": [
+        65536
+      ],
+      "configs": [
+        {
+          "block": 65536,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 64,
+          "spills": 5074,
+          "shared_bytes": 0
+        },
+        {
+          "block": 65536,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 32,
+          "spills": 2114,
+          "shared_bytes": 8
+        },
+        {
+          "block": 65536,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 32,
+          "spills": 1070,
+          "shared_bytes": 16
+        },
+        {
+          "block": 65536,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 255,
+          "spills": 108,
+          "shared_bytes": 32
+        },
+        {
+          "block": 65536,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 128,
+          "spills": 88,
+          "shared_bytes": 64
+        }
+      ],
+      "best_config": {
+        "block": 65536,
+        "num_warps": 8,
+        "num_stages": 1
+      }
+    },
+    {
+      "path": "looped",
+      "N": 65537,
+      "DTYPE": "torch.float16",
+      "DEVICE": 0,
+      "M": 3,
+      "LEADING_SHAPE": [
+        3
+      ],
+      "LEADING_STRIDES": [
+        65537
+      ],
+      "configs": [
+        {
+          "block": 1024,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 188,
+          "spills": 0,
+          "shared_bytes": 0
+        },
+        {
+          "block": 1024,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 52,
+          "spills": 0,
+          "shared_bytes": 8
+        },
+        {
+          "block": 1024,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 32,
+          "spills": 0,
+          "shared_bytes": 16
+        },
+        {
+          "block": 1024,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 40,
+          "spills": 0,
+          "shared_bytes": 32
+        },
+        {
+          "block": 1024,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 32,
+          "spills": 0,
+          "shared_bytes": 64
+        },
+        {
+          "block": 2048,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 255,
+          "spills": 8,
+          "shared_bytes": 0
+        },
+        {
+          "block": 2048,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 185,
+          "spills": 0,
+          "shared_bytes": 8
+        },
+        {
+          "block": 2048,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 54,
+          "spills": 0,
+          "shared_bytes": 16
+        },
+        {
+          "block": 2048,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 38,
+          "spills": 0,
+          "shared_bytes": 32
+        },
+        {
+          "block": 2048,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 37,
+          "spills": 0,
+          "shared_bytes": 64
+        },
+        {
+          "block": 4096,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 255,
+          "spills": 0,
+          "shared_bytes": 0
+        },
+        {
+          "block": 4096,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 255,
+          "spills": 8,
+          "shared_bytes": 8
+        },
+        {
+          "block": 4096,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 191,
+          "spills": 0,
+          "shared_bytes": 16
+        },
+        {
+          "block": 4096,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 103,
+          "spills": 0,
+          "shared_bytes": 32
+        },
+        {
+          "block": 4096,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 57,
+          "spills": 0,
+          "shared_bytes": 64
+        }
+      ],
+      "best_config": {
+        "block": 4096,
+        "num_warps": 16,
+        "num_stages": 1
+      }
+    },
+    {
+      "path": "looped",
+      "N": 65537,
+      "DTYPE": "torch.bfloat16",
+      "DEVICE": 0,
+      "M": 3,
+      "LEADING_SHAPE": [
+        3
+      ],
+      "LEADING_STRIDES": [
+        65537
+      ],
+      "configs": [
+        {
+          "block": 1024,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 188,
+          "spills": 0,
+          "shared_bytes": 0
+        },
+        {
+          "block": 1024,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 52,
+          "spills": 0,
+          "shared_bytes": 8
+        },
+        {
+          "block": 1024,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 32,
+          "spills": 0,
+          "shared_bytes": 16
+        },
+        {
+          "block": 1024,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 36,
+          "spills": 0,
+          "shared_bytes": 32
+        },
+        {
+          "block": 1024,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 32,
+          "spills": 0,
+          "shared_bytes": 64
+        },
+        {
+          "block": 2048,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 255,
+          "spills": 8,
+          "shared_bytes": 0
+        },
+        {
+          "block": 2048,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 185,
+          "spills": 0,
+          "shared_bytes": 8
+        },
+        {
+          "block": 2048,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 54,
+          "spills": 0,
+          "shared_bytes": 16
+        },
+        {
+          "block": 2048,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 38,
+          "spills": 0,
+          "shared_bytes": 32
+        },
+        {
+          "block": 2048,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 37,
+          "spills": 0,
+          "shared_bytes": 64
+        },
+        {
+          "block": 4096,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 255,
+          "spills": 0,
+          "shared_bytes": 0
+        },
+        {
+          "block": 4096,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 255,
+          "spills": 8,
+          "shared_bytes": 8
+        },
+        {
+          "block": 4096,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 191,
+          "spills": 0,
+          "shared_bytes": 16
+        },
+        {
+          "block": 4096,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 103,
+          "spills": 0,
+          "shared_bytes": 32
+        },
+        {
+          "block": 4096,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 57,
+          "spills": 0,
+          "shared_bytes": 64
+        }
+      ],
+      "best_config": {
+        "block": 4096,
+        "num_warps": 16,
+        "num_stages": 1
+      }
+    },
+    {
+      "path": "looped",
+      "N": 65537,
+      "DTYPE": "torch.float32",
+      "DEVICE": 0,
+      "M": 3,
+      "LEADING_SHAPE": [
+        3
+      ],
+      "LEADING_STRIDES": [
+        65537
+      ],
+      "configs": [
+        {
+          "block": 1024,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 199,
+          "spills": 0,
+          "shared_bytes": 0
+        },
+        {
+          "block": 1024,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 48,
+          "spills": 0,
+          "shared_bytes": 8
+        },
+        {
+          "block": 1024,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 32,
+          "spills": 0,
+          "shared_bytes": 16
+        },
+        {
+          "block": 1024,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 39,
+          "spills": 0,
+          "shared_bytes": 32
+        },
+        {
+          "block": 1024,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 32,
+          "spills": 0,
+          "shared_bytes": 64
+        },
+        {
+          "block": 2048,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 255,
+          "spills": 8,
+          "shared_bytes": 0
+        },
+        {
+          "block": 2048,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 201,
+          "spills": 0,
+          "shared_bytes": 8
+        },
+        {
+          "block": 2048,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 55,
+          "spills": 0,
+          "shared_bytes": 16
+        },
+        {
+          "block": 2048,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 39,
+          "spills": 0,
+          "shared_bytes": 32
+        },
+        {
+          "block": 2048,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 39,
+          "spills": 0,
+          "shared_bytes": 64
+        },
+        {
+          "block": 4096,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 255,
+          "spills": 14,
+          "shared_bytes": 0
+        },
+        {
+          "block": 4096,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 255,
+          "spills": 8,
+          "shared_bytes": 8
+        },
+        {
+          "block": 4096,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 203,
+          "spills": 0,
+          "shared_bytes": 16
+        },
+        {
+          "block": 4096,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 101,
+          "spills": 0,
+          "shared_bytes": 32
+        },
+        {
+          "block": 4096,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 54,
+          "spills": 0,
+          "shared_bytes": 64
+        }
+      ],
+      "best_config": {
+        "block": 4096,
+        "num_warps": 16,
+        "num_stages": 1
+      }
+    },
+    {
+      "path": "single",
+      "N": 31337,
+      "DTYPE": "torch.float16",
+      "DEVICE": 0,
+      "M": 3,
+      "LEADING_SHAPE": [
+        3
+      ],
+      "LEADING_STRIDES": [
+        31337
+      ],
+      "configs": [
+        {
+          "block": 32768,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 64,
+          "spills": 2350,
+          "shared_bytes": 0
+        },
+        {
+          "block": 32768,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 32,
+          "spills": 1632,
+          "shared_bytes": 8
+        },
+        {
+          "block": 32768,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 255,
+          "spills": 26,
+          "shared_bytes": 16
+        },
+        {
+          "block": 32768,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 255,
+          "spills": 0,
+          "shared_bytes": 32
+        },
+        {
+          "block": 32768,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 128,
+          "spills": 0,
+          "shared_bytes": 64
+        }
+      ],
+      "best_config": {
+        "block": 32768,
+        "num_warps": 16,
+        "num_stages": 1
+      }
+    },
+    {
+      "path": "single",
+      "N": 31337,
+      "DTYPE": "torch.bfloat16",
+      "DEVICE": 0,
+      "M": 3,
+      "LEADING_SHAPE": [
+        3
+      ],
+      "LEADING_STRIDES": [
+        31337
+      ],
+      "configs": [
+        {
+          "block": 32768,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 64,
+          "spills": 2350,
+          "shared_bytes": 0
+        },
+        {
+          "block": 32768,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 32,
+          "spills": 1632,
+          "shared_bytes": 8
+        },
+        {
+          "block": 32768,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 255,
+          "spills": 26,
+          "shared_bytes": 16
+        },
+        {
+          "block": 32768,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 255,
+          "spills": 0,
+          "shared_bytes": 32
+        },
+        {
+          "block": 32768,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 128,
+          "spills": 0,
+          "shared_bytes": 64
+        }
+      ],
+      "best_config": {
+        "block": 32768,
+        "num_warps": 8,
+        "num_stages": 1
+      }
+    },
+    {
+      "path": "single",
+      "N": 31337,
+      "DTYPE": "torch.float32",
+      "DEVICE": 0,
+      "M": 3,
+      "LEADING_SHAPE": [
+        3
+      ],
+      "LEADING_STRIDES": [
+        31337
+      ],
+      "configs": [
+        {
+          "block": 32768,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 64,
+          "spills": 1542,
+          "shared_bytes": 0
+        },
+        {
+          "block": 32768,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 32,
+          "spills": 1228,
+          "shared_bytes": 8
+        },
+        {
+          "block": 32768,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 255,
+          "spills": 24,
+          "shared_bytes": 16
+        },
+        {
+          "block": 32768,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 255,
+          "spills": 0,
+          "shared_bytes": 32
+        },
+        {
+          "block": 32768,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 128,
+          "spills": 0,
+          "shared_bytes": 64
+        }
+      ],
+      "best_config": {
+        "block": 32768,
+        "num_warps": 8,
+        "num_stages": 1
+      }
+    },
+    {
+      "path": "looped",
+      "N": 262144,
+      "DTYPE": "torch.float16",
+      "DEVICE": 0,
+      "M": 3,
+      "LEADING_SHAPE": [
+        3
+      ],
+      "LEADING_STRIDES": [
+        262144
+      ],
+      "configs": [
+        {
+          "block": 1024,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 57,
+          "spills": 0,
+          "shared_bytes": 0
+        },
+        {
+          "block": 1024,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 32,
+          "spills": 0,
+          "shared_bytes": 8
+        },
+        {
+          "block": 1024,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 32,
+          "spills": 0,
+          "shared_bytes": 16
+        },
+        {
+          "block": 1024,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 30,
+          "spills": 0,
+          "shared_bytes": 32
+        },
+        {
+          "block": 1024,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 28,
+          "spills": 0,
+          "shared_bytes": 64
+        },
+        {
+          "block": 2048,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 91,
+          "spills": 0,
+          "shared_bytes": 0
+        },
+        {
+          "block": 2048,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 53,
+          "spills": 0,
+          "shared_bytes": 8
+        },
+        {
+          "block": 2048,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 32,
+          "spills": 0,
+          "shared_bytes": 16
+        },
+        {
+          "block": 2048,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 32,
+          "spills": 0,
+          "shared_bytes": 32
+        },
+        {
+          "block": 2048,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 30,
+          "spills": 0,
+          "shared_bytes": 64
+        },
+        {
+          "block": 4096,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 150,
+          "spills": 0,
+          "shared_bytes": 0
+        },
+        {
+          "block": 4096,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 80,
+          "spills": 0,
+          "shared_bytes": 8
+        },
+        {
+          "block": 4096,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 53,
+          "spills": 0,
+          "shared_bytes": 16
+        },
+        {
+          "block": 4096,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 32,
+          "spills": 0,
+          "shared_bytes": 32
+        },
+        {
+          "block": 4096,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 32,
+          "spills": 0,
+          "shared_bytes": 64
+        }
+      ],
+      "best_config": {
+        "block": 4096,
+        "num_warps": 16,
+        "num_stages": 1
+      }
+    },
+    {
+      "path": "looped",
+      "N": 262144,
+      "DTYPE": "torch.bfloat16",
+      "DEVICE": 0,
+      "M": 3,
+      "LEADING_SHAPE": [
+        3
+      ],
+      "LEADING_STRIDES": [
+        262144
+      ],
+      "configs": [
+        {
+          "block": 1024,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 57,
+          "spills": 0,
+          "shared_bytes": 0
+        },
+        {
+          "block": 1024,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 32,
+          "spills": 0,
+          "shared_bytes": 8
+        },
+        {
+          "block": 1024,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 32,
+          "spills": 0,
+          "shared_bytes": 16
+        },
+        {
+          "block": 1024,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 30,
+          "spills": 0,
+          "shared_bytes": 32
+        },
+        {
+          "block": 1024,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 28,
+          "spills": 0,
+          "shared_bytes": 64
+        },
+        {
+          "block": 2048,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 93,
+          "spills": 0,
+          "shared_bytes": 0
+        },
+        {
+          "block": 2048,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 53,
+          "spills": 0,
+          "shared_bytes": 8
+        },
+        {
+          "block": 2048,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 32,
+          "spills": 0,
+          "shared_bytes": 16
+        },
+        {
+          "block": 2048,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 32,
+          "spills": 0,
+          "shared_bytes": 32
+        },
+        {
+          "block": 2048,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 30,
+          "spills": 0,
+          "shared_bytes": 64
+        },
+        {
+          "block": 4096,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 167,
+          "spills": 0,
+          "shared_bytes": 0
+        },
+        {
+          "block": 4096,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 80,
+          "spills": 0,
+          "shared_bytes": 8
+        },
+        {
+          "block": 4096,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 53,
+          "spills": 0,
+          "shared_bytes": 16
+        },
+        {
+          "block": 4096,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 32,
+          "spills": 0,
+          "shared_bytes": 32
+        },
+        {
+          "block": 4096,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 32,
+          "spills": 0,
+          "shared_bytes": 64
+        }
+      ],
+      "best_config": {
+        "block": 4096,
+        "num_warps": 8,
+        "num_stages": 1
+      }
+    },
+    {
+      "path": "looped",
+      "N": 262144,
+      "DTYPE": "torch.float32",
+      "DEVICE": 0,
+      "M": 3,
+      "LEADING_SHAPE": [
+        3
+      ],
+      "LEADING_STRIDES": [
+        262144
+      ],
+      "configs": [
+        {
+          "block": 1024,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 62,
+          "spills": 0,
+          "shared_bytes": 0
+        },
+        {
+          "block": 1024,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 32,
+          "spills": 0,
+          "shared_bytes": 8
+        },
+        {
+          "block": 1024,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 29,
+          "spills": 0,
+          "shared_bytes": 16
+        },
+        {
+          "block": 1024,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 30,
+          "spills": 0,
+          "shared_bytes": 32
+        },
+        {
+          "block": 1024,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 28,
+          "spills": 0,
+          "shared_bytes": 64
+        },
+        {
+          "block": 2048,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 95,
+          "spills": 0,
+          "shared_bytes": 0
+        },
+        {
+          "block": 2048,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 64,
+          "spills": 0,
+          "shared_bytes": 8
+        },
+        {
+          "block": 2048,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 32,
+          "spills": 0,
+          "shared_bytes": 16
+        },
+        {
+          "block": 2048,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 29,
+          "spills": 0,
+          "shared_bytes": 32
+        },
+        {
+          "block": 2048,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 30,
+          "spills": 0,
+          "shared_bytes": 64
+        },
+        {
+          "block": 4096,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 154,
+          "spills": 0,
+          "shared_bytes": 0
+        },
+        {
+          "block": 4096,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 88,
+          "spills": 0,
+          "shared_bytes": 8
+        },
+        {
+          "block": 4096,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 55,
+          "spills": 0,
+          "shared_bytes": 16
+        },
+        {
+          "block": 4096,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 39,
+          "spills": 0,
+          "shared_bytes": 32
+        },
+        {
+          "block": 4096,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 31,
+          "spills": 0,
+          "shared_bytes": 64
+        }
+      ],
+      "best_config": {
+        "block": 4096,
+        "num_warps": 16,
+        "num_stages": 1
+      }
+    },
+    {
+      "path": "single",
+      "N": 31,
+      "DTYPE": "torch.float16",
+      "DEVICE": 0,
+      "M": 1,
+      "LEADING_SHAPE": [],
+      "LEADING_STRIDES": [],
+      "configs": [
+        {
+          "block": 32,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 14,
+          "spills": 0,
+          "shared_bytes": 0
+        },
+        {
+          "block": 32,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "pruned",
+          "reason": "more threads than padded columns"
+        },
+        {
+          "block": 32,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "pruned",
+          "reason": "more threads than padded columns"
+        },
+        {
+          "block": 32,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "pruned",
+          "reason": "more threads than padded columns"
+        },
+        {
+          "block": 32,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "pruned",
+          "reason": "more threads than padded columns"
+        }
+      ],
+      "best_config": {
+        "block": 32,
+        "num_warps": 1,
+        "num_stages": 1
+      }
+    },
+    {
+      "path": "single",
+      "N": 31,
+      "DTYPE": "torch.bfloat16",
+      "DEVICE": 0,
+      "M": 1,
+      "LEADING_SHAPE": [],
+      "LEADING_STRIDES": [],
+      "configs": [
+        {
+          "block": 32,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 14,
+          "spills": 0,
+          "shared_bytes": 0
+        },
+        {
+          "block": 32,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "pruned",
+          "reason": "more threads than padded columns"
+        },
+        {
+          "block": 32,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "pruned",
+          "reason": "more threads than padded columns"
+        },
+        {
+          "block": 32,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "pruned",
+          "reason": "more threads than padded columns"
+        },
+        {
+          "block": 32,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "pruned",
+          "reason": "more threads than padded columns"
+        }
+      ],
+      "best_config": {
+        "block": 32,
+        "num_warps": 1,
+        "num_stages": 1
+      }
+    },
+    {
+      "path": "single",
+      "N": 31,
+      "DTYPE": "torch.float32",
+      "DEVICE": 0,
+      "M": 1,
+      "LEADING_SHAPE": [],
+      "LEADING_STRIDES": [],
+      "configs": [
+        {
+          "block": 32,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 14,
+          "spills": 0,
+          "shared_bytes": 0
+        },
+        {
+          "block": 32,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "pruned",
+          "reason": "more threads than padded columns"
+        },
+        {
+          "block": 32,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "pruned",
+          "reason": "more threads than padded columns"
+        },
+        {
+          "block": 32,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "pruned",
+          "reason": "more threads than padded columns"
+        },
+        {
+          "block": 32,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "pruned",
+          "reason": "more threads than padded columns"
+        }
+      ],
+      "best_config": {
+        "block": 32,
+        "num_warps": 1,
+        "num_stages": 1
+      }
+    },
+    {
+      "path": "looped",
+      "N": 65537,
+      "DTYPE": "torch.float16",
+      "DEVICE": 0,
+      "M": 1,
+      "LEADING_SHAPE": [],
+      "LEADING_STRIDES": [],
+      "configs": [
+        {
+          "block": 1024,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 124,
+          "spills": 0,
+          "shared_bytes": 512
+        },
+        {
+          "block": 1024,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 64,
+          "spills": 0,
+          "shared_bytes": 1024
+        },
+        {
+          "block": 1024,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 31,
+          "spills": 0,
+          "shared_bytes": 2048
+        },
+        {
+          "block": 1024,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 28,
+          "spills": 0,
+          "shared_bytes": 2048
+        },
+        {
+          "block": 1024,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 30,
+          "spills": 0,
+          "shared_bytes": 2048
+        },
+        {
+          "block": 2048,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 254,
+          "spills": 0,
+          "shared_bytes": 512
+        },
+        {
+          "block": 2048,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 127,
+          "spills": 0,
+          "shared_bytes": 1024
+        },
+        {
+          "block": 2048,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 64,
+          "spills": 0,
+          "shared_bytes": 2048
+        },
+        {
+          "block": 2048,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 31,
+          "spills": 0,
+          "shared_bytes": 4096
+        },
+        {
+          "block": 2048,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 29,
+          "spills": 0,
+          "shared_bytes": 4096
+        },
+        {
+          "block": 4096,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 168,
+          "spills": 0,
+          "shared_bytes": 512
+        },
+        {
+          "block": 4096,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 251,
+          "spills": 0,
+          "shared_bytes": 1024
+        },
+        {
+          "block": 4096,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 127,
+          "spills": 0,
+          "shared_bytes": 2048
+        },
+        {
+          "block": 4096,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 63,
+          "spills": 0,
+          "shared_bytes": 4096
+        },
+        {
+          "block": 4096,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 40,
+          "spills": 0,
+          "shared_bytes": 8192
+        }
+      ],
+      "best_config": {
+        "block": 4096,
+        "num_warps": 8,
+        "num_stages": 1
+      }
+    },
+    {
+      "path": "looped",
+      "N": 65537,
+      "DTYPE": "torch.bfloat16",
+      "DEVICE": 0,
+      "M": 1,
+      "LEADING_SHAPE": [],
+      "LEADING_STRIDES": [],
+      "configs": [
+        {
+          "block": 1024,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 124,
+          "spills": 0,
+          "shared_bytes": 512
+        },
+        {
+          "block": 1024,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 64,
+          "spills": 0,
+          "shared_bytes": 1024
+        },
+        {
+          "block": 1024,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 31,
+          "spills": 0,
+          "shared_bytes": 2048
+        },
+        {
+          "block": 1024,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 28,
+          "spills": 0,
+          "shared_bytes": 2048
+        },
+        {
+          "block": 1024,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 30,
+          "spills": 0,
+          "shared_bytes": 2048
+        },
+        {
+          "block": 2048,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 254,
+          "spills": 0,
+          "shared_bytes": 512
+        },
+        {
+          "block": 2048,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 127,
+          "spills": 0,
+          "shared_bytes": 1024
+        },
+        {
+          "block": 2048,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 64,
+          "spills": 0,
+          "shared_bytes": 2048
+        },
+        {
+          "block": 2048,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 31,
+          "spills": 0,
+          "shared_bytes": 4096
+        },
+        {
+          "block": 2048,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 29,
+          "spills": 0,
+          "shared_bytes": 4096
+        },
+        {
+          "block": 4096,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 168,
+          "spills": 0,
+          "shared_bytes": 512
+        },
+        {
+          "block": 4096,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 251,
+          "spills": 0,
+          "shared_bytes": 1024
+        },
+        {
+          "block": 4096,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 127,
+          "spills": 0,
+          "shared_bytes": 2048
+        },
+        {
+          "block": 4096,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 63,
+          "spills": 0,
+          "shared_bytes": 4096
+        },
+        {
+          "block": 4096,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 40,
+          "spills": 0,
+          "shared_bytes": 8192
+        }
+      ],
+      "best_config": {
+        "block": 4096,
+        "num_warps": 8,
+        "num_stages": 1
+      }
+    },
+    {
+      "path": "looped",
+      "N": 65537,
+      "DTYPE": "torch.float32",
+      "DEVICE": 0,
+      "M": 1,
+      "LEADING_SHAPE": [],
+      "LEADING_STRIDES": [],
+      "configs": [
+        {
+          "block": 1024,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 139,
+          "spills": 0,
+          "shared_bytes": 512
+        },
+        {
+          "block": 1024,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 40,
+          "spills": 0,
+          "shared_bytes": 1024
+        },
+        {
+          "block": 1024,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 32,
+          "spills": 0,
+          "shared_bytes": 2048
+        },
+        {
+          "block": 1024,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 28,
+          "spills": 0,
+          "shared_bytes": 4096
+        },
+        {
+          "block": 1024,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 32,
+          "spills": 0,
+          "shared_bytes": 4096
+        },
+        {
+          "block": 2048,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 255,
+          "spills": 2,
+          "shared_bytes": 512
+        },
+        {
+          "block": 2048,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 141,
+          "spills": 0,
+          "shared_bytes": 1024
+        },
+        {
+          "block": 2048,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 40,
+          "spills": 0,
+          "shared_bytes": 2048
+        },
+        {
+          "block": 2048,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 32,
+          "spills": 0,
+          "shared_bytes": 4096
+        },
+        {
+          "block": 2048,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 28,
+          "spills": 0,
+          "shared_bytes": 8192
+        },
+        {
+          "block": 4096,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 168,
+          "spills": 0,
+          "shared_bytes": 512
+        },
+        {
+          "block": 4096,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 255,
+          "spills": 0,
+          "shared_bytes": 1024
+        },
+        {
+          "block": 4096,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 141,
+          "spills": 0,
+          "shared_bytes": 2048
+        },
+        {
+          "block": 4096,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 64,
+          "spills": 0,
+          "shared_bytes": 4096
+        },
+        {
+          "block": 4096,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 40,
+          "spills": 0,
+          "shared_bytes": 8192
+        }
+      ],
+      "best_config": {
+        "block": 4096,
+        "num_warps": 8,
+        "num_stages": 1
+      }
+    },
+    {
+      "path": "single",
+      "N": 31,
+      "DTYPE": "torch.float16",
+      "DEVICE": 0,
+      "M": 6,
+      "LEADING_SHAPE": [
+        2,
+        3
+      ],
+      "LEADING_STRIDES": [
+        93,
+        31
+      ],
+      "configs": [
+        {
+          "block": 32,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 18,
+          "spills": 0,
+          "shared_bytes": 0
+        },
+        {
+          "block": 32,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "pruned",
+          "reason": "more threads than padded columns"
+        },
+        {
+          "block": 32,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "pruned",
+          "reason": "more threads than padded columns"
+        },
+        {
+          "block": 32,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "pruned",
+          "reason": "more threads than padded columns"
+        },
+        {
+          "block": 32,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "pruned",
+          "reason": "more threads than padded columns"
+        }
+      ],
+      "best_config": {
+        "block": 32,
+        "num_warps": 1,
+        "num_stages": 1
+      }
+    },
+    {
+      "path": "single",
+      "N": 31,
+      "DTYPE": "torch.bfloat16",
+      "DEVICE": 0,
+      "M": 6,
+      "LEADING_SHAPE": [
+        2,
+        3
+      ],
+      "LEADING_STRIDES": [
+        93,
+        31
+      ],
+      "configs": [
+        {
+          "block": 32,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 18,
+          "spills": 0,
+          "shared_bytes": 0
+        },
+        {
+          "block": 32,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "pruned",
+          "reason": "more threads than padded columns"
+        },
+        {
+          "block": 32,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "pruned",
+          "reason": "more threads than padded columns"
+        },
+        {
+          "block": 32,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "pruned",
+          "reason": "more threads than padded columns"
+        },
+        {
+          "block": 32,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "pruned",
+          "reason": "more threads than padded columns"
+        }
+      ],
+      "best_config": {
+        "block": 32,
+        "num_warps": 1,
+        "num_stages": 1
+      }
+    },
+    {
+      "path": "single",
+      "N": 31,
+      "DTYPE": "torch.float32",
+      "DEVICE": 0,
+      "M": 6,
+      "LEADING_SHAPE": [
+        2,
+        3
+      ],
+      "LEADING_STRIDES": [
+        93,
+        31
+      ],
+      "configs": [
+        {
+          "block": 32,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 18,
+          "spills": 0,
+          "shared_bytes": 0
+        },
+        {
+          "block": 32,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "pruned",
+          "reason": "more threads than padded columns"
+        },
+        {
+          "block": 32,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "pruned",
+          "reason": "more threads than padded columns"
+        },
+        {
+          "block": 32,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "pruned",
+          "reason": "more threads than padded columns"
+        },
+        {
+          "block": 32,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "pruned",
+          "reason": "more threads than padded columns"
+        }
+      ],
+      "best_config": {
+        "block": 32,
+        "num_warps": 1,
+        "num_stages": 1
+      }
+    },
+    {
+      "path": "looped",
+      "N": 65537,
+      "DTYPE": "torch.float16",
+      "DEVICE": 0,
+      "M": 6,
+      "LEADING_SHAPE": [
+        2,
+        3
+      ],
+      "LEADING_STRIDES": [
+        196611,
+        65537
+      ],
+      "configs": [
+        {
+          "block": 1024,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 188,
+          "spills": 0,
+          "shared_bytes": 0
+        },
+        {
+          "block": 1024,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 52,
+          "spills": 0,
+          "shared_bytes": 8
+        },
+        {
+          "block": 1024,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 32,
+          "spills": 0,
+          "shared_bytes": 16
+        },
+        {
+          "block": 1024,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 40,
+          "spills": 0,
+          "shared_bytes": 32
+        },
+        {
+          "block": 1024,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 32,
+          "spills": 0,
+          "shared_bytes": 64
+        },
+        {
+          "block": 2048,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 255,
+          "spills": 8,
+          "shared_bytes": 0
+        },
+        {
+          "block": 2048,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 185,
+          "spills": 0,
+          "shared_bytes": 8
+        },
+        {
+          "block": 2048,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 54,
+          "spills": 0,
+          "shared_bytes": 16
+        },
+        {
+          "block": 2048,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 38,
+          "spills": 0,
+          "shared_bytes": 32
+        },
+        {
+          "block": 2048,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 37,
+          "spills": 0,
+          "shared_bytes": 64
+        },
+        {
+          "block": 4096,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 255,
+          "spills": 0,
+          "shared_bytes": 0
+        },
+        {
+          "block": 4096,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 255,
+          "spills": 8,
+          "shared_bytes": 8
+        },
+        {
+          "block": 4096,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 187,
+          "spills": 0,
+          "shared_bytes": 16
+        },
+        {
+          "block": 4096,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 100,
+          "spills": 0,
+          "shared_bytes": 32
+        },
+        {
+          "block": 4096,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 57,
+          "spills": 0,
+          "shared_bytes": 64
+        }
+      ],
+      "best_config": {
+        "block": 4096,
+        "num_warps": 16,
+        "num_stages": 1
+      }
+    },
+    {
+      "path": "looped",
+      "N": 65537,
+      "DTYPE": "torch.bfloat16",
+      "DEVICE": 0,
+      "M": 6,
+      "LEADING_SHAPE": [
+        2,
+        3
+      ],
+      "LEADING_STRIDES": [
+        196611,
+        65537
+      ],
+      "configs": [
+        {
+          "block": 1024,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 188,
+          "spills": 0,
+          "shared_bytes": 0
+        },
+        {
+          "block": 1024,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 52,
+          "spills": 0,
+          "shared_bytes": 8
+        },
+        {
+          "block": 1024,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 32,
+          "spills": 0,
+          "shared_bytes": 16
+        },
+        {
+          "block": 1024,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 36,
+          "spills": 0,
+          "shared_bytes": 32
+        },
+        {
+          "block": 1024,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 32,
+          "spills": 0,
+          "shared_bytes": 64
+        },
+        {
+          "block": 2048,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 255,
+          "spills": 8,
+          "shared_bytes": 0
+        },
+        {
+          "block": 2048,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 185,
+          "spills": 0,
+          "shared_bytes": 8
+        },
+        {
+          "block": 2048,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 54,
+          "spills": 0,
+          "shared_bytes": 16
+        },
+        {
+          "block": 2048,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 38,
+          "spills": 0,
+          "shared_bytes": 32
+        },
+        {
+          "block": 2048,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 37,
+          "spills": 0,
+          "shared_bytes": 64
+        },
+        {
+          "block": 4096,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 255,
+          "spills": 0,
+          "shared_bytes": 0
+        },
+        {
+          "block": 4096,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 255,
+          "spills": 8,
+          "shared_bytes": 8
+        },
+        {
+          "block": 4096,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 187,
+          "spills": 0,
+          "shared_bytes": 16
+        },
+        {
+          "block": 4096,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 100,
+          "spills": 0,
+          "shared_bytes": 32
+        },
+        {
+          "block": 4096,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 57,
+          "spills": 0,
+          "shared_bytes": 64
+        }
+      ],
+      "best_config": {
+        "block": 4096,
+        "num_warps": 16,
+        "num_stages": 1
+      }
+    },
+    {
+      "path": "looped",
+      "N": 65537,
+      "DTYPE": "torch.float32",
+      "DEVICE": 0,
+      "M": 6,
+      "LEADING_SHAPE": [
+        2,
+        3
+      ],
+      "LEADING_STRIDES": [
+        196611,
+        65537
+      ],
+      "configs": [
+        {
+          "block": 1024,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 199,
+          "spills": 0,
+          "shared_bytes": 0
+        },
+        {
+          "block": 1024,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 48,
+          "spills": 0,
+          "shared_bytes": 8
+        },
+        {
+          "block": 1024,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 32,
+          "spills": 0,
+          "shared_bytes": 16
+        },
+        {
+          "block": 1024,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 39,
+          "spills": 0,
+          "shared_bytes": 32
+        },
+        {
+          "block": 1024,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 32,
+          "spills": 0,
+          "shared_bytes": 64
+        },
+        {
+          "block": 2048,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 255,
+          "spills": 8,
+          "shared_bytes": 0
+        },
+        {
+          "block": 2048,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 201,
+          "spills": 0,
+          "shared_bytes": 8
+        },
+        {
+          "block": 2048,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 55,
+          "spills": 0,
+          "shared_bytes": 16
+        },
+        {
+          "block": 2048,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 39,
+          "spills": 0,
+          "shared_bytes": 32
+        },
+        {
+          "block": 2048,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 39,
+          "spills": 0,
+          "shared_bytes": 64
+        },
+        {
+          "block": 4096,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 255,
+          "spills": 12,
+          "shared_bytes": 0
+        },
+        {
+          "block": 4096,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 255,
+          "spills": 8,
+          "shared_bytes": 8
+        },
+        {
+          "block": 4096,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 203,
+          "spills": 0,
+          "shared_bytes": 16
+        },
+        {
+          "block": 4096,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 107,
+          "spills": 0,
+          "shared_bytes": 32
+        },
+        {
+          "block": 4096,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 54,
+          "spills": 0,
+          "shared_bytes": 64
+        }
+      ],
+      "best_config": {
+        "block": 4096,
+        "num_warps": 16,
+        "num_stages": 1
+      }
+    },
+    {
+      "path": "single",
+      "N": 31,
+      "DTYPE": "torch.float16",
+      "DEVICE": 0,
+      "M": 4,
+      "LEADING_SHAPE": [
+        4
+      ],
+      "LEADING_STRIDES": [
+        93
+      ],
+      "configs": [
+        {
+          "block": 32,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 16,
+          "spills": 0,
+          "shared_bytes": 0
+        },
+        {
+          "block": 32,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "pruned",
+          "reason": "more threads than padded columns"
+        },
+        {
+          "block": 32,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "pruned",
+          "reason": "more threads than padded columns"
+        },
+        {
+          "block": 32,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "pruned",
+          "reason": "more threads than padded columns"
+        },
+        {
+          "block": 32,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "pruned",
+          "reason": "more threads than padded columns"
+        }
+      ],
+      "best_config": {
+        "block": 32,
+        "num_warps": 1,
+        "num_stages": 1
+      }
+    },
+    {
+      "path": "single",
+      "N": 31,
+      "DTYPE": "torch.bfloat16",
+      "DEVICE": 0,
+      "M": 4,
+      "LEADING_SHAPE": [
+        4
+      ],
+      "LEADING_STRIDES": [
+        93
+      ],
+      "configs": [
+        {
+          "block": 32,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 16,
+          "spills": 0,
+          "shared_bytes": 0
+        },
+        {
+          "block": 32,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "pruned",
+          "reason": "more threads than padded columns"
+        },
+        {
+          "block": 32,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "pruned",
+          "reason": "more threads than padded columns"
+        },
+        {
+          "block": 32,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "pruned",
+          "reason": "more threads than padded columns"
+        },
+        {
+          "block": 32,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "pruned",
+          "reason": "more threads than padded columns"
+        }
+      ],
+      "best_config": {
+        "block": 32,
+        "num_warps": 1,
+        "num_stages": 1
+      }
+    },
+    {
+      "path": "single",
+      "N": 31,
+      "DTYPE": "torch.float32",
+      "DEVICE": 0,
+      "M": 4,
+      "LEADING_SHAPE": [
+        4
+      ],
+      "LEADING_STRIDES": [
+        93
+      ],
+      "configs": [
+        {
+          "block": 32,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 16,
+          "spills": 0,
+          "shared_bytes": 0
+        },
+        {
+          "block": 32,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "pruned",
+          "reason": "more threads than padded columns"
+        },
+        {
+          "block": 32,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "pruned",
+          "reason": "more threads than padded columns"
+        },
+        {
+          "block": 32,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "pruned",
+          "reason": "more threads than padded columns"
+        },
+        {
+          "block": 32,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "pruned",
+          "reason": "more threads than padded columns"
+        }
+      ],
+      "best_config": {
+        "block": 32,
+        "num_warps": 1,
+        "num_stages": 1
+      }
+    },
+    {
+      "path": "looped",
+      "N": 65537,
+      "DTYPE": "torch.float16",
+      "DEVICE": 0,
+      "M": 4,
+      "LEADING_SHAPE": [
+        4
+      ],
+      "LEADING_STRIDES": [
+        196611
+      ],
+      "configs": [
+        {
+          "block": 1024,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 188,
+          "spills": 0,
+          "shared_bytes": 0
+        },
+        {
+          "block": 1024,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 52,
+          "spills": 0,
+          "shared_bytes": 8
+        },
+        {
+          "block": 1024,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 32,
+          "spills": 0,
+          "shared_bytes": 16
+        },
+        {
+          "block": 1024,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 40,
+          "spills": 0,
+          "shared_bytes": 32
+        },
+        {
+          "block": 1024,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 32,
+          "spills": 0,
+          "shared_bytes": 64
+        },
+        {
+          "block": 2048,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 255,
+          "spills": 8,
+          "shared_bytes": 0
+        },
+        {
+          "block": 2048,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 185,
+          "spills": 0,
+          "shared_bytes": 8
+        },
+        {
+          "block": 2048,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 54,
+          "spills": 0,
+          "shared_bytes": 16
+        },
+        {
+          "block": 2048,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 38,
+          "spills": 0,
+          "shared_bytes": 32
+        },
+        {
+          "block": 2048,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 37,
+          "spills": 0,
+          "shared_bytes": 64
+        },
+        {
+          "block": 4096,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 255,
+          "spills": 0,
+          "shared_bytes": 0
+        },
+        {
+          "block": 4096,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 255,
+          "spills": 8,
+          "shared_bytes": 8
+        },
+        {
+          "block": 4096,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 191,
+          "spills": 0,
+          "shared_bytes": 16
+        },
+        {
+          "block": 4096,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 103,
+          "spills": 0,
+          "shared_bytes": 32
+        },
+        {
+          "block": 4096,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 57,
+          "spills": 0,
+          "shared_bytes": 64
+        }
+      ],
+      "best_config": {
+        "block": 4096,
+        "num_warps": 16,
+        "num_stages": 1
+      }
+    },
+    {
+      "path": "looped",
+      "N": 65537,
+      "DTYPE": "torch.bfloat16",
+      "DEVICE": 0,
+      "M": 4,
+      "LEADING_SHAPE": [
+        4
+      ],
+      "LEADING_STRIDES": [
+        196611
+      ],
+      "configs": [
+        {
+          "block": 1024,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 188,
+          "spills": 0,
+          "shared_bytes": 0
+        },
+        {
+          "block": 1024,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 52,
+          "spills": 0,
+          "shared_bytes": 8
+        },
+        {
+          "block": 1024,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 32,
+          "spills": 0,
+          "shared_bytes": 16
+        },
+        {
+          "block": 1024,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 36,
+          "spills": 0,
+          "shared_bytes": 32
+        },
+        {
+          "block": 1024,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 32,
+          "spills": 0,
+          "shared_bytes": 64
+        },
+        {
+          "block": 2048,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 255,
+          "spills": 8,
+          "shared_bytes": 0
+        },
+        {
+          "block": 2048,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 185,
+          "spills": 0,
+          "shared_bytes": 8
+        },
+        {
+          "block": 2048,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 54,
+          "spills": 0,
+          "shared_bytes": 16
+        },
+        {
+          "block": 2048,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 38,
+          "spills": 0,
+          "shared_bytes": 32
+        },
+        {
+          "block": 2048,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 37,
+          "spills": 0,
+          "shared_bytes": 64
+        },
+        {
+          "block": 4096,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 255,
+          "spills": 0,
+          "shared_bytes": 0
+        },
+        {
+          "block": 4096,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 255,
+          "spills": 8,
+          "shared_bytes": 8
+        },
+        {
+          "block": 4096,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 191,
+          "spills": 0,
+          "shared_bytes": 16
+        },
+        {
+          "block": 4096,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 103,
+          "spills": 0,
+          "shared_bytes": 32
+        },
+        {
+          "block": 4096,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 57,
+          "spills": 0,
+          "shared_bytes": 64
+        }
+      ],
+      "best_config": {
+        "block": 4096,
+        "num_warps": 16,
+        "num_stages": 1
+      }
+    },
+    {
+      "path": "looped",
+      "N": 65537,
+      "DTYPE": "torch.float32",
+      "DEVICE": 0,
+      "M": 4,
+      "LEADING_SHAPE": [
+        4
+      ],
+      "LEADING_STRIDES": [
+        196611
+      ],
+      "configs": [
+        {
+          "block": 1024,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 199,
+          "spills": 0,
+          "shared_bytes": 0
+        },
+        {
+          "block": 1024,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 48,
+          "spills": 0,
+          "shared_bytes": 8
+        },
+        {
+          "block": 1024,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 32,
+          "spills": 0,
+          "shared_bytes": 16
+        },
+        {
+          "block": 1024,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 39,
+          "spills": 0,
+          "shared_bytes": 32
+        },
+        {
+          "block": 1024,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 32,
+          "spills": 0,
+          "shared_bytes": 64
+        },
+        {
+          "block": 2048,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 255,
+          "spills": 8,
+          "shared_bytes": 0
+        },
+        {
+          "block": 2048,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 201,
+          "spills": 0,
+          "shared_bytes": 8
+        },
+        {
+          "block": 2048,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 55,
+          "spills": 0,
+          "shared_bytes": 16
+        },
+        {
+          "block": 2048,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 39,
+          "spills": 0,
+          "shared_bytes": 32
+        },
+        {
+          "block": 2048,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 39,
+          "spills": 0,
+          "shared_bytes": 64
+        },
+        {
+          "block": 4096,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 255,
+          "spills": 14,
+          "shared_bytes": 0
+        },
+        {
+          "block": 4096,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 255,
+          "spills": 8,
+          "shared_bytes": 8
+        },
+        {
+          "block": 4096,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 203,
+          "spills": 0,
+          "shared_bytes": 16
+        },
+        {
+          "block": 4096,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 101,
+          "spills": 0,
+          "shared_bytes": 32
+        },
+        {
+          "block": 4096,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 54,
+          "spills": 0,
+          "shared_bytes": 64
+        }
+      ],
+      "best_config": {
+        "block": 4096,
+        "num_warps": 16,
+        "num_stages": 1
+      }
+    },
+    {
+      "path": "single",
+      "N": 31,
+      "DTYPE": "torch.float16",
+      "DEVICE": 0,
+      "M": 6,
+      "LEADING_SHAPE": [
+        3,
+        2
+      ],
+      "LEADING_STRIDES": [
+        31,
+        93
+      ],
+      "configs": [
+        {
+          "block": 32,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 15,
+          "spills": 0,
+          "shared_bytes": 0
+        },
+        {
+          "block": 32,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "pruned",
+          "reason": "more threads than padded columns"
+        },
+        {
+          "block": 32,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "pruned",
+          "reason": "more threads than padded columns"
+        },
+        {
+          "block": 32,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "pruned",
+          "reason": "more threads than padded columns"
+        },
+        {
+          "block": 32,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "pruned",
+          "reason": "more threads than padded columns"
+        }
+      ],
+      "best_config": {
+        "block": 32,
+        "num_warps": 1,
+        "num_stages": 1
+      }
+    },
+    {
+      "path": "single",
+      "N": 31,
+      "DTYPE": "torch.bfloat16",
+      "DEVICE": 0,
+      "M": 6,
+      "LEADING_SHAPE": [
+        3,
+        2
+      ],
+      "LEADING_STRIDES": [
+        31,
+        93
+      ],
+      "configs": [
+        {
+          "block": 32,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 15,
+          "spills": 0,
+          "shared_bytes": 0
+        },
+        {
+          "block": 32,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "pruned",
+          "reason": "more threads than padded columns"
+        },
+        {
+          "block": 32,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "pruned",
+          "reason": "more threads than padded columns"
+        },
+        {
+          "block": 32,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "pruned",
+          "reason": "more threads than padded columns"
+        },
+        {
+          "block": 32,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "pruned",
+          "reason": "more threads than padded columns"
+        }
+      ],
+      "best_config": {
+        "block": 32,
+        "num_warps": 1,
+        "num_stages": 1
+      }
+    },
+    {
+      "path": "single",
+      "N": 31,
+      "DTYPE": "torch.float32",
+      "DEVICE": 0,
+      "M": 6,
+      "LEADING_SHAPE": [
+        3,
+        2
+      ],
+      "LEADING_STRIDES": [
+        31,
+        93
+      ],
+      "configs": [
+        {
+          "block": 32,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 15,
+          "spills": 0,
+          "shared_bytes": 0
+        },
+        {
+          "block": 32,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "pruned",
+          "reason": "more threads than padded columns"
+        },
+        {
+          "block": 32,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "pruned",
+          "reason": "more threads than padded columns"
+        },
+        {
+          "block": 32,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "pruned",
+          "reason": "more threads than padded columns"
+        },
+        {
+          "block": 32,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "pruned",
+          "reason": "more threads than padded columns"
+        }
+      ],
+      "best_config": {
+        "block": 32,
+        "num_warps": 1,
+        "num_stages": 1
+      }
+    },
+    {
+      "path": "looped",
+      "N": 65537,
+      "DTYPE": "torch.float16",
+      "DEVICE": 0,
+      "M": 6,
+      "LEADING_SHAPE": [
+        3,
+        2
+      ],
+      "LEADING_STRIDES": [
+        65537,
+        196611
+      ],
+      "configs": [
+        {
+          "block": 1024,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 185,
+          "spills": 0,
+          "shared_bytes": 0
+        },
+        {
+          "block": 1024,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 52,
+          "spills": 0,
+          "shared_bytes": 8
+        },
+        {
+          "block": 1024,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 32,
+          "spills": 0,
+          "shared_bytes": 16
+        },
+        {
+          "block": 1024,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 40,
+          "spills": 0,
+          "shared_bytes": 32
+        },
+        {
+          "block": 1024,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 32,
+          "spills": 0,
+          "shared_bytes": 64
+        },
+        {
+          "block": 2048,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 255,
+          "spills": 8,
+          "shared_bytes": 0
+        },
+        {
+          "block": 2048,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 189,
+          "spills": 0,
+          "shared_bytes": 8
+        },
+        {
+          "block": 2048,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 54,
+          "spills": 0,
+          "shared_bytes": 16
+        },
+        {
+          "block": 2048,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 38,
+          "spills": 0,
+          "shared_bytes": 32
+        },
+        {
+          "block": 2048,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 37,
+          "spills": 0,
+          "shared_bytes": 64
+        },
+        {
+          "block": 4096,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 255,
+          "spills": 0,
+          "shared_bytes": 0
+        },
+        {
+          "block": 4096,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 255,
+          "spills": 8,
+          "shared_bytes": 8
+        },
+        {
+          "block": 4096,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 192,
+          "spills": 0,
+          "shared_bytes": 16
+        },
+        {
+          "block": 4096,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 100,
+          "spills": 0,
+          "shared_bytes": 32
+        },
+        {
+          "block": 4096,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 57,
+          "spills": 0,
+          "shared_bytes": 64
+        }
+      ],
+      "best_config": {
+        "block": 4096,
+        "num_warps": 16,
+        "num_stages": 1
+      }
+    },
+    {
+      "path": "looped",
+      "N": 65537,
+      "DTYPE": "torch.bfloat16",
+      "DEVICE": 0,
+      "M": 6,
+      "LEADING_SHAPE": [
+        3,
+        2
+      ],
+      "LEADING_STRIDES": [
+        65537,
+        196611
+      ],
+      "configs": [
+        {
+          "block": 1024,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 185,
+          "spills": 0,
+          "shared_bytes": 0
+        },
+        {
+          "block": 1024,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 52,
+          "spills": 0,
+          "shared_bytes": 8
+        },
+        {
+          "block": 1024,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 32,
+          "spills": 0,
+          "shared_bytes": 16
+        },
+        {
+          "block": 1024,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 36,
+          "spills": 0,
+          "shared_bytes": 32
+        },
+        {
+          "block": 1024,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 32,
+          "spills": 0,
+          "shared_bytes": 64
+        },
+        {
+          "block": 2048,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 255,
+          "spills": 8,
+          "shared_bytes": 0
+        },
+        {
+          "block": 2048,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 189,
+          "spills": 0,
+          "shared_bytes": 8
+        },
+        {
+          "block": 2048,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 54,
+          "spills": 0,
+          "shared_bytes": 16
+        },
+        {
+          "block": 2048,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 38,
+          "spills": 0,
+          "shared_bytes": 32
+        },
+        {
+          "block": 2048,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 37,
+          "spills": 0,
+          "shared_bytes": 64
+        },
+        {
+          "block": 4096,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 255,
+          "spills": 0,
+          "shared_bytes": 0
+        },
+        {
+          "block": 4096,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 255,
+          "spills": 8,
+          "shared_bytes": 8
+        },
+        {
+          "block": 4096,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 192,
+          "spills": 0,
+          "shared_bytes": 16
+        },
+        {
+          "block": 4096,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 100,
+          "spills": 0,
+          "shared_bytes": 32
+        },
+        {
+          "block": 4096,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 57,
+          "spills": 0,
+          "shared_bytes": 64
+        }
+      ],
+      "best_config": {
+        "block": 4096,
+        "num_warps": 16,
+        "num_stages": 1
+      }
+    },
+    {
+      "path": "looped",
+      "N": 65537,
+      "DTYPE": "torch.float32",
+      "DEVICE": 0,
+      "M": 6,
+      "LEADING_SHAPE": [
+        3,
+        2
+      ],
+      "LEADING_STRIDES": [
+        65537,
+        196611
+      ],
+      "configs": [
+        {
+          "block": 1024,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 201,
+          "spills": 0,
+          "shared_bytes": 0
+        },
+        {
+          "block": 1024,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 48,
+          "spills": 0,
+          "shared_bytes": 8
+        },
+        {
+          "block": 1024,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 32,
+          "spills": 0,
+          "shared_bytes": 16
+        },
+        {
+          "block": 1024,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 39,
+          "spills": 0,
+          "shared_bytes": 32
+        },
+        {
+          "block": 1024,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 32,
+          "spills": 0,
+          "shared_bytes": 64
+        },
+        {
+          "block": 2048,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 255,
+          "spills": 8,
+          "shared_bytes": 0
+        },
+        {
+          "block": 2048,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 201,
+          "spills": 0,
+          "shared_bytes": 8
+        },
+        {
+          "block": 2048,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 55,
+          "spills": 0,
+          "shared_bytes": 16
+        },
+        {
+          "block": 2048,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 39,
+          "spills": 0,
+          "shared_bytes": 32
+        },
+        {
+          "block": 2048,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 39,
+          "spills": 0,
+          "shared_bytes": 64
+        },
+        {
+          "block": 4096,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 255,
+          "spills": 14,
+          "shared_bytes": 0
+        },
+        {
+          "block": 4096,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 255,
+          "spills": 8,
+          "shared_bytes": 8
+        },
+        {
+          "block": 4096,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 205,
+          "spills": 0,
+          "shared_bytes": 16
+        },
+        {
+          "block": 4096,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 101,
+          "spills": 0,
+          "shared_bytes": 32
+        },
+        {
+          "block": 4096,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 54,
+          "spills": 0,
+          "shared_bytes": 64
+        }
+      ],
+      "best_config": {
+        "block": 4096,
+        "num_warps": 16,
+        "num_stages": 1
+      }
+    },
+    {
+      "path": "single",
+      "N": 31,
+      "DTYPE": "torch.float16",
+      "DEVICE": 0,
+      "M": 3,
+      "LEADING_SHAPE": [
+        3
+      ],
+      "LEADING_STRIDES": [
+        33
+      ],
+      "configs": [
+        {
+          "block": 32,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 16,
+          "spills": 0,
+          "shared_bytes": 0
+        },
+        {
+          "block": 32,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "pruned",
+          "reason": "more threads than padded columns"
+        },
+        {
+          "block": 32,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "pruned",
+          "reason": "more threads than padded columns"
+        },
+        {
+          "block": 32,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "pruned",
+          "reason": "more threads than padded columns"
+        },
+        {
+          "block": 32,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "pruned",
+          "reason": "more threads than padded columns"
+        }
+      ],
+      "best_config": {
+        "block": 32,
+        "num_warps": 1,
+        "num_stages": 1
+      }
+    },
+    {
+      "path": "single",
+      "N": 31,
+      "DTYPE": "torch.bfloat16",
+      "DEVICE": 0,
+      "M": 3,
+      "LEADING_SHAPE": [
+        3
+      ],
+      "LEADING_STRIDES": [
+        33
+      ],
+      "configs": [
+        {
+          "block": 32,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 16,
+          "spills": 0,
+          "shared_bytes": 0
+        },
+        {
+          "block": 32,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "pruned",
+          "reason": "more threads than padded columns"
+        },
+        {
+          "block": 32,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "pruned",
+          "reason": "more threads than padded columns"
+        },
+        {
+          "block": 32,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "pruned",
+          "reason": "more threads than padded columns"
+        },
+        {
+          "block": 32,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "pruned",
+          "reason": "more threads than padded columns"
+        }
+      ],
+      "best_config": {
+        "block": 32,
+        "num_warps": 1,
+        "num_stages": 1
+      }
+    },
+    {
+      "path": "single",
+      "N": 31,
+      "DTYPE": "torch.float32",
+      "DEVICE": 0,
+      "M": 3,
+      "LEADING_SHAPE": [
+        3
+      ],
+      "LEADING_STRIDES": [
+        33
+      ],
+      "configs": [
+        {
+          "block": 32,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 16,
+          "spills": 0,
+          "shared_bytes": 0
+        },
+        {
+          "block": 32,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "pruned",
+          "reason": "more threads than padded columns"
+        },
+        {
+          "block": 32,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "pruned",
+          "reason": "more threads than padded columns"
+        },
+        {
+          "block": 32,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "pruned",
+          "reason": "more threads than padded columns"
+        },
+        {
+          "block": 32,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "pruned",
+          "reason": "more threads than padded columns"
+        }
+      ],
+      "best_config": {
+        "block": 32,
+        "num_warps": 1,
+        "num_stages": 1
+      }
+    },
+    {
+      "path": "looped",
+      "N": 65537,
+      "DTYPE": "torch.float16",
+      "DEVICE": 0,
+      "M": 3,
+      "LEADING_SHAPE": [
+        3
+      ],
+      "LEADING_STRIDES": [
+        65539
+      ],
+      "configs": [
+        {
+          "block": 1024,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 188,
+          "spills": 0,
+          "shared_bytes": 0
+        },
+        {
+          "block": 1024,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 52,
+          "spills": 0,
+          "shared_bytes": 8
+        },
+        {
+          "block": 1024,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 32,
+          "spills": 0,
+          "shared_bytes": 16
+        },
+        {
+          "block": 1024,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 40,
+          "spills": 0,
+          "shared_bytes": 32
+        },
+        {
+          "block": 1024,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 32,
+          "spills": 0,
+          "shared_bytes": 64
+        },
+        {
+          "block": 2048,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 255,
+          "spills": 8,
+          "shared_bytes": 0
+        },
+        {
+          "block": 2048,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 185,
+          "spills": 0,
+          "shared_bytes": 8
+        },
+        {
+          "block": 2048,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 54,
+          "spills": 0,
+          "shared_bytes": 16
+        },
+        {
+          "block": 2048,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 38,
+          "spills": 0,
+          "shared_bytes": 32
+        },
+        {
+          "block": 2048,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 37,
+          "spills": 0,
+          "shared_bytes": 64
+        },
+        {
+          "block": 4096,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 255,
+          "spills": 0,
+          "shared_bytes": 0
+        },
+        {
+          "block": 4096,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 255,
+          "spills": 8,
+          "shared_bytes": 8
+        },
+        {
+          "block": 4096,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 191,
+          "spills": 0,
+          "shared_bytes": 16
+        },
+        {
+          "block": 4096,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 103,
+          "spills": 0,
+          "shared_bytes": 32
+        },
+        {
+          "block": 4096,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 57,
+          "spills": 0,
+          "shared_bytes": 64
+        }
+      ],
+      "best_config": {
+        "block": 4096,
+        "num_warps": 16,
+        "num_stages": 1
+      }
+    },
+    {
+      "path": "looped",
+      "N": 65537,
+      "DTYPE": "torch.bfloat16",
+      "DEVICE": 0,
+      "M": 3,
+      "LEADING_SHAPE": [
+        3
+      ],
+      "LEADING_STRIDES": [
+        65539
+      ],
+      "configs": [
+        {
+          "block": 1024,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 188,
+          "spills": 0,
+          "shared_bytes": 0
+        },
+        {
+          "block": 1024,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 52,
+          "spills": 0,
+          "shared_bytes": 8
+        },
+        {
+          "block": 1024,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 32,
+          "spills": 0,
+          "shared_bytes": 16
+        },
+        {
+          "block": 1024,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 36,
+          "spills": 0,
+          "shared_bytes": 32
+        },
+        {
+          "block": 1024,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 32,
+          "spills": 0,
+          "shared_bytes": 64
+        },
+        {
+          "block": 2048,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 255,
+          "spills": 8,
+          "shared_bytes": 0
+        },
+        {
+          "block": 2048,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 185,
+          "spills": 0,
+          "shared_bytes": 8
+        },
+        {
+          "block": 2048,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 54,
+          "spills": 0,
+          "shared_bytes": 16
+        },
+        {
+          "block": 2048,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 38,
+          "spills": 0,
+          "shared_bytes": 32
+        },
+        {
+          "block": 2048,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 37,
+          "spills": 0,
+          "shared_bytes": 64
+        },
+        {
+          "block": 4096,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 255,
+          "spills": 0,
+          "shared_bytes": 0
+        },
+        {
+          "block": 4096,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 255,
+          "spills": 8,
+          "shared_bytes": 8
+        },
+        {
+          "block": 4096,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 191,
+          "spills": 0,
+          "shared_bytes": 16
+        },
+        {
+          "block": 4096,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 103,
+          "spills": 0,
+          "shared_bytes": 32
+        },
+        {
+          "block": 4096,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 57,
+          "spills": 0,
+          "shared_bytes": 64
+        }
+      ],
+      "best_config": {
+        "block": 4096,
+        "num_warps": 16,
+        "num_stages": 1
+      }
+    },
+    {
+      "path": "looped",
+      "N": 65537,
+      "DTYPE": "torch.float32",
+      "DEVICE": 0,
+      "M": 3,
+      "LEADING_SHAPE": [
+        3
+      ],
+      "LEADING_STRIDES": [
+        65539
+      ],
+      "configs": [
+        {
+          "block": 1024,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 199,
+          "spills": 0,
+          "shared_bytes": 0
+        },
+        {
+          "block": 1024,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 48,
+          "spills": 0,
+          "shared_bytes": 8
+        },
+        {
+          "block": 1024,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 32,
+          "spills": 0,
+          "shared_bytes": 16
+        },
+        {
+          "block": 1024,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 39,
+          "spills": 0,
+          "shared_bytes": 32
+        },
+        {
+          "block": 1024,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 32,
+          "spills": 0,
+          "shared_bytes": 64
+        },
+        {
+          "block": 2048,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 255,
+          "spills": 8,
+          "shared_bytes": 0
+        },
+        {
+          "block": 2048,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 201,
+          "spills": 0,
+          "shared_bytes": 8
+        },
+        {
+          "block": 2048,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 55,
+          "spills": 0,
+          "shared_bytes": 16
+        },
+        {
+          "block": 2048,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 39,
+          "spills": 0,
+          "shared_bytes": 32
+        },
+        {
+          "block": 2048,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 39,
+          "spills": 0,
+          "shared_bytes": 64
+        },
+        {
+          "block": 4096,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 255,
+          "spills": 14,
+          "shared_bytes": 0
+        },
+        {
+          "block": 4096,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 255,
+          "spills": 8,
+          "shared_bytes": 8
+        },
+        {
+          "block": 4096,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 203,
+          "spills": 0,
+          "shared_bytes": 16
+        },
+        {
+          "block": 4096,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 101,
+          "spills": 0,
+          "shared_bytes": 32
+        },
+        {
+          "block": 4096,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 54,
+          "spills": 0,
+          "shared_bytes": 64
+        }
+      ],
+      "best_config": {
+        "block": 4096,
+        "num_warps": 16,
+        "num_stages": 1
+      }
+    },
+    {
+      "path": "single",
+      "N": 31,
+      "DTYPE": "torch.float16",
+      "DEVICE": 0,
+      "M": 4,
+      "LEADING_SHAPE": [
+        4
+      ],
+      "LEADING_STRIDES": [
+        0
+      ],
+      "configs": [
+        {
+          "block": 32,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 16,
+          "spills": 0,
+          "shared_bytes": 0
+        },
+        {
+          "block": 32,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "pruned",
+          "reason": "more threads than padded columns"
+        },
+        {
+          "block": 32,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "pruned",
+          "reason": "more threads than padded columns"
+        },
+        {
+          "block": 32,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "pruned",
+          "reason": "more threads than padded columns"
+        },
+        {
+          "block": 32,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "pruned",
+          "reason": "more threads than padded columns"
+        }
+      ],
+      "best_config": {
+        "block": 32,
+        "num_warps": 1,
+        "num_stages": 1
+      }
+    },
+    {
+      "path": "single",
+      "N": 31,
+      "DTYPE": "torch.bfloat16",
+      "DEVICE": 0,
+      "M": 4,
+      "LEADING_SHAPE": [
+        4
+      ],
+      "LEADING_STRIDES": [
+        0
+      ],
+      "configs": [
+        {
+          "block": 32,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 16,
+          "spills": 0,
+          "shared_bytes": 0
+        },
+        {
+          "block": 32,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "pruned",
+          "reason": "more threads than padded columns"
+        },
+        {
+          "block": 32,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "pruned",
+          "reason": "more threads than padded columns"
+        },
+        {
+          "block": 32,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "pruned",
+          "reason": "more threads than padded columns"
+        },
+        {
+          "block": 32,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "pruned",
+          "reason": "more threads than padded columns"
+        }
+      ],
+      "best_config": {
+        "block": 32,
+        "num_warps": 1,
+        "num_stages": 1
+      }
+    },
+    {
+      "path": "single",
+      "N": 31,
+      "DTYPE": "torch.float32",
+      "DEVICE": 0,
+      "M": 4,
+      "LEADING_SHAPE": [
+        4
+      ],
+      "LEADING_STRIDES": [
+        0
+      ],
+      "configs": [
+        {
+          "block": 32,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 16,
+          "spills": 0,
+          "shared_bytes": 0
+        },
+        {
+          "block": 32,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "pruned",
+          "reason": "more threads than padded columns"
+        },
+        {
+          "block": 32,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "pruned",
+          "reason": "more threads than padded columns"
+        },
+        {
+          "block": 32,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "pruned",
+          "reason": "more threads than padded columns"
+        },
+        {
+          "block": 32,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "pruned",
+          "reason": "more threads than padded columns"
+        }
+      ],
+      "best_config": {
+        "block": 32,
+        "num_warps": 1,
+        "num_stages": 1
+      }
+    },
+    {
+      "path": "looped",
+      "N": 65537,
+      "DTYPE": "torch.float16",
+      "DEVICE": 0,
+      "M": 4,
+      "LEADING_SHAPE": [
+        4
+      ],
+      "LEADING_STRIDES": [
+        0
+      ],
+      "configs": [
+        {
+          "block": 1024,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 128,
+          "spills": 0,
+          "shared_bytes": 512
+        },
+        {
+          "block": 1024,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 64,
+          "spills": 0,
+          "shared_bytes": 1024
+        },
+        {
+          "block": 1024,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 31,
+          "spills": 0,
+          "shared_bytes": 2048
+        },
+        {
+          "block": 1024,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 25,
+          "spills": 0,
+          "shared_bytes": 2048
+        },
+        {
+          "block": 1024,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 30,
+          "spills": 0,
+          "shared_bytes": 2048
+        },
+        {
+          "block": 2048,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 254,
+          "spills": 0,
+          "shared_bytes": 512
+        },
+        {
+          "block": 2048,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 128,
+          "spills": 0,
+          "shared_bytes": 1024
+        },
+        {
+          "block": 2048,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 64,
+          "spills": 0,
+          "shared_bytes": 2048
+        },
+        {
+          "block": 2048,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 31,
+          "spills": 0,
+          "shared_bytes": 4096
+        },
+        {
+          "block": 2048,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 29,
+          "spills": 0,
+          "shared_bytes": 4096
+        },
+        {
+          "block": 4096,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 167,
+          "spills": 0,
+          "shared_bytes": 512
+        },
+        {
+          "block": 4096,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 253,
+          "spills": 0,
+          "shared_bytes": 1024
+        },
+        {
+          "block": 4096,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 128,
+          "spills": 0,
+          "shared_bytes": 2048
+        },
+        {
+          "block": 4096,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 64,
+          "spills": 0,
+          "shared_bytes": 4096
+        },
+        {
+          "block": 4096,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 40,
+          "spills": 0,
+          "shared_bytes": 8192
+        }
+      ],
+      "best_config": {
+        "block": 4096,
+        "num_warps": 8,
+        "num_stages": 1
+      }
+    },
+    {
+      "path": "looped",
+      "N": 65537,
+      "DTYPE": "torch.bfloat16",
+      "DEVICE": 0,
+      "M": 4,
+      "LEADING_SHAPE": [
+        4
+      ],
+      "LEADING_STRIDES": [
+        0
+      ],
+      "configs": [
+        {
+          "block": 1024,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 128,
+          "spills": 0,
+          "shared_bytes": 512
+        },
+        {
+          "block": 1024,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 64,
+          "spills": 0,
+          "shared_bytes": 1024
+        },
+        {
+          "block": 1024,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 31,
+          "spills": 0,
+          "shared_bytes": 2048
+        },
+        {
+          "block": 1024,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 25,
+          "spills": 0,
+          "shared_bytes": 2048
+        },
+        {
+          "block": 1024,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 30,
+          "spills": 0,
+          "shared_bytes": 2048
+        },
+        {
+          "block": 2048,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 254,
+          "spills": 0,
+          "shared_bytes": 512
+        },
+        {
+          "block": 2048,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 128,
+          "spills": 0,
+          "shared_bytes": 1024
+        },
+        {
+          "block": 2048,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 64,
+          "spills": 0,
+          "shared_bytes": 2048
+        },
+        {
+          "block": 2048,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 31,
+          "spills": 0,
+          "shared_bytes": 4096
+        },
+        {
+          "block": 2048,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 29,
+          "spills": 0,
+          "shared_bytes": 4096
+        },
+        {
+          "block": 4096,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 167,
+          "spills": 0,
+          "shared_bytes": 512
+        },
+        {
+          "block": 4096,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 253,
+          "spills": 0,
+          "shared_bytes": 1024
+        },
+        {
+          "block": 4096,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 128,
+          "spills": 0,
+          "shared_bytes": 2048
+        },
+        {
+          "block": 4096,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 64,
+          "spills": 0,
+          "shared_bytes": 4096
+        },
+        {
+          "block": 4096,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 40,
+          "spills": 0,
+          "shared_bytes": 8192
+        }
+      ],
+      "best_config": {
+        "block": 4096,
+        "num_warps": 8,
+        "num_stages": 1
+      }
+    },
+    {
+      "path": "looped",
+      "N": 65537,
+      "DTYPE": "torch.float32",
+      "DEVICE": 0,
+      "M": 4,
+      "LEADING_SHAPE": [
+        4
+      ],
+      "LEADING_STRIDES": [
+        0
+      ],
+      "configs": [
+        {
+          "block": 1024,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 141,
+          "spills": 0,
+          "shared_bytes": 512
+        },
+        {
+          "block": 1024,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 40,
+          "spills": 0,
+          "shared_bytes": 1024
+        },
+        {
+          "block": 1024,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 32,
+          "spills": 0,
+          "shared_bytes": 2048
+        },
+        {
+          "block": 1024,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 28,
+          "spills": 0,
+          "shared_bytes": 4096
+        },
+        {
+          "block": 1024,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 32,
+          "spills": 0,
+          "shared_bytes": 4096
+        },
+        {
+          "block": 2048,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 255,
+          "spills": 2,
+          "shared_bytes": 512
+        },
+        {
+          "block": 2048,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 143,
+          "spills": 0,
+          "shared_bytes": 1024
+        },
+        {
+          "block": 2048,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 40,
+          "spills": 0,
+          "shared_bytes": 2048
+        },
+        {
+          "block": 2048,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 32,
+          "spills": 0,
+          "shared_bytes": 4096
+        },
+        {
+          "block": 2048,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 28,
+          "spills": 0,
+          "shared_bytes": 8192
+        },
+        {
+          "block": 4096,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 168,
+          "spills": 0,
+          "shared_bytes": 512
+        },
+        {
+          "block": 4096,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 255,
+          "spills": 2,
+          "shared_bytes": 1024
+        },
+        {
+          "block": 4096,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 143,
+          "spills": 0,
+          "shared_bytes": 2048
+        },
+        {
+          "block": 4096,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 64,
+          "spills": 0,
+          "shared_bytes": 4096
+        },
+        {
+          "block": 4096,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 40,
+          "spills": 0,
+          "shared_bytes": 8192
+        }
+      ],
+      "best_config": {
+        "block": 4096,
+        "num_warps": 8,
+        "num_stages": 1
+      }
+    },
+    {
+      "path": "single",
+      "N": 31,
+      "DTYPE": "torch.float16",
+      "DEVICE": 0,
+      "M": 6,
+      "LEADING_SHAPE": [
+        6
+      ],
+      "LEADING_STRIDES": [
+        31
+      ],
+      "configs": [
+        {
+          "block": 32,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 18,
+          "spills": 0,
+          "shared_bytes": 0
+        },
+        {
+          "block": 32,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "pruned",
+          "reason": "more threads than padded columns"
+        },
+        {
+          "block": 32,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "pruned",
+          "reason": "more threads than padded columns"
+        },
+        {
+          "block": 32,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "pruned",
+          "reason": "more threads than padded columns"
+        },
+        {
+          "block": 32,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "pruned",
+          "reason": "more threads than padded columns"
+        }
+      ],
+      "best_config": {
+        "block": 32,
+        "num_warps": 1,
+        "num_stages": 1
+      }
+    },
+    {
+      "path": "single",
+      "N": 31,
+      "DTYPE": "torch.bfloat16",
+      "DEVICE": 0,
+      "M": 6,
+      "LEADING_SHAPE": [
+        6
+      ],
+      "LEADING_STRIDES": [
+        31
+      ],
+      "configs": [
+        {
+          "block": 32,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 18,
+          "spills": 0,
+          "shared_bytes": 0
+        },
+        {
+          "block": 32,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "pruned",
+          "reason": "more threads than padded columns"
+        },
+        {
+          "block": 32,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "pruned",
+          "reason": "more threads than padded columns"
+        },
+        {
+          "block": 32,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "pruned",
+          "reason": "more threads than padded columns"
+        },
+        {
+          "block": 32,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "pruned",
+          "reason": "more threads than padded columns"
+        }
+      ],
+      "best_config": {
+        "block": 32,
+        "num_warps": 1,
+        "num_stages": 1
+      }
+    },
+    {
+      "path": "single",
+      "N": 31,
+      "DTYPE": "torch.float32",
+      "DEVICE": 0,
+      "M": 6,
+      "LEADING_SHAPE": [
+        6
+      ],
+      "LEADING_STRIDES": [
+        31
+      ],
+      "configs": [
+        {
+          "block": 32,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 18,
+          "spills": 0,
+          "shared_bytes": 0
+        },
+        {
+          "block": 32,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "pruned",
+          "reason": "more threads than padded columns"
+        },
+        {
+          "block": 32,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "pruned",
+          "reason": "more threads than padded columns"
+        },
+        {
+          "block": 32,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "pruned",
+          "reason": "more threads than padded columns"
+        },
+        {
+          "block": 32,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "pruned",
+          "reason": "more threads than padded columns"
+        }
+      ],
+      "best_config": {
+        "block": 32,
+        "num_warps": 1,
+        "num_stages": 1
+      }
+    },
+    {
+      "path": "looped",
+      "N": 65537,
+      "DTYPE": "torch.float16",
+      "DEVICE": 0,
+      "M": 6,
+      "LEADING_SHAPE": [
+        6
+      ],
+      "LEADING_STRIDES": [
+        65537
+      ],
+      "configs": [
+        {
+          "block": 1024,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 188,
+          "spills": 0,
+          "shared_bytes": 0
+        },
+        {
+          "block": 1024,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 52,
+          "spills": 0,
+          "shared_bytes": 8
+        },
+        {
+          "block": 1024,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 32,
+          "spills": 0,
+          "shared_bytes": 16
+        },
+        {
+          "block": 1024,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 40,
+          "spills": 0,
+          "shared_bytes": 32
+        },
+        {
+          "block": 1024,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 32,
+          "spills": 0,
+          "shared_bytes": 64
+        },
+        {
+          "block": 2048,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 255,
+          "spills": 8,
+          "shared_bytes": 0
+        },
+        {
+          "block": 2048,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 185,
+          "spills": 0,
+          "shared_bytes": 8
+        },
+        {
+          "block": 2048,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 54,
+          "spills": 0,
+          "shared_bytes": 16
+        },
+        {
+          "block": 2048,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 38,
+          "spills": 0,
+          "shared_bytes": 32
+        },
+        {
+          "block": 2048,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 37,
+          "spills": 0,
+          "shared_bytes": 64
+        },
+        {
+          "block": 4096,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 255,
+          "spills": 0,
+          "shared_bytes": 0
+        },
+        {
+          "block": 4096,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 255,
+          "spills": 8,
+          "shared_bytes": 8
+        },
+        {
+          "block": 4096,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 191,
+          "spills": 0,
+          "shared_bytes": 16
+        },
+        {
+          "block": 4096,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 103,
+          "spills": 0,
+          "shared_bytes": 32
+        },
+        {
+          "block": 4096,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 57,
+          "spills": 0,
+          "shared_bytes": 64
+        }
+      ],
+      "best_config": {
+        "block": 4096,
+        "num_warps": 16,
+        "num_stages": 1
+      }
+    },
+    {
+      "path": "looped",
+      "N": 65537,
+      "DTYPE": "torch.bfloat16",
+      "DEVICE": 0,
+      "M": 6,
+      "LEADING_SHAPE": [
+        6
+      ],
+      "LEADING_STRIDES": [
+        65537
+      ],
+      "configs": [
+        {
+          "block": 1024,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 188,
+          "spills": 0,
+          "shared_bytes": 0
+        },
+        {
+          "block": 1024,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 52,
+          "spills": 0,
+          "shared_bytes": 8
+        },
+        {
+          "block": 1024,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 32,
+          "spills": 0,
+          "shared_bytes": 16
+        },
+        {
+          "block": 1024,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 36,
+          "spills": 0,
+          "shared_bytes": 32
+        },
+        {
+          "block": 1024,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 32,
+          "spills": 0,
+          "shared_bytes": 64
+        },
+        {
+          "block": 2048,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 255,
+          "spills": 8,
+          "shared_bytes": 0
+        },
+        {
+          "block": 2048,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 185,
+          "spills": 0,
+          "shared_bytes": 8
+        },
+        {
+          "block": 2048,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 54,
+          "spills": 0,
+          "shared_bytes": 16
+        },
+        {
+          "block": 2048,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 38,
+          "spills": 0,
+          "shared_bytes": 32
+        },
+        {
+          "block": 2048,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 37,
+          "spills": 0,
+          "shared_bytes": 64
+        },
+        {
+          "block": 4096,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 255,
+          "spills": 0,
+          "shared_bytes": 0
+        },
+        {
+          "block": 4096,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 255,
+          "spills": 8,
+          "shared_bytes": 8
+        },
+        {
+          "block": 4096,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 191,
+          "spills": 0,
+          "shared_bytes": 16
+        },
+        {
+          "block": 4096,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 103,
+          "spills": 0,
+          "shared_bytes": 32
+        },
+        {
+          "block": 4096,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 57,
+          "spills": 0,
+          "shared_bytes": 64
+        }
+      ],
+      "best_config": {
+        "block": 4096,
+        "num_warps": 16,
+        "num_stages": 1
+      }
+    },
+    {
+      "path": "looped",
+      "N": 65537,
+      "DTYPE": "torch.float32",
+      "DEVICE": 0,
+      "M": 6,
+      "LEADING_SHAPE": [
+        6
+      ],
+      "LEADING_STRIDES": [
+        65537
+      ],
+      "configs": [
+        {
+          "block": 1024,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 199,
+          "spills": 0,
+          "shared_bytes": 0
+        },
+        {
+          "block": 1024,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 48,
+          "spills": 0,
+          "shared_bytes": 8
+        },
+        {
+          "block": 1024,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 32,
+          "spills": 0,
+          "shared_bytes": 16
+        },
+        {
+          "block": 1024,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 39,
+          "spills": 0,
+          "shared_bytes": 32
+        },
+        {
+          "block": 1024,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 32,
+          "spills": 0,
+          "shared_bytes": 64
+        },
+        {
+          "block": 2048,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 255,
+          "spills": 8,
+          "shared_bytes": 0
+        },
+        {
+          "block": 2048,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 201,
+          "spills": 0,
+          "shared_bytes": 8
+        },
+        {
+          "block": 2048,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 55,
+          "spills": 0,
+          "shared_bytes": 16
+        },
+        {
+          "block": 2048,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 39,
+          "spills": 0,
+          "shared_bytes": 32
+        },
+        {
+          "block": 2048,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 39,
+          "spills": 0,
+          "shared_bytes": 64
+        },
+        {
+          "block": 4096,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 255,
+          "spills": 14,
+          "shared_bytes": 0
+        },
+        {
+          "block": 4096,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 255,
+          "spills": 8,
+          "shared_bytes": 8
+        },
+        {
+          "block": 4096,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 203,
+          "spills": 0,
+          "shared_bytes": 16
+        },
+        {
+          "block": 4096,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 101,
+          "spills": 0,
+          "shared_bytes": 32
+        },
+        {
+          "block": 4096,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 54,
+          "spills": 0,
+          "shared_bytes": 64
+        }
+      ],
+      "best_config": {
+        "block": 4096,
+        "num_warps": 16,
+        "num_stages": 1
+      }
+    },
+    {
+      "path": "looped",
+      "N": 65537,
+      "DTYPE": "torch.float16",
+      "DEVICE": 0,
+      "M": 1,
+      "LEADING_SHAPE": [
+        1
+      ],
+      "LEADING_STRIDES": [
+        65537
+      ],
+      "configs": [
+        {
+          "block": 1024,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 124,
+          "spills": 0,
+          "shared_bytes": 512
+        },
+        {
+          "block": 1024,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 64,
+          "spills": 0,
+          "shared_bytes": 1024
+        },
+        {
+          "block": 1024,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 31,
+          "spills": 0,
+          "shared_bytes": 2048
+        },
+        {
+          "block": 1024,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 28,
+          "spills": 0,
+          "shared_bytes": 2048
+        },
+        {
+          "block": 1024,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 30,
+          "spills": 0,
+          "shared_bytes": 2048
+        },
+        {
+          "block": 2048,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 254,
+          "spills": 0,
+          "shared_bytes": 512
+        },
+        {
+          "block": 2048,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 127,
+          "spills": 0,
+          "shared_bytes": 1024
+        },
+        {
+          "block": 2048,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 64,
+          "spills": 0,
+          "shared_bytes": 2048
+        },
+        {
+          "block": 2048,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 31,
+          "spills": 0,
+          "shared_bytes": 4096
+        },
+        {
+          "block": 2048,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 29,
+          "spills": 0,
+          "shared_bytes": 4096
+        },
+        {
+          "block": 4096,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 168,
+          "spills": 0,
+          "shared_bytes": 512
+        },
+        {
+          "block": 4096,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 251,
+          "spills": 0,
+          "shared_bytes": 1024
+        },
+        {
+          "block": 4096,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 127,
+          "spills": 0,
+          "shared_bytes": 2048
+        },
+        {
+          "block": 4096,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 63,
+          "spills": 0,
+          "shared_bytes": 4096
+        },
+        {
+          "block": 4096,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 40,
+          "spills": 0,
+          "shared_bytes": 8192
+        }
+      ],
+      "best_config": {
+        "block": 4096,
+        "num_warps": 8,
+        "num_stages": 1
+      }
+    },
+    {
+      "path": "looped",
+      "N": 65537,
+      "DTYPE": "torch.bfloat16",
+      "DEVICE": 0,
+      "M": 1,
+      "LEADING_SHAPE": [
+        1
+      ],
+      "LEADING_STRIDES": [
+        65537
+      ],
+      "configs": [
+        {
+          "block": 1024,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 124,
+          "spills": 0,
+          "shared_bytes": 512
+        },
+        {
+          "block": 1024,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 64,
+          "spills": 0,
+          "shared_bytes": 1024
+        },
+        {
+          "block": 1024,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 31,
+          "spills": 0,
+          "shared_bytes": 2048
+        },
+        {
+          "block": 1024,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 28,
+          "spills": 0,
+          "shared_bytes": 2048
+        },
+        {
+          "block": 1024,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 30,
+          "spills": 0,
+          "shared_bytes": 2048
+        },
+        {
+          "block": 2048,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 254,
+          "spills": 0,
+          "shared_bytes": 512
+        },
+        {
+          "block": 2048,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 127,
+          "spills": 0,
+          "shared_bytes": 1024
+        },
+        {
+          "block": 2048,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 64,
+          "spills": 0,
+          "shared_bytes": 2048
+        },
+        {
+          "block": 2048,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 31,
+          "spills": 0,
+          "shared_bytes": 4096
+        },
+        {
+          "block": 2048,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 29,
+          "spills": 0,
+          "shared_bytes": 4096
+        },
+        {
+          "block": 4096,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 168,
+          "spills": 0,
+          "shared_bytes": 512
+        },
+        {
+          "block": 4096,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 251,
+          "spills": 0,
+          "shared_bytes": 1024
+        },
+        {
+          "block": 4096,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 127,
+          "spills": 0,
+          "shared_bytes": 2048
+        },
+        {
+          "block": 4096,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 63,
+          "spills": 0,
+          "shared_bytes": 4096
+        },
+        {
+          "block": 4096,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 40,
+          "spills": 0,
+          "shared_bytes": 8192
+        }
+      ],
+      "best_config": {
+        "block": 4096,
+        "num_warps": 8,
+        "num_stages": 1
+      }
+    },
+    {
+      "path": "looped",
+      "N": 65537,
+      "DTYPE": "torch.float32",
+      "DEVICE": 0,
+      "M": 1,
+      "LEADING_SHAPE": [
+        1
+      ],
+      "LEADING_STRIDES": [
+        65537
+      ],
+      "configs": [
+        {
+          "block": 1024,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 139,
+          "spills": 0,
+          "shared_bytes": 512
+        },
+        {
+          "block": 1024,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 40,
+          "spills": 0,
+          "shared_bytes": 1024
+        },
+        {
+          "block": 1024,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 32,
+          "spills": 0,
+          "shared_bytes": 2048
+        },
+        {
+          "block": 1024,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 28,
+          "spills": 0,
+          "shared_bytes": 4096
+        },
+        {
+          "block": 1024,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 32,
+          "spills": 0,
+          "shared_bytes": 4096
+        },
+        {
+          "block": 2048,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 255,
+          "spills": 2,
+          "shared_bytes": 512
+        },
+        {
+          "block": 2048,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 141,
+          "spills": 0,
+          "shared_bytes": 1024
+        },
+        {
+          "block": 2048,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 40,
+          "spills": 0,
+          "shared_bytes": 2048
+        },
+        {
+          "block": 2048,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 32,
+          "spills": 0,
+          "shared_bytes": 4096
+        },
+        {
+          "block": 2048,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 28,
+          "spills": 0,
+          "shared_bytes": 8192
+        },
+        {
+          "block": 4096,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 168,
+          "spills": 0,
+          "shared_bytes": 512
+        },
+        {
+          "block": 4096,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 255,
+          "spills": 0,
+          "shared_bytes": 1024
+        },
+        {
+          "block": 4096,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 141,
+          "spills": 0,
+          "shared_bytes": 2048
+        },
+        {
+          "block": 4096,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 64,
+          "spills": 0,
+          "shared_bytes": 4096
+        },
+        {
+          "block": 4096,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 40,
+          "spills": 0,
+          "shared_bytes": 8192
+        }
+      ],
+      "best_config": {
+        "block": 4096,
+        "num_warps": 8,
+        "num_stages": 1
+      }
+    },
+    {
+      "path": "single",
+      "N": 65536,
+      "DTYPE": "torch.float16",
+      "DEVICE": 0,
+      "M": 32769,
+      "LEADING_SHAPE": [
+        32769
+      ],
+      "LEADING_STRIDES": [
+        65536
+      ],
+      "configs": [
+        {
+          "block": 65536,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 64,
+          "spills": 3762,
+          "shared_bytes": 0
+        },
+        {
+          "block": 65536,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 32,
+          "spills": 2560,
+          "shared_bytes": 8
+        },
+        {
+          "block": 65536,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 32,
+          "spills": 1198,
+          "shared_bytes": 16
+        },
+        {
+          "block": 65536,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 255,
+          "spills": 90,
+          "shared_bytes": 32
+        },
+        {
+          "block": 65536,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 128,
+          "spills": 92,
+          "shared_bytes": 64
+        }
+      ],
+      "best_config": {
+        "block": 65536,
+        "num_warps": 8,
+        "num_stages": 1
+      }
+    },
+    {
+      "path": "single",
+      "N": 32768,
+      "DTYPE": "torch.float16",
+      "DEVICE": 0,
+      "M": 65537,
+      "LEADING_SHAPE": [
+        65537
+      ],
+      "LEADING_STRIDES": [
+        32768
+      ],
+      "configs": [
+        {
+          "block": 32768,
+          "num_warps": 1,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 64,
+          "spills": 1922,
+          "shared_bytes": 0
+        },
+        {
+          "block": 32768,
+          "num_warps": 2,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 32,
+          "spills": 1186,
+          "shared_bytes": 8
+        },
+        {
+          "block": 32768,
+          "num_warps": 4,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 255,
+          "spills": 88,
+          "shared_bytes": 16
+        },
+        {
+          "block": 32768,
+          "num_warps": 8,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 255,
+          "spills": 0,
+          "shared_bytes": 32
+        },
+        {
+          "block": 32768,
+          "num_warps": 16,
+          "num_stages": 1,
+          "status": "valid",
+          "registers": 124,
+          "spills": 0,
+          "shared_bytes": 64
+        }
+      ],
+      "best_config": {
+        "block": 32768,
+        "num_warps": 16,
+        "num_stages": 1
+      }
+    }
+  ]
+}

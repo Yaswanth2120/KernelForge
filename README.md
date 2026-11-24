@@ -31,7 +31,7 @@ remain explicit stubs that raise `NotImplementedError` on supported GPU calls.
 - [x] CPU references, tolerance policy, accounting, and fake-timer harness verified
 - [x] Softmax CPU interface and resource-pruning policy verified
 - [x] Softmax GPU correctness matrix passed (130/130 incl. both >2^31-element int64 tests, A100, torch 2.8.0 / Triton 3.4.0)
-- [ ] Softmax single/looped path threshold justified by measurement
+- [x] Softmax single/looped path threshold measured on A100 (limit 65536; see DECISIONS.md)
 - [ ] LayerNorm and attention GPU kernels validated
 - [ ] A100 measurements collected
 
