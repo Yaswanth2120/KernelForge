@@ -50,7 +50,7 @@ Public interface reserved for the upcoming kernel implementation. Its result is 
 
 ## `src/kernelforge/ops/layernorm.py:layer_norm`
 
-Public interface reserved for the upcoming kernel implementation. Its result is used by the calling interface or diagnostic; it makes no kernel correctness claim.
+Normalizes the trailing `normalized_shape` dims of `x` to zero mean and unit variance, then applies optional `weight` and `bias`. Statistics are computed in fp32 (the row sum in fp64), the output keeps `x`'s dtype and shape, and `return_stats=True` also returns per-row fp32 `mean` and `rstd`. It never calls `torch.nn.functional.layer_norm`.
 
 ## `src/kernelforge/ops/softmax.py:softmax`
 
@@ -629,3 +629,47 @@ Draws one panel per dtype of effective GB/s against N, with the KernelForge and 
 ## `src/kernelforge/cli.py:main`
 
 Parses the command and delegates. Exit codes: 0 ok, 1 criterion failure, 2 usage error (for example `--launches` other than 3), 3 environment problem (no GPU, or BW_copy missing).
+
+## `src/kernelforge/ops/layernorm.py:_normalized_size`
+
+Checks that `normalized_shape` matches the input's trailing dimensions and returns their product N, the length of each row being normalized.
+
+## `src/kernelforge/ops/layernorm.py:_check_affine`
+
+Checks that weight or bias has shape `normalized_shape`, lives on the input's device, and has the input's dtype or fp32 (mixed precision). It returns a flat contiguous copy or view of length N.
+
+## `src/kernelforge/ops/layernorm.py:_prepare`
+
+Validates all arguments and flattens the input to an (M, N) matrix. `reshape` returns a view when the leading dims collapse to one row stride; otherwise it copies, and a strided trailing block is also copied so columns have unit stride.
+
+## `src/kernelforge/ops/_layernorm_kernels.py:_prune_idle_warps`
+
+Removes autotune candidates with more threads than padded columns, which would leave threads idle. Configs that run out of resources are skipped by Triton's autotuner itself.
+
+## `src/kernelforge/ops/_layernorm_kernels.py:_row_id`
+
+Turns the 2-D program grid into one int64 row number, so `row * row_stride` cannot overflow even with more than 2^31 elements.
+
+## `src/kernelforge/ops/_layernorm_kernels.py:_row_mean`
+
+Divides an fp64 row sum by N and rounds once to fp32. The sum is the only statistic that can cancel badly (many values summing to nearly zero); fp64 keeps it accurate, and constant rows stay exactly centered.
+
+## `src/kernelforge/ops/_layernorm_kernels.py:_rstd`
+
+Computes 1/sqrt(M2/N + eps) with IEEE round-to-nearest division and square root. Triton's default `/` and `sqrt` are fast approximations that were measured to be 2 ulp off.
+
+## `src/kernelforge/ops/_layernorm_kernels.py:_store_outputs`
+
+Multiplies the centered values by rstd, applies weight and bias in fp32 when present (the flags are compile-time, so absent ones cost nothing), and stores one tile of output in the input dtype.
+
+## `src/kernelforge/ops/_layernorm_kernels.py:_single_layer_norm`
+
+One program holds a whole row in registers: sum for the mean, subtract it, sum the squares of the centered values for the variance, then normalize. This is the two-pass centered method, so it never uses E[x^2] - E[x]^2.
+
+## `src/kernelforge/ops/_layernorm_kernels.py:_looped_layer_norm`
+
+For rows too long for one block, the program walks the row in tiles three times: once to sum for the mean, once to sum squared deviations, and once to write the output. Each lane keeps its own partial sums across tiles and one tree reduction combines them, which keeps rounding error small.
+
+## `src/kernelforge/ops/_layernorm_kernels.py:launch_layer_norm`
+
+Picks the single or looped path from N and the measured limit, passes dummy pointers for absent weight, bias, and stats (their code is compiled out), launches, and records the autotuned winner.
