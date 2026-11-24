@@ -21,7 +21,7 @@ On a Linux CPU environment with the same PyTorch-provided Triton, run
 `test` requires a supported NVIDIA runtime and runs the softmax GPU matrix. It accepts pytest
 arguments after `test`, prints failing parametrizations with numerical error details, and saves
 JUnit output plus autotune validity/winner diagnostics under `reports/raw/`.
-GPU tests written, NOT run: `tests/gpu/test_softmax.py` (130 cases).
+`tests/gpu/test_softmax.py` (130 cases) passed on an A100-SXM4-80GB on 2026-11-24.
 
 ```sh
 # Normal correctness checks on an inexpensive sm_80+ GPU:
@@ -40,4 +40,6 @@ reviewing the installed timer source; no crossover timing is claimed here.
 `bench <suite>` is reserved and currently fails without writing measurements.
 `package` archives results and environment information. Save the archive before destroying a rental.
 Use a cheaper sm_80+ GPU for correctness; final measurements require A100 80GB SXM4,
-three independent process launches, and telemetry. No GPU session has been verified yet.
+three independent process launches, and telemetry. `setup`, `test`, and `package` were verified
+on a vast.ai A100-SXM4-80GB container on 2026-11-24; `package` writes its archive to the repo root.
+Stop other GPU workloads first: a co-resident vLLM server held 72 GiB until it was terminated.

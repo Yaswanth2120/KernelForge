@@ -1,0 +1,21 @@
+{
+  "python": "3.12.3",
+  "platform": "Linux-6.8.0-138-generic-x86_64-with-glibc2.39",
+  "versions": {
+    "torch": "2.8.0",
+    "triton": "3.4.0",
+    "pydantic": "2.14.4"
+  },
+  "gpu_available": true,
+  "torch_pin_matches": true,
+  "nvidia_smi": {
+    "returncode": 0,
+    "stdout": "Tue Nov 24 18:56:55 2026       \n+-----------------------------------------------------------------------------------------+\n| NVIDIA-SMI 595.91.07              Driver Version: 595.91.07      CUDA Version: 13.2     |\n+-----------------------------------------+------------------------+----------------------+\n| GPU  Name                 Persistence-M | Bus-Id          Disp.A | Volatile Uncorr. ECC |\n| Fan  Temp   Perf          Pwr:Usage/Cap |           Memory-Usage | GPU-Util  Compute M. |\n|                                         |                        |               MIG M. |\n|=========================================+========================+======================|\n|   0  NVIDIA A100-SXM4-80GB          On  |   00000000:41:00.0 Off |                    0 |\n| N/A   31C    P0             83W /  400W |       5MiB /  81920MiB |      0%      Default |\n|                                         |                        |             Disabled |\n+-----------------------------------------+------------------------+----------------------+\n\n+-----------------------------------------------------------------------------------------+\n| Processes:                                                                              |\n|  GPU   GI   CI              PID   Type   Process name                        GPU Memory |\n|        ID   ID                                                               Usage      |\n|=========================================================================================|\n|  No running processes found                                                             |\n+-----------------------------------------------------------------------------------------+\n",
+    "stderr": ""
+  },
+  "interpreter": "not yet determined; run scripts/interpreter_probe.py on Linux",
+  "ncu": {
+    "status": "not run",
+    "executable": null
+  }
+}

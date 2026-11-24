@@ -1,9 +1,11 @@
 # Kernel design
 
-## Softmax: implementation awaiting GPU validation
+## Softmax: GPU correctness verified, performance unmeasured
 
-GPU tests written, NOT run: `tests/gpu/test_softmax.py` (130 cases).
-No NVIDIA execution, measured crossover, winning configuration, or speed claim is available.
+`tests/gpu/test_softmax.py` (130 cases) passed on an NVIDIA A100-SXM4-80GB on 2026-11-24
+(torch 2.8.0, Triton 3.4.0; `reports/raw/k2_softmax_a100/`). Autotune winners from that run
+were chosen on tiny correctness shapes and are not benchmark results. No measured crossover
+or speed claim is available.
 LayerNorm and causal attention remain unimplemented.
 
 ### Contract and layout

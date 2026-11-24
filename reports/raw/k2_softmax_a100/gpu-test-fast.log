@@ -1,0 +1,12 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-8.4.2, pluggy-1.7.0
+rootdir: /root/kernelforge
+configfile: pyproject.toml
+collected 130 items / 2 deselected / 128 selected
+
+tests/gpu/test_softmax.py .............................................. [ 35%]
+........................................................................ [ 92%]
+..........                                                               [100%]
+
+------- generated xml file: /root/kernelforge/reports/raw/gpu-tests.xml --------
+================ 128 passed, 2 deselected in 234.30s (0:03:54) =================

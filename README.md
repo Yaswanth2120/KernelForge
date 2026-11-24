@@ -19,7 +19,8 @@ kernelforge doctor
 
 `doctor` prints diagnostics and exits 3 when a supported GPU environment is unavailable.
 Imports work on CPU machines; operation calls raise `GPUUnavailableError` there.
-Softmax has a Triton implementation awaiting NVIDIA validation. LayerNorm and attention
+Softmax has a Triton implementation that passed its 130-case GPU correctness matrix on an
+NVIDIA A100-SXM4-80GB (2026-11-24; evidence in `reports/raw/k2_softmax_a100/`). LayerNorm and attention
 remain explicit stubs that raise `NotImplementedError` on supported GPU calls.
 
 ## Status
@@ -29,12 +30,13 @@ remain explicit stubs that raise `NotImplementedError` on supported GPU calls.
 - [x] Pre-registered suites verified
 - [x] CPU references, tolerance policy, accounting, and fake-timer harness verified
 - [x] Softmax CPU interface and resource-pruning policy verified
-- [ ] Softmax GPU correctness accepted
+- [x] Softmax GPU correctness matrix passed (130/130 incl. both >2^31-element int64 tests, A100, torch 2.8.0 / Triton 3.4.0)
+- [ ] Softmax single/looped path threshold justified by measurement
 - [ ] LayerNorm and attention GPU kernels validated
 - [ ] A100 measurements collected
 
-GPU tests written, NOT run: the 130-case softmax matrix in `tests/gpu/test_softmax.py`.
-No kernel correctness or performance claim is made. No performance results are available. Targets and measurement rules are frozen in [PREREG.md](PREREG.md).
+The softmax correctness claim is limited to the tested matrix on the recorded environment.
+No performance claim is made. No performance results are available. Targets and measurement rules are frozen in [PREREG.md](PREREG.md).
 CPU helpers and their contracts are described in [validation](docs/VALIDATION.md).
 See [GPU setup](docs/GPU_SESSION.md), [profiling](docs/PROFILING.md), and [contributing](CONTRIBUTING.md).
 

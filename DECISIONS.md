@@ -119,3 +119,27 @@ Force pushes and deletion of main are blocked. The previous plan limitation no l
   pending, not passes. The full matrix includes both single and looped int64 paths.
 - The looped algorithm physically reads twice and writes once. Keep the registered 2*M*N*elem_size
   effective-bandwidth formula unchanged and disclose the difference from physical traffic in docs.
+
+## 2026-11-24 — Softmax GPU validation run (A100) and tuple-indexing fix
+
+- Provenance: Claude Code ran this session over SSH at the owner's request (owner-provided
+  vast.ai container) instead of the owner pasting output. Device NVIDIA A100-SXM4-80GB (cc 8.0),
+  driver 595.91.07, torch 2.8.0, Triton 3.4.0 (bundled), Python 3.12.3, Ubuntu 24.04. A
+  co-resident vLLM server (owner's other project) was stopped before testing; GPU showed 0 MiB used.
+- First run: 115 of 128 non-slow cases failed to compile. `_row_location` computed
+  `axis = len(LEADING_SHAPE) - index - 1` from a `tl.static_range` index; in Triton 3.4 that
+  arithmetic yields a tensor, which cannot index a constexpr tuple. Fix: iterate
+  `tl.static_range(len(LEADING_SHAPE) - 1, -1, -1)` directly. Probed first on 2-D, 1-D and empty
+  leading shapes. No test, tolerance, or criterion changed.
+- After the fix: 130/130 passed in one `gpu_session.sh test` run (exit 0), including both
+  >2^31-element int64 tests. Pruning recorded 662 valid / 138 pruned / 0 invalid configs; some
+  single-block BLOCK=8192 and looped configs spill registers at num_warps=1 (kept; autotune chooses).
+  The commit SHA in the results is 1d0a7da plus `uncommitted.diff` (this fix), both saved in
+  `reports/raw/k2_softmax_a100/`. `collect_results.sh` does not record dirty trees; flagged, not changed.
+- do_bench behavior (Triton 3.4.0 `triton/testing.py`, read from the installed source): one
+  untimed call then synchronize; a 256 MiB int32 buffer is zeroed (`cache.zero_()`) before every
+  timed call to flush L2, including the 5 estimation calls; warmup/rep are milliseconds converted
+  to counts via `max(1, int(ms / estimate_ms))`; warmup calls do not flush; each timed call is
+  bracketed by its own CUDA events and a single synchronize follows all repetitions; quantiles
+  are computed over the per-call event times. The zeroing kernel is outside the event pair.
+- SOFTMAX_SINGLE_BLOCK_LIMIT remains provisional (8192): no crossover timing was taken.

@@ -18,8 +18,9 @@ def _row_location(LEADING_SHAPE: tl.constexpr, LEADING_STRIDES: tl.constexpr):
     row = tl.program_id(0).to(tl.int64) + tl.program_id(1).to(tl.int64) * tl.num_programs(0)
     remaining = row
     offset = tl.full((), 0, tl.int64)
-    for index in tl.static_range(len(LEADING_SHAPE)):
-        axis = len(LEADING_SHAPE) - index - 1
+    # Iterate axes in reverse with static_range so `axis` stays a compile-time constant;
+    # arithmetic on the loop index turns it into a tensor, which cannot index a tuple.
+    for axis in tl.static_range(len(LEADING_SHAPE) - 1, -1, -1):
         offset += (remaining % LEADING_SHAPE[axis]) * LEADING_STRIDES[axis]
         remaining = remaining // LEADING_SHAPE[axis]
     return row, offset
