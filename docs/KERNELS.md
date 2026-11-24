@@ -203,3 +203,78 @@ was read as a reference. The two-pass centered variance is the textbook stable m
 (Chan, Golub, LeVeque, *Algorithms for computing the sample variance*, 1983, also the source of
 the superseded merge formula). The code was written for this project's layouts, mixed-precision
 affine, statistics output, looped path, and int64 indexing; tutorial code was not pasted.
+
+## Causal attention forward
+
+### Math
+
+For one (batch, head), with q, k, v of shape (S, D) and scale = 1/sqrt(D) by default:
+
+```text
+s[i, j] = scale * q[i] . k[j]            for j <= i   (masked to -inf for j > i)
+o[i]    = sum_j softmax_j(s[i, :]) * v[j]
+lse[i]  = log sum_j exp(s[i, j])        (returned with return_lse=True, fp32)
+```
+
+The S x S matrix is never stored. Inputs and output are fp16 or bf16; scores, running statistics,
+and the accumulator are fp32.
+
+### Tiling
+
+```text
+          keys (BLOCK_N columns per step) ->
+        +------+------+------+------+------+
+ query  |  U   |  U   |  D   |  .   |  .   |    program for query block 2 (rows 2*BM .. 3*BM-1)
+ block 2|      |      | \    |      |      |    U = unmasked stage: every key precedes every query
+        |      |      |  \   |      |      |    D = diagonal stage: mask j <= i and j < S
+        +------+------+------+------+------+    . = above the diagonal: never loaded
+          0      BM    2BM    3BM
+```
+
+Grid: (ceil(S / BLOCK_M), B * H). Each program loads its Q tile once, then:
+
+1. **Unmasked stage**, keys [0, start): no mask, no bounds check (all keys < start <= S).
+2. **Diagonal stage**, keys [start, min(start + BLOCK_M, S)): causal mask j <= i and tail mask
+   j < S. BLOCK_N <= BLOCK_M (enforced by pruning) so the split lands on a key-block boundary.
+3. Key blocks beyond the query block are skipped, roughly halving work versus full attention.
+
+Per key block (the FlashAttention-2 online softmax):
+
+```text
+s      = (Q K^T) * scale * log2(e)            # fp32, log2 units
+m_new  = max(m, rowmax(s))
+p      = exp2(s - m_new)
+alpha  = exp2(m - m_new)                      # rescales everything accumulated so far
+l      = l * alpha + rowsum(p)
+acc    = acc * alpha + p.to(v.dtype) @ V      # second matmul in the input dtype, fp32 accumulate
+m      = m_new
+```
+
+At the end `o = acc / l`; `lse = (m + log2(l)) / log2(e)` converts back to natural log. Every
+row has at least one visible key (the diagonal), so `m` is finite before any fully masked block
+for that row arrives, and `exp2(-inf - m) = 0` handles masked entries without NaNs.
+
+### Memory access and indexing
+
+Q, K, V, O use their own (batch, head, sequence) strides; only the last dim must be contiguous
+(otherwise that tensor is copied). Batch and head offsets and the per-block sequence offset are
+int64, so tensors with more than 2^31 elements are addressed correctly; offsets within a tile are
+bounded by BLOCK * stride. K is loaded as a (D, BLOCK_N) tile for `tl.dot(q, k)`.
+
+### Autotuning
+
+BLOCK_M, BLOCK_N in {32, 64, 128} with BLOCK_N <= BLOCK_M; num_warps {4, 8}; num_stages {2, 3, 4};
+keyed on S, D, and tensor dtypes. Query blocks far larger than S are pruned. Configurations that
+exceed shared memory (common at D = 128 with deep pipelining) fail inside Triton's autotuner,
+receive infinite time, and are recorded as invalid for the report.
+
+### Provenance
+
+The algorithm is FlashAttention-2's forward pass: Tri Dao,
+[FlashAttention-2: Faster Attention with Better Parallelism and Work Partitioning](https://arxiv.org/abs/2307.08691)
+(2023), building on Dao et al., [FlashAttention](https://arxiv.org/abs/2205.14135) (2022), and
+the online softmax of Milakov and Gimelshein (2018). The
+[Triton fused-attention tutorial](https://triton-lang.org/main/getting-started/tutorials/06-fused-attention.html)
+was read as a reference. The structure is dictated by that published algorithm; the code was
+written for this project (arbitrary per-tensor strides, irregular S, int64 bases, LSE output,
+pruning/validity recording) and tutorial code was not pasted.
