@@ -30,3 +30,10 @@
 - GitHub rejected main-branch protection with HTTP 403: this private repository requires
   GitHub Pro or public visibility. Squash-only merging and automatic branch deletion are enabled;
   PR review and green CI are a documented workflow rather than server-enforced protection.
+
+## 2026-11-23 — Public repository policy
+
+The owner clarified that KernelForge must be public. This supersedes the initial private
+visibility choice. The repository is now public, and main-branch protection is enabled:
+pull requests, current passing Python 3.10–3.12 checks, and administrator enforcement.
+Force pushes and deletion of main are blocked. The previous plan limitation no longer applies.
