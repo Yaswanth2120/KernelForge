@@ -56,8 +56,6 @@ def measure_case(n, dtype_name, path):
     key = next(k for k in kernels.PRUNING_LOG if k[0] == path and k[1] == n and k[4] == m
                and k[2] == str(dtype))
     best = kernels.PRUNING_LOG[key]["best_config"]
-    del x, y
-    torch.cuda.empty_cache()
     return {"N": n, "M": m, "dtype": dtype_name, "path": path, "ms_p20": p20, "ms_p50": p50,
             "ms_p80": p80, "gbps": 2 * m * n * elem / (p50 * 1e-3) / 1e9, "best_config": best}
 
@@ -76,7 +74,9 @@ def run_launch(index, out_dir):
             for path in ("single", "looped"):
                 try:
                     record["cases"].append(measure_case(n, dtype_name, path))
-                except Exception as exc:  # recorded as a result, not hidden
+                    torch.cuda.empty_cache()
+                # Any compile/launch/OOM failure is a result to record, not to hide or crash on.
+                except Exception as exc:  # noqa: BLE001
                     record["cases"].append({"N": n, "dtype": dtype_name, "path": path,
                                             "error": f"{type(exc).__name__}: {exc}"[:500]})
                 print(json.dumps(record["cases"][-1]), flush=True)

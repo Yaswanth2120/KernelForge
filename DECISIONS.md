@@ -143,3 +143,17 @@ Force pushes and deletion of main are blocked. The previous plan limitation no l
   bracketed by its own CUDA events and a single synchronize follows all repetitions; quantiles
   are computed over the per-call event times. The zeroing kernel is outside the event pair.
 - SOFTMAX_SINGLE_BLOCK_LIMIT remains provisional (8192): no crossover timing was taken.
+
+## 2026-11-24 — Softmax path-threshold measurement protocol (stated before measuring)
+
+- Script: `scripts/measure_softmax_threshold.py`. Both paths are forced via `launch_softmax`'s
+  limit argument. Decision widths N in {1024, 2048, 4096, 8192, 16384, 32768, 65536};
+  informational widths {4097, 6144, 8193, 12288} are reported but do not decide. dtypes
+  fp16/bf16/fp32; M chosen so the input is >= 512 MiB; autotune runs before timing;
+  `do_bench` quantiles [0.2, 0.5, 0.8]; three fresh processes; nvidia-smi telemetry per launch.
+- Rule: SOFTMAX_SINGLE_BLOCK_LIMIT = the largest decision N where the single path's
+  median-of-three-medians p50 is <= the looped path's for every dtype, at that N and at every
+  smaller decision N. Strict comparison, no tie band. If the rule gives a value other than 8192,
+  the constant changes and the reason is recorded here; frozen PREREG shapes and criteria do not.
+- Commit 2bc1e64 pushed this script with lint errors and without this entry (a shell chaining
+  mistake); the follow-up commit fixes lint and adds this entry before any measurement ran.
