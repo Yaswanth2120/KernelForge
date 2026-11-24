@@ -9,5 +9,5 @@ Run `pytest`, `ruff check .`, and `kernelforge check-prereg` locally.
 GPU correctness and performance claims require saved output from a real NVIDIA session.
 Changes to frozen criteria need a dated entry in DECISIONS.md with old and new values.
 
-Branch protection is currently unavailable on this private repository's GitHub plan.
-The PR and green-check policy must be followed manually until server enforcement is available.
+The public repository protects `main`: pull requests and passing Python 3.10–3.12 CPU
+checks are required, including for administrators. Force pushes and branch deletion are blocked.
