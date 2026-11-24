@@ -123,3 +123,158 @@ Source review is not a substitute for compilation or execution on the owner's GP
 The threshold must be justified by future measurements; neither path is accepted as correct or
 fast until owner-provided GPU output supports it. Benchmarking, accuracy tables, and performance
 criteria evaluation remain pending.
+
+## LayerNorm forward
+
+### Math and contract
+
+For each row x of length N (the trailing `normalized_shape` dims, flattened):
+
+```text
+mean = sum(x) / N                      (row sum in fp64, rounded once to fp32)
+var  = sum((x - mean)^2) / N           (population variance, centered: never E[x^2] - E[x]^2)
+rstd = 1 / sqrt(var + eps)             (IEEE div_rn / sqrt_rn)
+y    = (x - mean) * rstd * weight + bias   (weight, bias optional; fp32 or the input dtype)
+```
+
+Output has the input's dtype and shape; `return_stats=True` adds fp32 `mean` and `rstd` with the
+leading shape. The wrapper flattens to (M, N): a view when the leading dims collapse to a single
+row stride, otherwise a copy, and a non-unit-stride trailing block is copied. Row offsets use
+int64 (`row * row_stride`), and rows above CUDA's x-grid limit spill into a second grid dimension.
+
+### Single-block path (N <= 32768)
+
+```text
+program r:   x[r, 0:N] --load (masked, pad 0)--> registers [BLOCK = next_pow2(N)]
+             sum (fp64) -> mean;  where(mask, x - mean, 0) -> centered
+             sum(centered^2) -> var -> rstd
+             centered * rstd * w + b --store (masked)--> y[r, 0:N]
+```
+
+One HBM read and one write per element. The masked padding is zero and is also zeroed after
+centering, so padding never contributes to the variance.
+
+### Looped path (N > 32768)
+
+```text
+program r:   pass 1: tiles of BLOCK columns      lane sums (fp64) += x      -> tree sum -> mean
+             pass 2: same tiles, reread x        lane sums += (x - mean)^2  -> tree sum -> rstd
+             pass 3: same tiles, reread x        write (x - mean) * rstd * w + b
+```
+
+Three reads and one write. Each lane accumulates only its own columns (N / BLOCK values), and a
+single tree reduction finishes the row, so no running scalar is rounded at the whole row's scale.
+An earlier design merged per-tile (count, mean, M2) with Chan et al.'s parallel-variance formula
+in two reads; on the A100 it turned a +inf row's mean into NaN and lost ~2 ulp of rstd at
+N = 262144, so it was replaced (DECISIONS.md, 2026-11-24).
+
+### Numerical choices
+
+- Triton lowers fp32 `/` and `sqrt` to fast approximate instructions by default. With them, a
+  constant row 3,3,...,3 (N=31) got mean 93/31 != 3, and rstd amplified the tiny residue into a
+  5e-5 output error. `tl.div_rn` / `tl.sqrt_rn` fixed it.
+- The row sum is the only cancellation-prone statistic (e.g. 32769 normal values summing to
+  ~0.005*N). Summing in fp64 matched PyTorch's accuracy on that case; centered squares do not
+  cancel and stay in fp32. Stored statistics are fp32 as specified.
+- NaN anywhere in a row makes the row NaN; +inf gives mean +inf (matching the fp32 reference;
+  PyTorch reports NaN there) and a NaN output row, as in PyTorch.
+
+### Threshold and autotuning
+
+The single/looped switch is 32768, measured on the A100 with a rule fixed before measuring
+(largest N where the single path is within 1% of, or faster than, the looped path for every
+dtype at that N and below). At 65536 the single path is 10-23% slower: it keeps x and the
+centered row live and spills registers. Autotune: num_warps {1, 2, 4, 8, 16} (more threads than
+padded columns pruned), looped BLOCK {1024, 2048, 4096}; keyed on N, the weight/bias/stats
+flags, and (automatically) tensor dtypes. Triton's autotuner skips configs that fail to compile
+or launch.
+
+### Known limits
+
+Irregular widths (4097, 8193) were 1.6-2.5x slower than neighbouring powers of two on both
+paths in fp16/bf16 during the threshold sweep; the cause is analyzed in docs/PROFILING.md.
+
+### Provenance
+
+The normalization is the standard LayerNorm definition (Ba, Kiros, Hinton,
+[Layer Normalization](https://arxiv.org/abs/1607.06450)); the
+[Triton layer-norm tutorial](https://triton-lang.org/main/getting-started/tutorials/05-layer-norm.html)
+was read as a reference. The two-pass centered variance is the textbook stable method
+(Chan, Golub, LeVeque, *Algorithms for computing the sample variance*, 1983, also the source of
+the superseded merge formula). The code was written for this project's layouts, mixed-precision
+affine, statistics output, looped path, and int64 indexing; tutorial code was not pasted.
+
+## Causal attention forward
+
+### Math
+
+For one (batch, head), with q, k, v of shape (S, D) and scale = 1/sqrt(D) by default:
+
+```text
+s[i, j] = scale * q[i] . k[j]            for j <= i   (masked to -inf for j > i)
+o[i]    = sum_j softmax_j(s[i, :]) * v[j]
+lse[i]  = log sum_j exp(s[i, j])        (returned with return_lse=True, fp32)
+```
+
+The S x S matrix is never stored. Inputs and output are fp16 or bf16; scores, running statistics,
+and the accumulator are fp32.
+
+### Tiling
+
+```text
+          keys (BLOCK_N columns per step) ->
+        +------+------+------+------+------+
+ query  |  U   |  U   |  D   |  .   |  .   |    program for query block 2 (rows 2*BM .. 3*BM-1)
+ block 2|      |      | \    |      |      |    U = unmasked stage: every key precedes every query
+        |      |      |  \   |      |      |    D = diagonal stage: mask j <= i and j < S
+        +------+------+------+------+------+    . = above the diagonal: never loaded
+          0      BM    2BM    3BM
+```
+
+Grid: (ceil(S / BLOCK_M), B * H). Each program loads its Q tile once, then:
+
+1. **Unmasked stage**, keys [0, start): no mask, no bounds check (all keys < start <= S).
+2. **Diagonal stage**, keys [start, min(start + BLOCK_M, S)): causal mask j <= i and tail mask
+   j < S. BLOCK_N <= BLOCK_M (enforced by pruning) so the split lands on a key-block boundary.
+3. Key blocks beyond the query block are skipped, roughly halving work versus full attention.
+
+Per key block (the FlashAttention-2 online softmax):
+
+```text
+s      = (Q K^T) * scale * log2(e)            # fp32, log2 units
+m_new  = max(m, rowmax(s))
+p      = exp2(s - m_new)
+alpha  = exp2(m - m_new)                      # rescales everything accumulated so far
+l      = l * alpha + rowsum(p)
+acc    = acc * alpha + p.to(v.dtype) @ V      # second matmul in the input dtype, fp32 accumulate
+m      = m_new
+```
+
+At the end `o = acc / l`; `lse = (m + log2(l)) / log2(e)` converts back to natural log. Every
+row has at least one visible key (the diagonal), so `m` is finite before any fully masked block
+for that row arrives, and `exp2(-inf - m) = 0` handles masked entries without NaNs.
+
+### Memory access and indexing
+
+Q, K, V, O use their own (batch, head, sequence) strides; only the last dim must be contiguous
+(otherwise that tensor is copied). Batch and head offsets and the per-block sequence offset are
+int64, so tensors with more than 2^31 elements are addressed correctly; offsets within a tile are
+bounded by BLOCK * stride. K is loaded as a (D, BLOCK_N) tile for `tl.dot(q, k)`.
+
+### Autotuning
+
+BLOCK_M, BLOCK_N in {32, 64, 128} with BLOCK_N <= BLOCK_M; num_warps {4, 8}; num_stages {2, 3, 4};
+keyed on S, D, and tensor dtypes. Query blocks far larger than S are pruned. Configurations that
+exceed shared memory (common at D = 128 with deep pipelining) fail inside Triton's autotuner,
+receive infinite time, and are recorded as invalid for the report.
+
+### Provenance
+
+The algorithm is FlashAttention-2's forward pass: Tri Dao,
+[FlashAttention-2: Faster Attention with Better Parallelism and Work Partitioning](https://arxiv.org/abs/2307.08691)
+(2023), building on Dao et al., [FlashAttention](https://arxiv.org/abs/2205.14135) (2022), and
+the online softmax of Milakov and Gimelshein (2018). The
+[Triton fused-attention tutorial](https://triton-lang.org/main/getting-started/tutorials/06-fused-attention.html)
+was read as a reference. The structure is dictated by that published algorithm; the code was
+written for this project (arbitrary per-tensor strides, irregular S, int64 bases, LSE output,
+pruning/validity recording) and tutorial code was not pasted.

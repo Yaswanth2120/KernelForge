@@ -33,7 +33,9 @@ remain explicit stubs that raise `NotImplementedError` on supported GPU calls.
 - [x] Softmax GPU correctness matrix passed (130/130 incl. both >2^31-element int64 tests, A100, torch 2.8.0 / Triton 3.4.0)
 - [x] Softmax single/looped path threshold measured on A100 (limit 65536; see DECISIONS.md)
 - [x] Softmax A100 benchmark: copy baseline + sweep, three launches, report generated
-- [ ] LayerNorm and attention GPU kernels validated
+- [x] LayerNorm GPU correctness matrix passed (168/168 incl. both >2^31-element int64 tests, A100, commit 9852793)
+- [x] LayerNorm single/looped threshold measured on A100 (limit 32768)
+- [ ] Causal attention GPU kernel validated
 - [ ] LayerNorm and attention A100 measurements collected
 
 ## Results so far (A100-SXM4-80GB, three launches; full tables in the [report](reports/performance_report.md))
