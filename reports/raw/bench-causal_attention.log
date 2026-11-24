@@ -1,0 +1,354 @@
+causal_attention kernelforge {'B': 8, 'H': 32, 'S': 2048, 'D': 64, 'dtype': 'fp16', 'selected': True} p50=0.9253 ms 148.5 TFLOPS
+causal_attention sdpa_flash {'B': 8, 'H': 32, 'S': 2048, 'D': 64, 'dtype': 'fp16', 'selected': True} p50=0.8862 ms 155.1 TFLOPS
+causal_attention sdpa_default {'B': 8, 'H': 32, 'S': 2048, 'D': 64, 'dtype': 'fp16', 'selected': True} p50=0.9013 ms 152.5 TFLOPS
+causal_attention kernelforge {'B': 8, 'H': 32, 'S': 2048, 'D': 64, 'dtype': 'bf16', 'selected': True} p50=0.9271 ms 148.2 TFLOPS
+causal_attention sdpa_flash {'B': 8, 'H': 32, 'S': 2048, 'D': 64, 'dtype': 'bf16', 'selected': True} p50=0.8825 ms 155.7 TFLOPS
+causal_attention sdpa_default {'B': 8, 'H': 32, 'S': 2048, 'D': 64, 'dtype': 'bf16', 'selected': True} p50=0.8893 ms 154.5 TFLOPS
+causal_attention kernelforge {'B': 8, 'H': 32, 'S': 2048, 'D': 128, 'dtype': 'fp16', 'selected': True} p50=1.9514 ms 140.9 TFLOPS
+causal_attention sdpa_flash {'B': 8, 'H': 32, 'S': 2048, 'D': 128, 'dtype': 'fp16', 'selected': True} p50=1.5784 ms 174.1 TFLOPS
+causal_attention sdpa_default {'B': 8, 'H': 32, 'S': 2048, 'D': 128, 'dtype': 'fp16', 'selected': True} p50=1.5757 ms 174.4 TFLOPS
+causal_attention kernelforge {'B': 8, 'H': 32, 'S': 2048, 'D': 128, 'dtype': 'bf16', 'selected': True} p50=2.1259 ms 129.3 TFLOPS
+causal_attention sdpa_flash {'B': 8, 'H': 32, 'S': 2048, 'D': 128, 'dtype': 'bf16', 'selected': True} p50=1.5579 ms 176.4 TFLOPS
+causal_attention sdpa_default {'B': 8, 'H': 32, 'S': 2048, 'D': 128, 'dtype': 'bf16', 'selected': True} p50=1.5407 ms 178.4 TFLOPS
+causal_attention kernelforge {'B': 4, 'H': 32, 'S': 4096, 'D': 64, 'dtype': 'fp16', 'selected': True} p50=1.7073 ms 161.0 TFLOPS
+causal_attention sdpa_flash {'B': 4, 'H': 32, 'S': 4096, 'D': 64, 'dtype': 'fp16', 'selected': True} p50=1.6824 ms 163.4 TFLOPS
+causal_attention sdpa_default {'B': 4, 'H': 32, 'S': 4096, 'D': 64, 'dtype': 'fp16', 'selected': True} p50=1.6970 ms 162.0 TFLOPS
+causal_attention kernelforge {'B': 4, 'H': 32, 'S': 4096, 'D': 64, 'dtype': 'bf16', 'selected': True} p50=1.6869 ms 162.9 TFLOPS
+causal_attention sdpa_flash {'B': 4, 'H': 32, 'S': 4096, 'D': 64, 'dtype': 'bf16', 'selected': True} p50=1.6637 ms 165.2 TFLOPS
+causal_attention sdpa_default {'B': 4, 'H': 32, 'S': 4096, 'D': 64, 'dtype': 'bf16', 'selected': True} p50=1.6784 ms 163.8 TFLOPS
+causal_attention kernelforge {'B': 4, 'H': 32, 'S': 4096, 'D': 128, 'dtype': 'fp16', 'selected': True} p50=3.5422 ms 155.2 TFLOPS
+causal_attention sdpa_flash {'B': 4, 'H': 32, 'S': 4096, 'D': 128, 'dtype': 'fp16', 'selected': True} p50=2.9359 ms 187.3 TFLOPS
+causal_attention sdpa_default {'B': 4, 'H': 32, 'S': 4096, 'D': 128, 'dtype': 'fp16', 'selected': True} p50=2.9427 ms 186.8 TFLOPS
+causal_attention kernelforge {'B': 4, 'H': 32, 'S': 4096, 'D': 128, 'dtype': 'bf16', 'selected': True} p50=3.4665 ms 158.6 TFLOPS
+causal_attention sdpa_flash {'B': 4, 'H': 32, 'S': 4096, 'D': 128, 'dtype': 'bf16', 'selected': True} p50=2.9047 ms 189.3 TFLOPS
+causal_attention sdpa_default {'B': 4, 'H': 32, 'S': 4096, 'D': 128, 'dtype': 'bf16', 'selected': True} p50=2.8960 ms 189.8 TFLOPS
+causal_attention kernelforge {'B': 2, 'H': 32, 'S': 8192, 'D': 64, 'dtype': 'fp16', 'selected': True} p50=3.2719 ms 168.0 TFLOPS
+causal_attention sdpa_flash {'B': 2, 'H': 32, 'S': 8192, 'D': 64, 'dtype': 'fp16', 'selected': True} p50=3.2866 ms 167.3 TFLOPS
+causal_attention sdpa_default {'B': 2, 'H': 32, 'S': 8192, 'D': 64, 'dtype': 'fp16', 'selected': True} p50=3.2767 ms 167.8 TFLOPS
+causal_attention kernelforge {'B': 2, 'H': 32, 'S': 8192, 'D': 64, 'dtype': 'bf16', 'selected': True} p50=3.2287 ms 170.3 TFLOPS
+causal_attention sdpa_flash {'B': 2, 'H': 32, 'S': 8192, 'D': 64, 'dtype': 'bf16', 'selected': True} p50=3.2419 ms 169.6 TFLOPS
+causal_attention sdpa_default {'B': 2, 'H': 32, 'S': 8192, 'D': 64, 'dtype': 'bf16', 'selected': True} p50=3.2372 ms 169.8 TFLOPS
+causal_attention kernelforge {'B': 2, 'H': 32, 'S': 8192, 'D': 128, 'dtype': 'fp16', 'selected': True} p50=6.6927 ms 164.3 TFLOPS
+causal_attention sdpa_flash {'B': 2, 'H': 32, 'S': 8192, 'D': 128, 'dtype': 'fp16', 'selected': True} p50=5.7476 ms 191.3 TFLOPS
+causal_attention sdpa_default {'B': 2, 'H': 32, 'S': 8192, 'D': 128, 'dtype': 'fp16', 'selected': True} p50=5.7022 ms 192.8 TFLOPS
+causal_attention kernelforge {'B': 2, 'H': 32, 'S': 8192, 'D': 128, 'dtype': 'bf16', 'selected': True} p50=6.5798 ms 167.1 TFLOPS
+causal_attention sdpa_flash {'B': 2, 'H': 32, 'S': 8192, 'D': 128, 'dtype': 'bf16', 'selected': True} p50=5.5450 ms 198.3 TFLOPS
+causal_attention sdpa_default {'B': 2, 'H': 32, 'S': 8192, 'D': 128, 'dtype': 'bf16', 'selected': True} p50=5.6300 ms 195.3 TFLOPS
+causal_attention kernelforge {'B': 32, 'H': 32, 'S': 512, 'D': 64, 'dtype': 'fp16', 'selected': False} p50=0.3487 ms 98.5 TFLOPS
+causal_attention sdpa_flash {'B': 32, 'H': 32, 'S': 512, 'D': 64, 'dtype': 'fp16', 'selected': False} p50=0.3392 ms 101.3 TFLOPS
+causal_attention sdpa_default {'B': 32, 'H': 32, 'S': 512, 'D': 64, 'dtype': 'fp16', 'selected': False} p50=0.3387 ms 101.5 TFLOPS
+causal_attention kernelforge {'B': 32, 'H': 32, 'S': 512, 'D': 64, 'dtype': 'bf16', 'selected': False} p50=0.3420 ms 100.5 TFLOPS
+causal_attention sdpa_flash {'B': 32, 'H': 32, 'S': 512, 'D': 64, 'dtype': 'bf16', 'selected': False} p50=0.3353 ms 102.5 TFLOPS
+causal_attention sdpa_default {'B': 32, 'H': 32, 'S': 512, 'D': 64, 'dtype': 'bf16', 'selected': False} p50=0.3345 ms 102.7 TFLOPS
+causal_attention kernelforge {'B': 32, 'H': 32, 'S': 512, 'D': 128, 'dtype': 'fp16', 'selected': False} p50=0.7111 ms 96.6 TFLOPS
+causal_attention sdpa_flash {'B': 32, 'H': 32, 'S': 512, 'D': 128, 'dtype': 'fp16', 'selected': False} p50=0.5480 ms 125.4 TFLOPS
+causal_attention sdpa_default {'B': 32, 'H': 32, 'S': 512, 'D': 128, 'dtype': 'fp16', 'selected': False} p50=0.5499 ms 125.0 TFLOPS
+causal_attention kernelforge {'B': 32, 'H': 32, 'S': 512, 'D': 128, 'dtype': 'bf16', 'selected': False} p50=0.7075 ms 97.1 TFLOPS
+causal_attention sdpa_flash {'B': 32, 'H': 32, 'S': 512, 'D': 128, 'dtype': 'bf16', 'selected': False} p50=0.5416 ms 126.9 TFLOPS
+causal_attention sdpa_default {'B': 32, 'H': 32, 'S': 512, 'D': 128, 'dtype': 'bf16', 'selected': False} p50=0.5397 ms 127.3 TFLOPS
+causal_attention kernelforge {'B': 16, 'H': 32, 'S': 1024, 'D': 64, 'dtype': 'fp16', 'selected': False} p50=0.5490 ms 125.2 TFLOPS
+causal_attention sdpa_flash {'B': 16, 'H': 32, 'S': 1024, 'D': 64, 'dtype': 'fp16', 'selected': False} p50=0.5186 ms 132.5 TFLOPS
+causal_attention sdpa_default {'B': 16, 'H': 32, 'S': 1024, 'D': 64, 'dtype': 'fp16', 'selected': False} p50=0.5173 ms 132.8 TFLOPS
+causal_attention kernelforge {'B': 16, 'H': 32, 'S': 1024, 'D': 64, 'dtype': 'bf16', 'selected': False} p50=0.5420 ms 126.8 TFLOPS
+causal_attention sdpa_flash {'B': 16, 'H': 32, 'S': 1024, 'D': 64, 'dtype': 'bf16', 'selected': False} p50=0.5149 ms 133.5 TFLOPS
+causal_attention sdpa_default {'B': 16, 'H': 32, 'S': 1024, 'D': 64, 'dtype': 'bf16', 'selected': False} p50=0.5148 ms 133.5 TFLOPS
+causal_attention kernelforge {'B': 16, 'H': 32, 'S': 1024, 'D': 128, 'dtype': 'fp16', 'selected': False} p50=1.1402 ms 120.5 TFLOPS
+causal_attention sdpa_flash {'B': 16, 'H': 32, 'S': 1024, 'D': 128, 'dtype': 'fp16', 'selected': False} p50=0.8977 ms 153.1 TFLOPS
+causal_attention sdpa_default {'B': 16, 'H': 32, 'S': 1024, 'D': 128, 'dtype': 'fp16', 'selected': False} p50=0.8944 ms 153.7 TFLOPS
+causal_attention kernelforge {'B': 16, 'H': 32, 'S': 1024, 'D': 128, 'dtype': 'bf16', 'selected': False} p50=1.1306 ms 121.6 TFLOPS
+causal_attention sdpa_flash {'B': 16, 'H': 32, 'S': 1024, 'D': 128, 'dtype': 'bf16', 'selected': False} p50=0.8769 ms 156.7 TFLOPS
+causal_attention sdpa_default {'B': 16, 'H': 32, 'S': 1024, 'D': 128, 'dtype': 'bf16', 'selected': False} p50=0.8793 ms 156.3 TFLOPS
+causal_attention kernelforge {'B': 1, 'H': 32, 'S': 16384, 'D': 64, 'dtype': 'fp16', 'selected': False} p50=6.3695 ms 172.6 TFLOPS
+causal_attention sdpa_flash {'B': 1, 'H': 32, 'S': 16384, 'D': 64, 'dtype': 'fp16', 'selected': False} p50=6.4346 ms 170.9 TFLOPS
+causal_attention sdpa_default {'B': 1, 'H': 32, 'S': 16384, 'D': 64, 'dtype': 'fp16', 'selected': False} p50=6.4353 ms 170.9 TFLOPS
+causal_attention kernelforge {'B': 1, 'H': 32, 'S': 16384, 'D': 64, 'dtype': 'bf16', 'selected': False} p50=6.3081 ms 174.3 TFLOPS
+causal_attention sdpa_flash {'B': 1, 'H': 32, 'S': 16384, 'D': 64, 'dtype': 'bf16', 'selected': False} p50=6.3564 ms 173.0 TFLOPS
+causal_attention sdpa_default {'B': 1, 'H': 32, 'S': 16384, 'D': 64, 'dtype': 'bf16', 'selected': False} p50=6.3667 ms 172.7 TFLOPS
+causal_attention kernelforge {'B': 1, 'H': 32, 'S': 16384, 'D': 128, 'dtype': 'fp16', 'selected': False} p50=13.0382 ms 168.7 TFLOPS
+causal_attention sdpa_flash {'B': 1, 'H': 32, 'S': 16384, 'D': 128, 'dtype': 'fp16', 'selected': False} p50=11.1602 ms 197.0 TFLOPS
+causal_attention sdpa_default {'B': 1, 'H': 32, 'S': 16384, 'D': 128, 'dtype': 'fp16', 'selected': False} p50=11.2315 ms 195.8 TFLOPS
+causal_attention kernelforge {'B': 1, 'H': 32, 'S': 16384, 'D': 128, 'dtype': 'bf16', 'selected': False} p50=12.8445 ms 171.2 TFLOPS
+causal_attention sdpa_flash {'B': 1, 'H': 32, 'S': 16384, 'D': 128, 'dtype': 'bf16', 'selected': False} p50=11.0739 ms 198.6 TFLOPS
+causal_attention sdpa_default {'B': 1, 'H': 32, 'S': 16384, 'D': 128, 'dtype': 'bf16', 'selected': False} p50=10.9946 ms 200.0 TFLOPS
+causal_attention kernelforge {'B': 16, 'H': 32, 'S': 1000, 'D': 64, 'dtype': 'fp16', 'selected': False} p50=0.5467 ms 119.9 TFLOPS
+causal_attention sdpa_flash {'B': 16, 'H': 32, 'S': 1000, 'D': 64, 'dtype': 'fp16', 'selected': False} p50=0.6608 ms 99.2 TFLOPS
+causal_attention sdpa_default {'B': 16, 'H': 32, 'S': 1000, 'D': 64, 'dtype': 'fp16', 'selected': False} p50=0.6611 ms 99.1 TFLOPS
+causal_attention kernelforge {'B': 16, 'H': 32, 'S': 1000, 'D': 64, 'dtype': 'bf16', 'selected': False} p50=0.5428 ms 120.7 TFLOPS
+causal_attention sdpa_flash {'B': 16, 'H': 32, 'S': 1000, 'D': 64, 'dtype': 'bf16', 'selected': False} p50=0.6598 ms 99.3 TFLOPS
+causal_attention sdpa_default {'B': 16, 'H': 32, 'S': 1000, 'D': 64, 'dtype': 'bf16', 'selected': False} p50=0.6594 ms 99.4 TFLOPS
+causal_attention kernelforge {'B': 16, 'H': 32, 'S': 1000, 'D': 128, 'dtype': 'fp16', 'selected': False} p50=1.1358 ms 115.4 TFLOPS
+causal_attention sdpa_flash {'B': 16, 'H': 32, 'S': 1000, 'D': 128, 'dtype': 'fp16', 'selected': False} p50=1.0209 ms 128.4 TFLOPS
+causal_attention sdpa_default {'B': 16, 'H': 32, 'S': 1000, 'D': 128, 'dtype': 'fp16', 'selected': False} p50=1.0140 ms 129.3 TFLOPS
+causal_attention kernelforge {'B': 16, 'H': 32, 'S': 1000, 'D': 128, 'dtype': 'bf16', 'selected': False} p50=1.2485 ms 105.0 TFLOPS
+causal_attention sdpa_flash {'B': 16, 'H': 32, 'S': 1000, 'D': 128, 'dtype': 'bf16', 'selected': False} p50=1.0118 ms 129.5 TFLOPS
+causal_attention sdpa_default {'B': 16, 'H': 32, 'S': 1000, 'D': 128, 'dtype': 'bf16', 'selected': False} p50=1.0131 ms 129.4 TFLOPS
+causal_attention kernelforge {'B': 4, 'H': 32, 'S': 4097, 'D': 64, 'dtype': 'fp16', 'selected': False} p50=1.7990 ms 152.9 TFLOPS
+causal_attention sdpa_flash {'B': 4, 'H': 32, 'S': 4097, 'D': 64, 'dtype': 'fp16', 'selected': False} p50=1.8552 ms 148.2 TFLOPS
+causal_attention sdpa_default {'B': 4, 'H': 32, 'S': 4097, 'D': 64, 'dtype': 'fp16', 'selected': False} p50=1.8321 ms 150.1 TFLOPS
+causal_attention kernelforge {'B': 4, 'H': 32, 'S': 4097, 'D': 64, 'dtype': 'bf16', 'selected': False} p50=1.7806 ms 154.4 TFLOPS
+causal_attention sdpa_flash {'B': 4, 'H': 32, 'S': 4097, 'D': 64, 'dtype': 'bf16', 'selected': False} p50=1.8296 ms 150.3 TFLOPS
+causal_attention sdpa_default {'B': 4, 'H': 32, 'S': 4097, 'D': 64, 'dtype': 'bf16', 'selected': False} p50=1.8397 ms 149.5 TFLOPS
+causal_attention kernelforge {'B': 4, 'H': 32, 'S': 4097, 'D': 128, 'dtype': 'fp16', 'selected': False} p50=3.6934 ms 148.9 TFLOPS
+causal_attention sdpa_flash {'B': 4, 'H': 32, 'S': 4097, 'D': 128, 'dtype': 'fp16', 'selected': False} p50=3.3512 ms 164.1 TFLOPS
+causal_attention sdpa_default {'B': 4, 'H': 32, 'S': 4097, 'D': 128, 'dtype': 'fp16', 'selected': False} p50=3.3330 ms 165.0 TFLOPS
+causal_attention kernelforge {'B': 4, 'H': 32, 'S': 4097, 'D': 128, 'dtype': 'bf16', 'selected': False} p50=3.6541 ms 150.5 TFLOPS
+causal_attention sdpa_flash {'B': 4, 'H': 32, 'S': 4097, 'D': 128, 'dtype': 'bf16', 'selected': False} p50=3.2857 ms 167.4 TFLOPS
+causal_attention sdpa_default {'B': 4, 'H': 32, 'S': 4097, 'D': 128, 'dtype': 'bf16', 'selected': False} p50=3.3107 ms 166.1 TFLOPS
+causal_attention kernelforge {'B': 8, 'H': 32, 'S': 2048, 'D': 64, 'dtype': 'fp16', 'selected': True} p50=0.9366 ms 146.7 TFLOPS
+causal_attention sdpa_flash {'B': 8, 'H': 32, 'S': 2048, 'D': 64, 'dtype': 'fp16', 'selected': True} p50=0.8923 ms 154.0 TFLOPS
+causal_attention sdpa_default {'B': 8, 'H': 32, 'S': 2048, 'D': 64, 'dtype': 'fp16', 'selected': True} p50=0.9068 ms 151.6 TFLOPS
+causal_attention kernelforge {'B': 8, 'H': 32, 'S': 2048, 'D': 64, 'dtype': 'bf16', 'selected': True} p50=0.9160 ms 150.0 TFLOPS
+causal_attention sdpa_flash {'B': 8, 'H': 32, 'S': 2048, 'D': 64, 'dtype': 'bf16', 'selected': True} p50=0.8907 ms 154.3 TFLOPS
+causal_attention sdpa_default {'B': 8, 'H': 32, 'S': 2048, 'D': 64, 'dtype': 'bf16', 'selected': True} p50=0.8920 ms 154.1 TFLOPS
+causal_attention kernelforge {'B': 8, 'H': 32, 'S': 2048, 'D': 128, 'dtype': 'fp16', 'selected': True} p50=1.9431 ms 141.5 TFLOPS
+causal_attention sdpa_flash {'B': 8, 'H': 32, 'S': 2048, 'D': 128, 'dtype': 'fp16', 'selected': True} p50=1.5897 ms 172.9 TFLOPS
+causal_attention sdpa_default {'B': 8, 'H': 32, 'S': 2048, 'D': 128, 'dtype': 'fp16', 'selected': True} p50=1.5776 ms 174.2 TFLOPS
+causal_attention kernelforge {'B': 8, 'H': 32, 'S': 2048, 'D': 128, 'dtype': 'bf16', 'selected': True} p50=1.9310 ms 142.4 TFLOPS
+causal_attention sdpa_flash {'B': 8, 'H': 32, 'S': 2048, 'D': 128, 'dtype': 'bf16', 'selected': True} p50=1.5536 ms 176.9 TFLOPS
+causal_attention sdpa_default {'B': 8, 'H': 32, 'S': 2048, 'D': 128, 'dtype': 'bf16', 'selected': True} p50=1.5420 ms 178.3 TFLOPS
+causal_attention kernelforge {'B': 4, 'H': 32, 'S': 4096, 'D': 64, 'dtype': 'fp16', 'selected': True} p50=1.7039 ms 161.3 TFLOPS
+causal_attention sdpa_flash {'B': 4, 'H': 32, 'S': 4096, 'D': 64, 'dtype': 'fp16', 'selected': True} p50=1.6961 ms 162.1 TFLOPS
+causal_attention sdpa_default {'B': 4, 'H': 32, 'S': 4096, 'D': 64, 'dtype': 'fp16', 'selected': True} p50=1.7019 ms 161.5 TFLOPS
+causal_attention kernelforge {'B': 4, 'H': 32, 'S': 4096, 'D': 64, 'dtype': 'bf16', 'selected': True} p50=1.6818 ms 163.4 TFLOPS
+causal_attention sdpa_flash {'B': 4, 'H': 32, 'S': 4096, 'D': 64, 'dtype': 'bf16', 'selected': True} p50=1.6631 ms 165.3 TFLOPS
+causal_attention sdpa_default {'B': 4, 'H': 32, 'S': 4096, 'D': 64, 'dtype': 'bf16', 'selected': True} p50=1.6634 ms 165.3 TFLOPS
+causal_attention kernelforge {'B': 4, 'H': 32, 'S': 4096, 'D': 128, 'dtype': 'fp16', 'selected': True} p50=3.4675 ms 158.5 TFLOPS
+causal_attention sdpa_flash {'B': 4, 'H': 32, 'S': 4096, 'D': 128, 'dtype': 'fp16', 'selected': True} p50=2.9494 ms 186.4 TFLOPS
+causal_attention sdpa_default {'B': 4, 'H': 32, 'S': 4096, 'D': 128, 'dtype': 'fp16', 'selected': True} p50=2.9460 ms 186.6 TFLOPS
+causal_attention kernelforge {'B': 4, 'H': 32, 'S': 4096, 'D': 128, 'dtype': 'bf16', 'selected': True} p50=3.4668 ms 158.6 TFLOPS
+causal_attention sdpa_flash {'B': 4, 'H': 32, 'S': 4096, 'D': 128, 'dtype': 'bf16', 'selected': True} p50=2.8978 ms 189.7 TFLOPS
+causal_attention sdpa_default {'B': 4, 'H': 32, 'S': 4096, 'D': 128, 'dtype': 'bf16', 'selected': True} p50=2.9063 ms 189.2 TFLOPS
+causal_attention kernelforge {'B': 2, 'H': 32, 'S': 8192, 'D': 64, 'dtype': 'fp16', 'selected': True} p50=3.2504 ms 169.1 TFLOPS
+causal_attention sdpa_flash {'B': 2, 'H': 32, 'S': 8192, 'D': 64, 'dtype': 'fp16', 'selected': True} p50=3.2519 ms 169.1 TFLOPS
+causal_attention sdpa_default {'B': 2, 'H': 32, 'S': 8192, 'D': 64, 'dtype': 'fp16', 'selected': True} p50=3.2571 ms 168.8 TFLOPS
+causal_attention kernelforge {'B': 2, 'H': 32, 'S': 8192, 'D': 64, 'dtype': 'bf16', 'selected': True} p50=3.1977 ms 171.9 TFLOPS
+causal_attention sdpa_flash {'B': 2, 'H': 32, 'S': 8192, 'D': 64, 'dtype': 'bf16', 'selected': True} p50=3.2348 ms 169.9 TFLOPS
+causal_attention sdpa_default {'B': 2, 'H': 32, 'S': 8192, 'D': 64, 'dtype': 'bf16', 'selected': True} p50=3.2132 ms 171.1 TFLOPS
+causal_attention kernelforge {'B': 2, 'H': 32, 'S': 8192, 'D': 128, 'dtype': 'fp16', 'selected': True} p50=6.7202 ms 163.6 TFLOPS
+causal_attention sdpa_flash {'B': 2, 'H': 32, 'S': 8192, 'D': 128, 'dtype': 'fp16', 'selected': True} p50=5.7060 ms 192.7 TFLOPS
+causal_attention sdpa_default {'B': 2, 'H': 32, 'S': 8192, 'D': 128, 'dtype': 'fp16', 'selected': True} p50=5.6862 ms 193.4 TFLOPS
+causal_attention kernelforge {'B': 2, 'H': 32, 'S': 8192, 'D': 128, 'dtype': 'bf16', 'selected': True} p50=6.5490 ms 167.9 TFLOPS
+causal_attention sdpa_flash {'B': 2, 'H': 32, 'S': 8192, 'D': 128, 'dtype': 'bf16', 'selected': True} p50=5.5614 ms 197.7 TFLOPS
+causal_attention sdpa_default {'B': 2, 'H': 32, 'S': 8192, 'D': 128, 'dtype': 'bf16', 'selected': True} p50=5.6070 ms 196.1 TFLOPS
+causal_attention kernelforge {'B': 32, 'H': 32, 'S': 512, 'D': 64, 'dtype': 'fp16', 'selected': False} p50=0.3485 ms 98.6 TFLOPS
+causal_attention sdpa_flash {'B': 32, 'H': 32, 'S': 512, 'D': 64, 'dtype': 'fp16', 'selected': False} p50=0.3390 ms 101.3 TFLOPS
+causal_attention sdpa_default {'B': 32, 'H': 32, 'S': 512, 'D': 64, 'dtype': 'fp16', 'selected': False} p50=0.3367 ms 102.1 TFLOPS
+causal_attention kernelforge {'B': 32, 'H': 32, 'S': 512, 'D': 64, 'dtype': 'bf16', 'selected': False} p50=0.3411 ms 100.7 TFLOPS
+causal_attention sdpa_flash {'B': 32, 'H': 32, 'S': 512, 'D': 64, 'dtype': 'bf16', 'selected': False} p50=0.3361 ms 102.2 TFLOPS
+causal_attention sdpa_default {'B': 32, 'H': 32, 'S': 512, 'D': 64, 'dtype': 'bf16', 'selected': False} p50=0.3348 ms 102.6 TFLOPS
+causal_attention kernelforge {'B': 32, 'H': 32, 'S': 512, 'D': 128, 'dtype': 'fp16', 'selected': False} p50=0.7135 ms 96.3 TFLOPS
+causal_attention sdpa_flash {'B': 32, 'H': 32, 'S': 512, 'D': 128, 'dtype': 'fp16', 'selected': False} p50=0.5278 ms 130.2 TFLOPS
+causal_attention sdpa_default {'B': 32, 'H': 32, 'S': 512, 'D': 128, 'dtype': 'fp16', 'selected': False} p50=0.5514 ms 124.6 TFLOPS
+causal_attention kernelforge {'B': 32, 'H': 32, 'S': 512, 'D': 128, 'dtype': 'bf16', 'selected': False} p50=0.7076 ms 97.1 TFLOPS
+causal_attention sdpa_flash {'B': 32, 'H': 32, 'S': 512, 'D': 128, 'dtype': 'bf16', 'selected': False} p50=0.5435 ms 126.4 TFLOPS
+causal_attention sdpa_default {'B': 32, 'H': 32, 'S': 512, 'D': 128, 'dtype': 'bf16', 'selected': False} p50=0.5395 ms 127.4 TFLOPS
+causal_attention kernelforge {'B': 16, 'H': 32, 'S': 1024, 'D': 64, 'dtype': 'fp16', 'selected': False} p50=0.5427 ms 126.6 TFLOPS
+causal_attention sdpa_flash {'B': 16, 'H': 32, 'S': 1024, 'D': 64, 'dtype': 'fp16', 'selected': False} p50=0.5206 ms 132.0 TFLOPS
+causal_attention sdpa_default {'B': 16, 'H': 32, 'S': 1024, 'D': 64, 'dtype': 'fp16', 'selected': False} p50=0.5193 ms 132.3 TFLOPS
+causal_attention kernelforge {'B': 16, 'H': 32, 'S': 1024, 'D': 64, 'dtype': 'bf16', 'selected': False} p50=0.5381 ms 127.7 TFLOPS
+causal_attention sdpa_flash {'B': 16, 'H': 32, 'S': 1024, 'D': 64, 'dtype': 'bf16', 'selected': False} p50=0.5092 ms 135.0 TFLOPS
+causal_attention sdpa_default {'B': 16, 'H': 32, 'S': 1024, 'D': 64, 'dtype': 'bf16', 'selected': False} p50=0.5130 ms 134.0 TFLOPS
+causal_attention kernelforge {'B': 16, 'H': 32, 'S': 1024, 'D': 128, 'dtype': 'fp16', 'selected': False} p50=1.1419 ms 120.4 TFLOPS
+causal_attention sdpa_flash {'B': 16, 'H': 32, 'S': 1024, 'D': 128, 'dtype': 'fp16', 'selected': False} p50=0.9003 ms 152.7 TFLOPS
+causal_attention sdpa_default {'B': 16, 'H': 32, 'S': 1024, 'D': 128, 'dtype': 'fp16', 'selected': False} p50=0.8930 ms 153.9 TFLOPS
+causal_attention kernelforge {'B': 16, 'H': 32, 'S': 1024, 'D': 128, 'dtype': 'bf16', 'selected': False} p50=1.1322 ms 121.4 TFLOPS
+causal_attention sdpa_flash {'B': 16, 'H': 32, 'S': 1024, 'D': 128, 'dtype': 'bf16', 'selected': False} p50=0.8804 ms 156.1 TFLOPS
+causal_attention sdpa_default {'B': 16, 'H': 32, 'S': 1024, 'D': 128, 'dtype': 'bf16', 'selected': False} p50=0.8804 ms 156.1 TFLOPS
+causal_attention kernelforge {'B': 1, 'H': 32, 'S': 16384, 'D': 64, 'dtype': 'fp16', 'selected': False} p50=6.3656 ms 172.7 TFLOPS
+causal_attention sdpa_flash {'B': 1, 'H': 32, 'S': 16384, 'D': 64, 'dtype': 'fp16', 'selected': False} p50=6.4518 ms 170.4 TFLOPS
+causal_attention sdpa_default {'B': 1, 'H': 32, 'S': 16384, 'D': 64, 'dtype': 'fp16', 'selected': False} p50=6.4862 ms 169.5 TFLOPS
+causal_attention kernelforge {'B': 1, 'H': 32, 'S': 16384, 'D': 64, 'dtype': 'bf16', 'selected': False} p50=6.2846 ms 175.0 TFLOPS
+causal_attention sdpa_flash {'B': 1, 'H': 32, 'S': 16384, 'D': 64, 'dtype': 'bf16', 'selected': False} p50=6.3396 ms 173.4 TFLOPS
+causal_attention sdpa_default {'B': 1, 'H': 32, 'S': 16384, 'D': 64, 'dtype': 'bf16', 'selected': False} p50=6.3575 ms 172.9 TFLOPS
+causal_attention kernelforge {'B': 1, 'H': 32, 'S': 16384, 'D': 128, 'dtype': 'fp16', 'selected': False} p50=12.9843 ms 169.4 TFLOPS
+causal_attention sdpa_flash {'B': 1, 'H': 32, 'S': 16384, 'D': 128, 'dtype': 'fp16', 'selected': False} p50=11.1418 ms 197.4 TFLOPS
+causal_attention sdpa_default {'B': 1, 'H': 32, 'S': 16384, 'D': 128, 'dtype': 'fp16', 'selected': False} p50=11.1739 ms 196.8 TFLOPS
+causal_attention kernelforge {'B': 1, 'H': 32, 'S': 16384, 'D': 128, 'dtype': 'bf16', 'selected': False} p50=12.8388 ms 171.3 TFLOPS
+causal_attention sdpa_flash {'B': 1, 'H': 32, 'S': 16384, 'D': 128, 'dtype': 'bf16', 'selected': False} p50=11.0254 ms 199.5 TFLOPS
+causal_attention sdpa_default {'B': 1, 'H': 32, 'S': 16384, 'D': 128, 'dtype': 'bf16', 'selected': False} p50=11.0648 ms 198.7 TFLOPS
+causal_attention kernelforge {'B': 16, 'H': 32, 'S': 1000, 'D': 64, 'dtype': 'fp16', 'selected': False} p50=0.5421 ms 120.9 TFLOPS
+causal_attention sdpa_flash {'B': 16, 'H': 32, 'S': 1000, 'D': 64, 'dtype': 'fp16', 'selected': False} p50=0.6596 ms 99.4 TFLOPS
+causal_attention sdpa_default {'B': 16, 'H': 32, 'S': 1000, 'D': 64, 'dtype': 'fp16', 'selected': False} p50=0.6575 ms 99.7 TFLOPS
+causal_attention kernelforge {'B': 16, 'H': 32, 'S': 1000, 'D': 64, 'dtype': 'bf16', 'selected': False} p50=0.5419 ms 120.9 TFLOPS
+causal_attention sdpa_flash {'B': 16, 'H': 32, 'S': 1000, 'D': 64, 'dtype': 'bf16', 'selected': False} p50=0.6605 ms 99.2 TFLOPS
+causal_attention sdpa_default {'B': 16, 'H': 32, 'S': 1000, 'D': 64, 'dtype': 'bf16', 'selected': False} p50=0.6598 ms 99.3 TFLOPS
+causal_attention kernelforge {'B': 16, 'H': 32, 'S': 1000, 'D': 128, 'dtype': 'fp16', 'selected': False} p50=1.1340 ms 115.6 TFLOPS
+causal_attention sdpa_flash {'B': 16, 'H': 32, 'S': 1000, 'D': 128, 'dtype': 'fp16', 'selected': False} p50=0.9913 ms 132.2 TFLOPS
+causal_attention sdpa_default {'B': 16, 'H': 32, 'S': 1000, 'D': 128, 'dtype': 'fp16', 'selected': False} p50=1.0245 ms 127.9 TFLOPS
+causal_attention kernelforge {'B': 16, 'H': 32, 'S': 1000, 'D': 128, 'dtype': 'bf16', 'selected': False} p50=1.1338 ms 115.6 TFLOPS
+causal_attention sdpa_flash {'B': 16, 'H': 32, 'S': 1000, 'D': 128, 'dtype': 'bf16', 'selected': False} p50=1.0104 ms 129.7 TFLOPS
+causal_attention sdpa_default {'B': 16, 'H': 32, 'S': 1000, 'D': 128, 'dtype': 'bf16', 'selected': False} p50=1.0122 ms 129.5 TFLOPS
+causal_attention kernelforge {'B': 4, 'H': 32, 'S': 4097, 'D': 64, 'dtype': 'fp16', 'selected': False} p50=1.8027 ms 152.6 TFLOPS
+causal_attention sdpa_flash {'B': 4, 'H': 32, 'S': 4097, 'D': 64, 'dtype': 'fp16', 'selected': False} p50=1.8588 ms 148.0 TFLOPS
+causal_attention sdpa_default {'B': 4, 'H': 32, 'S': 4097, 'D': 64, 'dtype': 'fp16', 'selected': False} p50=1.8481 ms 148.8 TFLOPS
+causal_attention kernelforge {'B': 4, 'H': 32, 'S': 4097, 'D': 64, 'dtype': 'bf16', 'selected': False} p50=1.7816 ms 154.4 TFLOPS
+causal_attention sdpa_flash {'B': 4, 'H': 32, 'S': 4097, 'D': 64, 'dtype': 'bf16', 'selected': False} p50=1.8511 ms 148.6 TFLOPS
+causal_attention sdpa_default {'B': 4, 'H': 32, 'S': 4097, 'D': 64, 'dtype': 'bf16', 'selected': False} p50=1.8278 ms 150.5 TFLOPS
+causal_attention kernelforge {'B': 4, 'H': 32, 'S': 4097, 'D': 128, 'dtype': 'fp16', 'selected': False} p50=3.7058 ms 148.4 TFLOPS
+causal_attention sdpa_flash {'B': 4, 'H': 32, 'S': 4097, 'D': 128, 'dtype': 'fp16', 'selected': False} p50=3.3352 ms 164.9 TFLOPS
+causal_attention sdpa_default {'B': 4, 'H': 32, 'S': 4097, 'D': 128, 'dtype': 'fp16', 'selected': False} p50=3.3179 ms 165.8 TFLOPS
+causal_attention kernelforge {'B': 4, 'H': 32, 'S': 4097, 'D': 128, 'dtype': 'bf16', 'selected': False} p50=3.6543 ms 150.5 TFLOPS
+causal_attention sdpa_flash {'B': 4, 'H': 32, 'S': 4097, 'D': 128, 'dtype': 'bf16', 'selected': False} p50=3.2723 ms 168.1 TFLOPS
+causal_attention sdpa_default {'B': 4, 'H': 32, 'S': 4097, 'D': 128, 'dtype': 'bf16', 'selected': False} p50=3.3195 ms 165.7 TFLOPS
+causal_attention kernelforge {'B': 8, 'H': 32, 'S': 2048, 'D': 64, 'dtype': 'fp16', 'selected': True} p50=0.9260 ms 148.4 TFLOPS
+causal_attention sdpa_flash {'B': 8, 'H': 32, 'S': 2048, 'D': 64, 'dtype': 'fp16', 'selected': True} p50=0.8993 ms 152.8 TFLOPS
+causal_attention sdpa_default {'B': 8, 'H': 32, 'S': 2048, 'D': 64, 'dtype': 'fp16', 'selected': True} p50=0.9050 ms 151.9 TFLOPS
+causal_attention kernelforge {'B': 8, 'H': 32, 'S': 2048, 'D': 64, 'dtype': 'bf16', 'selected': True} p50=0.9264 ms 148.4 TFLOPS
+causal_attention sdpa_flash {'B': 8, 'H': 32, 'S': 2048, 'D': 64, 'dtype': 'bf16', 'selected': True} p50=0.8931 ms 153.9 TFLOPS
+causal_attention sdpa_default {'B': 8, 'H': 32, 'S': 2048, 'D': 64, 'dtype': 'bf16', 'selected': True} p50=0.8943 ms 153.7 TFLOPS
+causal_attention kernelforge {'B': 8, 'H': 32, 'S': 2048, 'D': 128, 'dtype': 'fp16', 'selected': True} p50=1.9426 ms 141.5 TFLOPS
+causal_attention sdpa_flash {'B': 8, 'H': 32, 'S': 2048, 'D': 128, 'dtype': 'fp16', 'selected': True} p50=1.5867 ms 173.2 TFLOPS
+causal_attention sdpa_default {'B': 8, 'H': 32, 'S': 2048, 'D': 128, 'dtype': 'fp16', 'selected': True} p50=1.5910 ms 172.8 TFLOPS
+causal_attention kernelforge {'B': 8, 'H': 32, 'S': 2048, 'D': 128, 'dtype': 'bf16', 'selected': True} p50=1.9228 ms 143.0 TFLOPS
+causal_attention sdpa_flash {'B': 8, 'H': 32, 'S': 2048, 'D': 128, 'dtype': 'bf16', 'selected': True} p50=1.5696 ms 175.1 TFLOPS
+causal_attention sdpa_default {'B': 8, 'H': 32, 'S': 2048, 'D': 128, 'dtype': 'bf16', 'selected': True} p50=1.5562 ms 176.6 TFLOPS
+causal_attention kernelforge {'B': 4, 'H': 32, 'S': 4096, 'D': 64, 'dtype': 'fp16', 'selected': True} p50=1.6984 ms 161.8 TFLOPS
+causal_attention sdpa_flash {'B': 4, 'H': 32, 'S': 4096, 'D': 64, 'dtype': 'fp16', 'selected': True} p50=1.6997 ms 161.7 TFLOPS
+causal_attention sdpa_default {'B': 4, 'H': 32, 'S': 4096, 'D': 64, 'dtype': 'fp16', 'selected': True} p50=1.7041 ms 161.3 TFLOPS
+causal_attention kernelforge {'B': 4, 'H': 32, 'S': 4096, 'D': 64, 'dtype': 'bf16', 'selected': True} p50=1.6588 ms 165.7 TFLOPS
+causal_attention sdpa_flash {'B': 4, 'H': 32, 'S': 4096, 'D': 64, 'dtype': 'bf16', 'selected': True} p50=1.6879 ms 162.8 TFLOPS
+causal_attention sdpa_default {'B': 4, 'H': 32, 'S': 4096, 'D': 64, 'dtype': 'bf16', 'selected': True} p50=1.6635 ms 165.2 TFLOPS
+causal_attention kernelforge {'B': 4, 'H': 32, 'S': 4096, 'D': 128, 'dtype': 'fp16', 'selected': True} p50=3.5015 ms 157.0 TFLOPS
+causal_attention sdpa_flash {'B': 4, 'H': 32, 'S': 4096, 'D': 128, 'dtype': 'fp16', 'selected': True} p50=2.9397 ms 187.0 TFLOPS
+causal_attention sdpa_default {'B': 4, 'H': 32, 'S': 4096, 'D': 128, 'dtype': 'fp16', 'selected': True} p50=2.9467 ms 186.6 TFLOPS
+causal_attention kernelforge {'B': 4, 'H': 32, 'S': 4096, 'D': 128, 'dtype': 'bf16', 'selected': True} p50=3.4804 ms 158.0 TFLOPS
+causal_attention sdpa_flash {'B': 4, 'H': 32, 'S': 4096, 'D': 128, 'dtype': 'bf16', 'selected': True} p50=2.9090 ms 189.0 TFLOPS
+causal_attention sdpa_default {'B': 4, 'H': 32, 'S': 4096, 'D': 128, 'dtype': 'bf16', 'selected': True} p50=2.9017 ms 189.5 TFLOPS
+causal_attention kernelforge {'B': 2, 'H': 32, 'S': 8192, 'D': 64, 'dtype': 'fp16', 'selected': True} p50=3.2676 ms 168.2 TFLOPS
+causal_attention sdpa_flash {'B': 2, 'H': 32, 'S': 8192, 'D': 64, 'dtype': 'fp16', 'selected': True} p50=3.2547 ms 168.9 TFLOPS
+causal_attention sdpa_default {'B': 2, 'H': 32, 'S': 8192, 'D': 64, 'dtype': 'fp16', 'selected': True} p50=3.2892 ms 167.1 TFLOPS
+causal_attention kernelforge {'B': 2, 'H': 32, 'S': 8192, 'D': 64, 'dtype': 'bf16', 'selected': True} p50=3.2150 ms 171.0 TFLOPS
+causal_attention sdpa_flash {'B': 2, 'H': 32, 'S': 8192, 'D': 64, 'dtype': 'bf16', 'selected': True} p50=3.2159 ms 170.9 TFLOPS
+causal_attention sdpa_default {'B': 2, 'H': 32, 'S': 8192, 'D': 64, 'dtype': 'bf16', 'selected': True} p50=3.2390 ms 169.7 TFLOPS
+causal_attention kernelforge {'B': 2, 'H': 32, 'S': 8192, 'D': 128, 'dtype': 'fp16', 'selected': True} p50=6.6907 ms 164.3 TFLOPS
+causal_attention sdpa_flash {'B': 2, 'H': 32, 'S': 8192, 'D': 128, 'dtype': 'fp16', 'selected': True} p50=5.6852 ms 193.4 TFLOPS
+causal_attention sdpa_default {'B': 2, 'H': 32, 'S': 8192, 'D': 128, 'dtype': 'fp16', 'selected': True} p50=5.6844 ms 193.4 TFLOPS
+causal_attention kernelforge {'B': 2, 'H': 32, 'S': 8192, 'D': 128, 'dtype': 'bf16', 'selected': True} p50=6.6178 ms 166.1 TFLOPS
+causal_attention sdpa_flash {'B': 2, 'H': 32, 'S': 8192, 'D': 128, 'dtype': 'bf16', 'selected': True} p50=5.5994 ms 196.4 TFLOPS
+causal_attention sdpa_default {'B': 2, 'H': 32, 'S': 8192, 'D': 128, 'dtype': 'bf16', 'selected': True} p50=5.6323 ms 195.2 TFLOPS
+causal_attention kernelforge {'B': 32, 'H': 32, 'S': 512, 'D': 64, 'dtype': 'fp16', 'selected': False} p50=0.3486 ms 98.6 TFLOPS
+causal_attention sdpa_flash {'B': 32, 'H': 32, 'S': 512, 'D': 64, 'dtype': 'fp16', 'selected': False} p50=0.3381 ms 101.6 TFLOPS
+causal_attention sdpa_default {'B': 32, 'H': 32, 'S': 512, 'D': 64, 'dtype': 'fp16', 'selected': False} p50=0.3377 ms 101.8 TFLOPS
+causal_attention kernelforge {'B': 32, 'H': 32, 'S': 512, 'D': 64, 'dtype': 'bf16', 'selected': False} p50=0.3446 ms 99.7 TFLOPS
+causal_attention sdpa_flash {'B': 32, 'H': 32, 'S': 512, 'D': 64, 'dtype': 'bf16', 'selected': False} p50=0.3380 ms 101.7 TFLOPS
+causal_attention sdpa_default {'B': 32, 'H': 32, 'S': 512, 'D': 64, 'dtype': 'bf16', 'selected': False} p50=0.3381 ms 101.6 TFLOPS
+causal_attention kernelforge {'B': 32, 'H': 32, 'S': 512, 'D': 128, 'dtype': 'fp16', 'selected': False} p50=0.7143 ms 96.2 TFLOPS
+causal_attention sdpa_flash {'B': 32, 'H': 32, 'S': 512, 'D': 128, 'dtype': 'fp16', 'selected': False} p50=0.5514 ms 124.6 TFLOPS
+causal_attention sdpa_default {'B': 32, 'H': 32, 'S': 512, 'D': 128, 'dtype': 'fp16', 'selected': False} p50=0.5548 ms 123.9 TFLOPS
+causal_attention kernelforge {'B': 32, 'H': 32, 'S': 512, 'D': 128, 'dtype': 'bf16', 'selected': False} p50=0.7097 ms 96.8 TFLOPS
+causal_attention sdpa_flash {'B': 32, 'H': 32, 'S': 512, 'D': 128, 'dtype': 'bf16', 'selected': False} p50=0.5466 ms 125.7 TFLOPS
+causal_attention sdpa_default {'B': 32, 'H': 32, 'S': 512, 'D': 128, 'dtype': 'bf16', 'selected': False} p50=0.5464 ms 125.8 TFLOPS
+causal_attention kernelforge {'B': 16, 'H': 32, 'S': 1024, 'D': 64, 'dtype': 'fp16', 'selected': False} p50=0.5498 ms 125.0 TFLOPS
+causal_attention sdpa_flash {'B': 16, 'H': 32, 'S': 1024, 'D': 64, 'dtype': 'fp16', 'selected': False} p50=0.5203 ms 132.1 TFLOPS
+causal_attention sdpa_default {'B': 16, 'H': 32, 'S': 1024, 'D': 64, 'dtype': 'fp16', 'selected': False} p50=0.5174 ms 132.8 TFLOPS
+causal_attention kernelforge {'B': 16, 'H': 32, 'S': 1024, 'D': 64, 'dtype': 'bf16', 'selected': False} p50=0.5436 ms 126.4 TFLOPS
+causal_attention sdpa_flash {'B': 16, 'H': 32, 'S': 1024, 'D': 64, 'dtype': 'bf16', 'selected': False} p50=0.5164 ms 133.1 TFLOPS
+causal_attention sdpa_default {'B': 16, 'H': 32, 'S': 1024, 'D': 64, 'dtype': 'bf16', 'selected': False} p50=0.5153 ms 133.4 TFLOPS
+causal_attention kernelforge {'B': 16, 'H': 32, 'S': 1024, 'D': 128, 'dtype': 'fp16', 'selected': False} p50=1.1410 ms 120.5 TFLOPS
+causal_attention sdpa_flash {'B': 16, 'H': 32, 'S': 1024, 'D': 128, 'dtype': 'fp16', 'selected': False} p50=0.9000 ms 152.7 TFLOPS
+causal_attention sdpa_default {'B': 16, 'H': 32, 'S': 1024, 'D': 128, 'dtype': 'fp16', 'selected': False} p50=0.9021 ms 152.3 TFLOPS
+causal_attention kernelforge {'B': 16, 'H': 32, 'S': 1024, 'D': 128, 'dtype': 'bf16', 'selected': False} p50=1.1320 ms 121.4 TFLOPS
+causal_attention sdpa_flash {'B': 16, 'H': 32, 'S': 1024, 'D': 128, 'dtype': 'bf16', 'selected': False} p50=0.8791 ms 156.3 TFLOPS
+causal_attention sdpa_default {'B': 16, 'H': 32, 'S': 1024, 'D': 128, 'dtype': 'bf16', 'selected': False} p50=0.8782 ms 156.5 TFLOPS
+causal_attention kernelforge {'B': 1, 'H': 32, 'S': 16384, 'D': 64, 'dtype': 'fp16', 'selected': False} p50=6.3872 ms 172.1 TFLOPS
+causal_attention sdpa_flash {'B': 1, 'H': 32, 'S': 16384, 'D': 64, 'dtype': 'fp16', 'selected': False} p50=6.4670 ms 170.0 TFLOPS
+causal_attention sdpa_default {'B': 1, 'H': 32, 'S': 16384, 'D': 64, 'dtype': 'fp16', 'selected': False} p50=6.4409 ms 170.7 TFLOPS
+causal_attention kernelforge {'B': 1, 'H': 32, 'S': 16384, 'D': 64, 'dtype': 'bf16', 'selected': False} p50=6.3126 ms 174.2 TFLOPS
+causal_attention sdpa_flash {'B': 1, 'H': 32, 'S': 16384, 'D': 64, 'dtype': 'bf16', 'selected': False} p50=6.3243 ms 173.9 TFLOPS
+causal_attention sdpa_default {'B': 1, 'H': 32, 'S': 16384, 'D': 64, 'dtype': 'bf16', 'selected': False} p50=6.4125 ms 171.5 TFLOPS
+causal_attention kernelforge {'B': 1, 'H': 32, 'S': 16384, 'D': 128, 'dtype': 'fp16', 'selected': False} p50=12.9811 ms 169.4 TFLOPS
+causal_attention sdpa_flash {'B': 1, 'H': 32, 'S': 16384, 'D': 128, 'dtype': 'fp16', 'selected': False} p50=11.1475 ms 197.3 TFLOPS
+causal_attention sdpa_default {'B': 1, 'H': 32, 'S': 16384, 'D': 128, 'dtype': 'fp16', 'selected': False} p50=11.1757 ms 196.8 TFLOPS
+causal_attention kernelforge {'B': 1, 'H': 32, 'S': 16384, 'D': 128, 'dtype': 'bf16', 'selected': False} p50=12.8388 ms 171.3 TFLOPS
+causal_attention sdpa_flash {'B': 1, 'H': 32, 'S': 16384, 'D': 128, 'dtype': 'bf16', 'selected': False} p50=10.9938 ms 200.0 TFLOPS
+causal_attention sdpa_default {'B': 1, 'H': 32, 'S': 16384, 'D': 128, 'dtype': 'bf16', 'selected': False} p50=11.0426 ms 199.1 TFLOPS
+causal_attention kernelforge {'B': 16, 'H': 32, 'S': 1000, 'D': 64, 'dtype': 'fp16', 'selected': False} p50=0.5415 ms 121.0 TFLOPS
+causal_attention sdpa_flash {'B': 16, 'H': 32, 'S': 1000, 'D': 64, 'dtype': 'fp16', 'selected': False} p50=0.6608 ms 99.2 TFLOPS
+causal_attention sdpa_default {'B': 16, 'H': 32, 'S': 1000, 'D': 64, 'dtype': 'fp16', 'selected': False} p50=0.6577 ms 99.6 TFLOPS
+causal_attention kernelforge {'B': 16, 'H': 32, 'S': 1000, 'D': 64, 'dtype': 'bf16', 'selected': False} p50=0.5361 ms 122.2 TFLOPS
+causal_attention sdpa_flash {'B': 16, 'H': 32, 'S': 1000, 'D': 64, 'dtype': 'bf16', 'selected': False} p50=0.6609 ms 99.2 TFLOPS
+causal_attention sdpa_default {'B': 16, 'H': 32, 'S': 1000, 'D': 64, 'dtype': 'bf16', 'selected': False} p50=0.6580 ms 99.6 TFLOPS
+causal_attention kernelforge {'B': 16, 'H': 32, 'S': 1000, 'D': 128, 'dtype': 'fp16', 'selected': False} p50=1.1485 ms 114.1 TFLOPS
+causal_attention sdpa_flash {'B': 16, 'H': 32, 'S': 1000, 'D': 128, 'dtype': 'fp16', 'selected': False} p50=1.0231 ms 128.1 TFLOPS
+causal_attention sdpa_default {'B': 16, 'H': 32, 'S': 1000, 'D': 128, 'dtype': 'fp16', 'selected': False} p50=1.0233 ms 128.1 TFLOPS
+causal_attention kernelforge {'B': 16, 'H': 32, 'S': 1000, 'D': 128, 'dtype': 'bf16', 'selected': False} p50=1.1331 ms 115.7 TFLOPS
+causal_attention sdpa_flash {'B': 16, 'H': 32, 'S': 1000, 'D': 128, 'dtype': 'bf16', 'selected': False} p50=0.9922 ms 132.1 TFLOPS
+causal_attention sdpa_default {'B': 16, 'H': 32, 'S': 1000, 'D': 128, 'dtype': 'bf16', 'selected': False} p50=1.0145 ms 129.2 TFLOPS
+causal_attention kernelforge {'B': 4, 'H': 32, 'S': 4097, 'D': 64, 'dtype': 'fp16', 'selected': False} p50=1.7961 ms 153.1 TFLOPS
+causal_attention sdpa_flash {'B': 4, 'H': 32, 'S': 4097, 'D': 64, 'dtype': 'fp16', 'selected': False} p50=1.8552 ms 148.2 TFLOPS
+causal_attention sdpa_default {'B': 4, 'H': 32, 'S': 4097, 'D': 64, 'dtype': 'fp16', 'selected': False} p50=1.8506 ms 148.6 TFLOPS
+causal_attention kernelforge {'B': 4, 'H': 32, 'S': 4097, 'D': 64, 'dtype': 'bf16', 'selected': False} p50=1.7761 ms 154.8 TFLOPS
+causal_attention sdpa_flash {'B': 4, 'H': 32, 'S': 4097, 'D': 64, 'dtype': 'bf16', 'selected': False} p50=1.8353 ms 149.8 TFLOPS
+causal_attention sdpa_default {'B': 4, 'H': 32, 'S': 4097, 'D': 64, 'dtype': 'bf16', 'selected': False} p50=1.8333 ms 150.0 TFLOPS
+causal_attention kernelforge {'B': 4, 'H': 32, 'S': 4097, 'D': 128, 'dtype': 'fp16', 'selected': False} p50=3.6926 ms 149.0 TFLOPS
+causal_attention sdpa_flash {'B': 4, 'H': 32, 'S': 4097, 'D': 128, 'dtype': 'fp16', 'selected': False} p50=3.3410 ms 164.6 TFLOPS
+causal_attention sdpa_default {'B': 4, 'H': 32, 'S': 4097, 'D': 128, 'dtype': 'fp16', 'selected': False} p50=3.3547 ms 164.0 TFLOPS
+causal_attention kernelforge {'B': 4, 'H': 32, 'S': 4097, 'D': 128, 'dtype': 'bf16', 'selected': False} p50=3.6538 ms 150.5 TFLOPS
+causal_attention sdpa_flash {'B': 4, 'H': 32, 'S': 4097, 'D': 128, 'dtype': 'bf16', 'selected': False} p50=3.2869 ms 167.3 TFLOPS
+causal_attention sdpa_default {'B': 4, 'H': 32, 'S': 4097, 'D': 128, 'dtype': 'bf16', 'selected': False} p50=3.2696 ms 168.2 TFLOPS
+Traceback (most recent call last):
+  File "/root/kf-venv/bin/kernelforge", line 6, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File "/root/kernelforge/src/kernelforge/cli.py", line 104, in main
+    return _report(args)
+           ^^^^^^^^^^^^^
+  File "/root/kernelforge/src/kernelforge/cli.py", line 83, in _report
+    failures = write_report(args.raw, args.out)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/kernelforge/src/kernelforge/report.py", line 532, in write_report
+    markdown, failures = render(raw_dir, out_dir / "plots")
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/kernelforge/src/kernelforge/report.py", line 493, in render
+    attention = load_groups(raw_dir, "causal_attention")
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/kernelforge/src/kernelforge/report.py", line 39, in load_groups
+    return group_launches(load_launch_records(Path(raw_dir) / suite))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/kernelforge/src/kernelforge/bench/harness.py", line 208, in group_launches
+    return {key: (aggregate_launches(group) if len(group) == 3 else None, group)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/kernelforge/src/kernelforge/bench/harness.py", line 181, in aggregate_launches
+    return Aggregate(**_launch_values(records),
+                       ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/kernelforge/src/kernelforge/bench/harness.py", line 165, in _launch_values
+    raise ValueError(f"Cannot aggregate differing {field}")
+ValueError: Cannot aggregate differing baseline_call
+## Pre-registered criterion 2: Softmax ratio >= 0.80
+
+| N | dtype | M | GB/s | ratio to BW_copy | threshold | result | n |
+|---|---|---|---|---|---|---|---|
+| 2048 | fp16 | 131072 | 1744.7 | 0.993 | 0.80 | PASS | 3 |
+| 2048 | bf16 | 131072 | 1730.3 | 0.984 | 0.80 | PASS | 3 |
+| 2048 | fp32 | 65536 | 1744.7 | 0.993 | 0.80 | PASS | 3 |
+| 4096 | fp16 | 65536 | 1741.8 | 0.991 | 0.80 | PASS | 3 |
+| 4096 | bf16 | 65536 | 1738.9 | 0.989 | 0.80 | PASS | 3 |
+| 4096 | fp32 | 32768 | 1736.1 | 0.988 | 0.80 | PASS | 3 |
+| 8192 | fp16 | 32768 | 1741.8 | 0.991 | 0.80 | PASS | 3 |
+| 8192 | bf16 | 32768 | 1736.1 | 0.988 | 0.80 | PASS | 3 |
+| 8192 | fp32 | 16384 | 1730.3 | 0.984 | 0.80 | PASS | 3 |
+
+## Pre-registered criterion 3: LayerNorm ratio >= 0.80
+
+| N | dtype | M | GB/s | ratio to BW_copy | threshold | result | n |
+|---|---|---|---|---|---|---|---|
+| 2048 | fp16 | 131072 | 1750.6 | 0.996 | 0.80 | PASS | 3 |
+| 2048 | bf16 | 131072 | 1756.4 | 0.999 | 0.80 | PASS | 3 |
+| 2048 | fp32 | 65536 | 1739.0 | 0.989 | 0.80 | PASS | 3 |
+| 4096 | fp16 | 65536 | 1753.5 | 0.998 | 0.80 | PASS | 3 |
+| 4096 | bf16 | 65536 | 1753.5 | 0.998 | 0.80 | PASS | 3 |
+| 4096 | fp32 | 32768 | 1750.6 | 0.996 | 0.80 | PASS | 3 |
+| 8192 | fp16 | 32768 | 1724.7 | 0.981 | 0.80 | PASS | 3 |
+| 8192 | bf16 | 32768 | 1727.5 | 0.983 | 0.80 | PASS | 3 |
+| 8192 | fp32 | 16384 | 1724.7 | 0.981 | 0.80 | PASS | 3 |
+
+## Memory-copy baseline (BW_copy)
+
+| implementation | call | GB/s | ms p50 (launch range) | n |
+|---|---|---|---|---|
+| triton_copy | `kernelforge.ops._copy_kernels.triton_copy(x, y)` | 1757.9 | 1.2216 (1.2216-1.2237) | 3 |
+| torch_copy_ | `y.copy_(x)` | 1746.2 | 1.2298 (1.2298-1.2298) | 3 |
+
+BW_copy = **1757.9 GB/s** (triton_copy), 0.862 of the 2039 GB/s datasheet figure. Buffer: 1073741824 bytes, counted as one read plus one write.
+
+## Softmax sweep

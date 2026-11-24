@@ -288,9 +288,8 @@ def attention_operations(case):
              "kernelforge.causal_attention(q, k, v)", best, rejected),
             ("sdpa_flash", lambda: _sdpa(q, k, v, flash),
              f"{call} under sdpa_kernel(SDPBackend.FLASH_ATTENTION)", dict, list),
-            ("sdpa_default", lambda: _sdpa(q, k, v, None),
-             f"{call}, default backend; kernel {default_sdpa_kernel(q, k, v)}", dict, list)], \
-        (q, k, v)
+            ("sdpa_default", lambda: _sdpa(q, k, v, None), f"{call}, default backend",
+             lambda: {"profiled_kernel": default_sdpa_kernel(q, k, v)}, list)], (q, k, v)
 
 
 def attention_accuracy(case, q, k, v):

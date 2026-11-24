@@ -266,17 +266,22 @@ def attention_sweep(groups):
         ours, flash, _ = _attention_pair(groups, case)
         default, default_group = groups.get(_key("causal_attention", "sdpa_default", case),
                                             (None, []))
-        defaults.update(record.baseline_call for record in default_group)
+        # Older records embedded the profiled kernel in the call; newer ones keep it in autotune.
+        defaults.update(record.autotune.best_config.get("profiled_kernel", record.baseline_call)
+                        for record in default_group)
         name = f"{_shape(case)}{'*' if case['selected'] else ''}"
         if ours is None or flash is None:
             lines.append(f"| {name} | {case['dtype']} | not measured | | | | | | |")
             continue
-        default_cell = "-" if default is None else f"{default.tflops:.1f}"
+        default_cell = (f"{default.tflops:.1f}" if default is not None
+                        else "not aggregated" if default_group else "-")
         lines.append(f"| {name} | {case['dtype']} | {ours.tflops:.1f} | {ours.ms_p50:.3f} "
                      f"({ours.ms_min:.3f}-{ours.ms_max:.3f}) | "
                      f"{100 * ours.tflops / PEAK_TFLOPS:.1f}% | {flash.tflops:.1f} | "
                      f"{ours.tflops / flash.tflops:.3f} | {default_cell} | 3 |")
-    lines += ["", "Default-backend calls observed (kernel named with torch.profiler):", ""]
+    lines += ["", ("Default-backend kernels observed with torch.profiler (\"unknown\" = the "
+                   "profiler captured no CUDA event; such launches cannot be aggregated with "
+                   "launches that named the kernel):"), ""]
     lines += [f"- `{call}`" for call in sorted(defaults)] or ["- none measured"]
     return lines + [""]
 

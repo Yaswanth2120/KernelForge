@@ -201,9 +201,22 @@ def load_launch_records(directory):
 
 
 def group_launches(records: Sequence[Measurement]):
-    """Group records per configuration; aggregate only groups with exactly three launches."""
+    """Group records per configuration; aggregate only three consistent launches.
+
+    A group with a launch count other than three, or launches that disagree on identity fields
+    (for example the recorded baseline call), keeps its records but gets no aggregate, so no
+    number is ever printed for it.
+    """
     groups = {}
     for record in records:
         groups.setdefault(case_key(record), []).append(record)
-    return {key: (aggregate_launches(group) if len(group) == 3 else None, group)
-            for key, group in groups.items()}
+    return {key: (_aggregate_or_none(group), group) for key, group in groups.items()}
+
+
+def _aggregate_or_none(group):
+    if len(group) != 3:
+        return None
+    try:
+        return aggregate_launches(group)
+    except ValueError:
+        return None

@@ -234,3 +234,13 @@ def test_attention_flops_accounting():
     case = {'B': 8, 'H': 32, 'S': 2048, 'D': 64, 'dtype': 'fp16'}
     assert gpu_runner.attention_flops(case) == 2 * 8 * 32 * 2048**2 * 64
     assert gpu_runner.attention_bytes(case) == 4 * 8 * 32 * 2048 * 64 * 2
+
+
+def test_inconsistent_launches_are_not_aggregated():
+    from kernelforge.bench.harness import group_launches
+
+    case = {'B': 1, 'H': 1, 'S': 64, 'D': 64, 'dtype': 'fp16', 'selected': False}
+    records = [attention_record(case, 'sdpa_default', 1.0, i) for i in range(3)]
+    records[0] = records[0].model_copy(update={'baseline_call': 'different(q, k, v)'})
+    (aggregate, group), = group_launches(records).values()
+    assert aggregate is None and len(group) == 3

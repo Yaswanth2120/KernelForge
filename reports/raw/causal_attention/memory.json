@@ -1,0 +1,167 @@
+[
+  {
+    "case": {
+      "B": 1,
+      "H": 32,
+      "S": 1024,
+      "D": 64,
+      "dtype": "fp16"
+    },
+    "impl": "kernelforge",
+    "peak_mem_delta_bytes": 4194304
+  },
+  {
+    "case": {
+      "B": 1,
+      "H": 32,
+      "S": 1024,
+      "D": 64,
+      "dtype": "fp16"
+    },
+    "impl": "sdpa_flash",
+    "peak_mem_delta_bytes": 4326400
+  },
+  {
+    "case": {
+      "B": 1,
+      "H": 32,
+      "S": 1024,
+      "D": 64,
+      "dtype": "fp16"
+    },
+    "impl": "sdpa_math",
+    "peak_mem_delta_bytes": 339771904
+  },
+  {
+    "case": {
+      "B": 1,
+      "H": 32,
+      "S": 2048,
+      "D": 64,
+      "dtype": "fp16"
+    },
+    "impl": "kernelforge",
+    "peak_mem_delta_bytes": 8388608
+  },
+  {
+    "case": {
+      "B": 1,
+      "H": 32,
+      "S": 2048,
+      "D": 64,
+      "dtype": "fp16"
+    },
+    "impl": "sdpa_flash",
+    "peak_mem_delta_bytes": 8651776
+  },
+  {
+    "case": {
+      "B": 1,
+      "H": 32,
+      "S": 2048,
+      "D": 64,
+      "dtype": "fp16"
+    },
+    "impl": "sdpa_math",
+    "peak_mem_delta_bytes": 1291911680
+  },
+  {
+    "case": {
+      "B": 1,
+      "H": 32,
+      "S": 4096,
+      "D": 64,
+      "dtype": "fp16"
+    },
+    "impl": "kernelforge",
+    "peak_mem_delta_bytes": 16777216
+  },
+  {
+    "case": {
+      "B": 1,
+      "H": 32,
+      "S": 4096,
+      "D": 64,
+      "dtype": "fp16"
+    },
+    "impl": "sdpa_flash",
+    "peak_mem_delta_bytes": 17302528
+  },
+  {
+    "case": {
+      "B": 1,
+      "H": 32,
+      "S": 4096,
+      "D": 64,
+      "dtype": "fp16"
+    },
+    "impl": "sdpa_math",
+    "peak_mem_delta_bytes": 5033296384
+  },
+  {
+    "case": {
+      "B": 1,
+      "H": 32,
+      "S": 8192,
+      "D": 64,
+      "dtype": "fp16"
+    },
+    "impl": "kernelforge",
+    "peak_mem_delta_bytes": 33554432
+  },
+  {
+    "case": {
+      "B": 1,
+      "H": 32,
+      "S": 8192,
+      "D": 64,
+      "dtype": "fp16"
+    },
+    "impl": "sdpa_flash",
+    "peak_mem_delta_bytes": 34604032
+  },
+  {
+    "case": {
+      "B": 1,
+      "H": 32,
+      "S": 8192,
+      "D": 64,
+      "dtype": "fp16"
+    },
+    "impl": "sdpa_math",
+    "peak_mem_delta_bytes": 19864486400
+  },
+  {
+    "case": {
+      "B": 1,
+      "H": 32,
+      "S": 16384,
+      "D": 64,
+      "dtype": "fp16"
+    },
+    "impl": "kernelforge",
+    "peak_mem_delta_bytes": 67108864
+  },
+  {
+    "case": {
+      "B": 1,
+      "H": 32,
+      "S": 16384,
+      "D": 64,
+      "dtype": "fp16"
+    },
+    "impl": "sdpa_flash",
+    "peak_mem_delta_bytes": 69207040
+  },
+  {
+    "case": {
+      "B": 1,
+      "H": 32,
+      "S": 16384,
+      "D": 64,
+      "dtype": "fp16"
+    },
+    "impl": "sdpa_math",
+    "peak_mem_delta_bytes": 78920548864
+  }
+]
