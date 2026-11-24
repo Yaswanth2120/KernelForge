@@ -1,0 +1,1 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="0" skipped="0" tests="1" time="778.879" timestamp="2026-11-24T23:00:08.244908+00:00" hostname="128a83e7821f"><testcase classname="tests.gpu.test_attention" name="test_int64_offsets_over_two_billion_elements" time="777.548" /></testsuite></testsuites>
