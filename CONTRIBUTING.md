@@ -8,3 +8,6 @@ Keep `main` releasable and delete merged branches. Never commit credentials or f
 Run `pytest`, `ruff check .`, and `kernelforge check-prereg` locally.
 GPU correctness and performance claims require saved output from a real NVIDIA session.
 Changes to frozen criteria need a dated entry in DECISIONS.md with old and new values.
+
+Branch protection is currently unavailable on this private repository's GitHub plan.
+The PR and green-check policy must be followed manually until server enforcement is available.

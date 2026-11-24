@@ -26,3 +26,7 @@
 
 - Owner requested no internal stage labels in GitHub. PREREG.md preserves all numerical criteria
   and protocols; its heading and timing instruction omit internal stage references only.
+
+- GitHub rejected main-branch protection with HTTP 403: this private repository requires
+  GitHub Pro or public visibility. Squash-only merging and automatic branch deletion are enabled;
+  PR review and green CI are a documented workflow rather than server-enforced protection.
