@@ -40,7 +40,13 @@ def _gpu_ready():
 
 
 def _bench(args):
-    from kernelforge.bench.gpu_runner import LAUNCHES, SUITES, copy_baseline, run_suite
+    from kernelforge.bench.gpu_runner import (
+        LAUNCHES,
+        RATIO_SUITES,
+        SUITES,
+        copy_baseline,
+        run_suite,
+    )
 
     if args.suite not in SUITES or args.suite == "copy":
         print(f"Unknown benchmark suite {args.suite!r}; use one of {SUITES[1:]} "
@@ -51,11 +57,12 @@ def _bench(args):
         return 2
     if not _gpu_ready():
         return 3
-    try:
-        copy_baseline(args.out)
-    except FileNotFoundError as exc:
-        print(str(exc))
-        return 3
+    if args.suite in RATIO_SUITES:
+        try:
+            copy_baseline(args.out)
+        except FileNotFoundError as exc:
+            print(str(exc))
+            return 3
     run_suite(args.suite, args.out, args.launches)
     return 0
 

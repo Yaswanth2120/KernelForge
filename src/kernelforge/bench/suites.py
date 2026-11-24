@@ -53,3 +53,24 @@ def check_prereg(path):
             or ATTENTION_PAIRS != ((8, 2048), (4, 4096), (2, 8192))
             or MIN_INPUT_BYTES != 512 * 1024**2):
         raise ValueError("Suite definitions differ from PREREG.md")
+
+
+# Attention sweep (reported, not pass/fail): B * S fixed at 16384 tokens, H = 32, plus irregular S.
+ATTENTION_SWEEP_S = (512, 1024, 2048, 4096, 8192, 16384)
+ATTENTION_IRREGULAR = ((16, 1000), (4, 4097))
+ATTENTION_MEMORY_S = (1024, 2048, 4096, 8192, 16384)
+
+
+def attention_sweep():
+    """Sweep cases; the pre-registered pass/fail cases are flagged as selected."""
+    selected = [{**case, "selected": True} for case in selected_attention()]
+    pairs = [(16384 // s, s) for s in ATTENTION_SWEEP_S] + list(ATTENTION_IRREGULAR)
+    extra = [{"B": b, "H": 32, "S": s, "D": d, "dtype": dtype, "selected": False}
+             for (b, s), d, dtype in product(pairs, (64, 128), ("fp16", "bf16"))
+             if (b, s) not in ATTENTION_PAIRS]
+    return selected + extra
+
+
+def attention_memory_cases():
+    """Peak-memory scaling in S at B=1, H=32, D=64, fp16 (math backend shows O(S^2))."""
+    return [{"B": 1, "H": 32, "S": s, "D": 64, "dtype": "fp16"} for s in ATTENTION_MEMORY_S]

@@ -15,7 +15,9 @@ from kernelforge import metrics
 from kernelforge.bench import suites
 from kernelforge.bench.harness import Autotune, Environment, Telemetry, Timing, benchmark
 
-SUITES = ("copy", "softmax", "layer_norm")
+SUITES = ("copy", "softmax", "layer_norm", "causal_attention")
+# Suites whose criteria are bandwidth ratios and therefore need BW_copy first.
+RATIO_SUITES = ("softmax", "layer_norm")
 LAUNCHES = 3
 TELEMETRY_FIELDS = ("clocks.sm", "clocks.max.sm", "clocks.mem", "power.draw", "temperature.gpu",
                     "clocks_throttle_reasons.active")
@@ -236,12 +238,148 @@ def layer_norm_bytes(case):
     return metrics.layer_norm_bytes(case["M"], case["N"], elem, elem, elem)
 
 
+def _sdpa(q, k, v, backend):
+    """F.scaled_dot_product_attention(is_causal=True), optionally forced to one backend."""
+    import torch.nn.functional as F
+    from torch.nn.attention import sdpa_kernel
+
+    if backend is None:
+        return F.scaled_dot_product_attention(q, k, v, is_causal=True)
+    with sdpa_kernel(backend):
+        return F.scaled_dot_product_attention(q, k, v, is_causal=True)
+
+
+def default_sdpa_kernel(q, k, v):
+    """Name the CUDA kernel that dominates the default SDPA backend's run (torch.profiler)."""
+    import torch
+    from torch.profiler import ProfilerActivity, profile
+
+    with profile(activities=[ProfilerActivity.CUDA]) as trace:
+        _sdpa(q, k, v, None)
+        torch.cuda.synchronize()
+    events = [(getattr(e, "self_device_time_total", 0), e.key) for e in trace.key_averages()]
+    events = [event for event in events if event[0] > 0]
+    return max(events)[1][:120] if events else "unknown"
+
+
+def attention_operations(case):
+    """KernelForge, SDPA forced to FlashAttention, and SDPA's default backend on one input."""
+    import torch
+    from torch.nn.attention import SDPBackend
+
+    from kernelforge import causal_attention
+    from kernelforge.ops import _attention_kernels as kernels
+
+    shape = (case["B"], case["H"], case["S"], case["D"])
+    dtype = getattr(torch, TORCH_DTYPES[case["dtype"]])
+    generator = torch.Generator(device="cuda").manual_seed(case["S"] * case["D"])
+    q, k, v = (torch.randn(shape, generator=generator, dtype=dtype, device="cuda")
+               for _ in range(3))
+    flash = SDPBackend.FLASH_ATTENTION
+    call = "F.scaled_dot_product_attention(q, k, v, is_causal=True)"
+
+    def best():
+        return dict(kernels.LAST_LAUNCH.get("best_config", {}))
+
+    def rejected():
+        return [c for c in kernels.LAST_LAUNCH.get("configs", []) if c["status"] != "valid"]
+
+    return [("kernelforge", lambda: causal_attention(q, k, v),
+             "kernelforge.causal_attention(q, k, v)", best, rejected),
+            ("sdpa_flash", lambda: _sdpa(q, k, v, flash),
+             f"{call} under sdpa_kernel(SDPBackend.FLASH_ATTENTION)", dict, list),
+            ("sdpa_default", lambda: _sdpa(q, k, v, None),
+             f"{call}, default backend; kernel {default_sdpa_kernel(q, k, v)}", dict, list)], \
+        (q, k, v)
+
+
+def attention_accuracy(case, q, k, v):
+    """Frozen rule on the first batch's first two heads (the reference materializes S x S)."""
+    from torch.nn.attention import SDPBackend
+
+    from kernelforge import causal_attention, reference
+    from kernelforge.tolerance import compare_accuracy
+
+    q, k, v = (t[:1, :2] for t in (q, k, v))
+    result = compare_accuracy(causal_attention(q, k, v),
+                              _sdpa(q, k, v, SDPBackend.FLASH_ATTENTION),
+                              reference.causal_attention(q, k, v), q.dtype)
+    return {"case": case, "kernel_max_abs": result.kernel.max_abs,
+            "torch_max_abs": result.baseline.max_abs, "allowed_max_abs": result.allowed_max_abs,
+            "passed": result.passed, "slice": "batch 0, heads 0-1"}
+
+
+def _attention_memory_case(case):
+    """Peak-memory rows for one S; an out-of-memory failure is recorded as a result."""
+    import torch
+    from torch.nn.attention import SDPBackend
+
+    from kernelforge import causal_attention
+
+    shape = (case["B"], case["H"], case["S"], case["D"])
+    q, k, v = (torch.randn(shape, dtype=torch.float16, device="cuda") for _ in range(3))
+    operations = {"kernelforge": lambda: causal_attention(q, k, v),
+                  "sdpa_flash": lambda: _sdpa(q, k, v, SDPBackend.FLASH_ATTENTION),
+                  "sdpa_math": lambda: _sdpa(q, k, v, SDPBackend.MATH)}
+    rows = []
+    for impl, operation in operations.items():
+        try:
+            operation()  # compile/tune outside the measured call
+            rows.append({"case": case, "impl": impl,
+                         "peak_mem_delta_bytes": _peak_memory_delta(operation)})
+        except torch.OutOfMemoryError:
+            rows.append({"case": case, "impl": impl, "peak_mem_delta_bytes": None,
+                         "error": "OutOfMemoryError"})
+        torch.cuda.empty_cache()
+    return rows
+
+
+def attention_memory():
+    """Peak memory over the inputs vs S for KernelForge, SDPA-flash, and SDPA-math."""
+    import torch
+
+    rows = []
+    for case in suites.attention_memory_cases():
+        rows += _attention_memory_case(case)
+        torch.cuda.empty_cache()
+    return rows
+
+
+def attention_bytes(case):
+    """q, k, v read plus o written (informational; attention is judged in TFLOPS)."""
+    return 4 * case["B"] * case["H"] * case["S"] * case["D"] * ELEM_SIZE[case["dtype"]]
+
+
+def attention_flops(case):
+    return metrics.attention_flops(case["B"], case["H"], case["S"], case["D"])
+
+
 def softmax_bytes(case):
     return metrics.softmax_bytes(case["M"], case["N"], ELEM_SIZE[case["dtype"]])
 
 
 def copy_bytes(case):
     return 2 * case["buffer_bytes"]
+
+
+def _suite(suite, case):
+    """(operations, accuracy inputs, byte accounting, FLOP accounting, accuracy fn) for a case."""
+    if suite == "copy":
+        return copy_operations(case), None, copy_bytes, None, None
+    if suite == "softmax":
+        operations, x = softmax_operations(case)
+        return operations, (x,), softmax_bytes, None, softmax_accuracy
+    if suite == "layer_norm":
+        operations, inputs = layer_norm_operations(case)
+        return operations, inputs, layer_norm_bytes, None, layer_norm_accuracy
+    operations, inputs = attention_operations(case)
+    return operations, inputs, attention_bytes, attention_flops, attention_accuracy
+
+
+def _cases(suite):
+    if suite == "copy":
+        return suites.copy_cases()
+    return suites.attention_sweep() if suite == "causal_attention" else suites.row_sweep()
 
 
 def run_launch(suite, index, out_dir):
@@ -252,34 +390,28 @@ def run_launch(suite, index, out_dir):
 
     if not is_triton_available():
         raise RuntimeError("GPU benchmarks require NVIDIA sm_80+ CUDA and PyTorch-bundled Triton")
-    copy_gbps = None if suite == "copy" else copy_baseline(out_dir)
+    copy_gbps = copy_baseline(out_dir) if suite in RATIO_SUITES else None
     env, start = environment(), sample_telemetry()
     records, accuracy = [], []
-    cases = suites.copy_cases() if suite == "copy" else suites.row_sweep()
-    for case in cases:
-        if suite == "copy":
-            operations, x, accounting = copy_operations(case), None, copy_bytes
-        elif suite == "softmax":
-            (operations, x), accounting = softmax_operations(case), softmax_bytes
-        else:
-            (operations, x), accounting = layer_norm_operations(case), layer_norm_bytes
+    for case in _cases(suite):
+        operations, inputs, byte_fn, flop_fn, accuracy_fn = _suite(suite, case)
         for impl, operation, call, best, rejected in operations:
             tuning = _first_call_seconds(operation)
             peak = _peak_memory_delta(operation)
             record = benchmark(operation, DoBenchTimer(), op=suite, impl=impl, case=case,
-                               launch_index=index, env=env, byte_accounting=accounting,
-                               copy_gbps=copy_gbps, peak_mem_delta_bytes=peak,
+                               launch_index=index, env=env, byte_accounting=byte_fn,
+                               flop_accounting=flop_fn, copy_gbps=copy_gbps,
+                               peak_mem_delta_bytes=peak,
                                autotune=Autotune(best_config=best(), tuning_seconds=tuning,
                                                  invalid_configs=rejected()),
                                baseline_call=call)
             records.append(record)
-            print(f"{suite} {impl} {case} p50={record.ms_p50:.4f} ms {record.gbps:.1f} GB/s",
-                  flush=True)
-        if suite == "softmax" and index == 0:
-            accuracy.append(softmax_accuracy(case, x))
-        if suite == "layer_norm" and index == 0:
-            accuracy.append(layer_norm_accuracy(case, *x))
-        del operations, x
+            rate = (f"{record.tflops:.1f} TFLOPS" if record.tflops is not None
+                    else f"{record.gbps:.1f} GB/s")
+            print(f"{suite} {impl} {case} p50={record.ms_p50:.4f} ms {rate}", flush=True)
+        if accuracy_fn is not None and index == 0:
+            accuracy.append(accuracy_fn(case, *inputs))
+        del operations, inputs
         torch.cuda.empty_cache()
     telemetry = Telemetry(start=start, end=sample_telemetry())
     directory = Path(out_dir) / suite
@@ -289,6 +421,8 @@ def run_launch(suite, index, out_dir):
     (directory / f"launch_{index}.jsonl").write_text("\n".join(lines) + "\n")
     if accuracy:
         (directory / "accuracy.json").write_text(json.dumps(accuracy, indent=2) + "\n")
+    if suite == "causal_attention" and index == 0:
+        (directory / "memory.json").write_text(json.dumps(attention_memory(), indent=2) + "\n")
 
 
 def main(argv=None):
