@@ -150,3 +150,10 @@ def test_aggregate_json_cannot_forge_launch_count_or_rates():
     data['gbps'] *= 2
     with pytest.raises(ValidationError, match='inconsistent'):
         Aggregate.model_validate(data)
+
+
+def test_missing_schema_identity_is_rejected():
+    data = measurement().model_dump(by_alias=True)
+    del data['schema']
+    with pytest.raises(ValidationError, match='schema'):
+        Measurement.model_validate(data)

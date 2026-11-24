@@ -49,8 +49,7 @@ class Autotune(RecordModel):
 
 
 class Measurement(Timing):
-    schema_id: Literal["kernelforge.bench.v1"] = Field(
-        default="kernelforge.bench.v1", alias="schema")
+    schema_id: Literal["kernelforge.bench.v1"] = Field(alias="schema")
     op: Literal["softmax", "layer_norm", "causal_attention", "copy"]
     impl: str = Field(min_length=1)
     case: dict[str, JsonValue]
@@ -139,7 +138,7 @@ def benchmark(operation, timer: Timer, *, op, impl, case, launch_index, env,
     timing = timer.measure(operation)
     bandwidth = metrics.gbps(byte_count, timing.ms_p50)
     return Measurement(
-        **timing.model_dump(), op=op, impl=impl, case=case, launch_index=launch_index,
+        schema="kernelforge.bench.v1", **timing.model_dump(), op=op, impl=impl, case=case, launch_index=launch_index,
         bytes=byte_count, flops=flop_count, gbps=bandwidth,
         tflops=None if flop_count is None else metrics.tflops(flop_count, timing.ms_p50),
         copy_gbps=copy_gbps,

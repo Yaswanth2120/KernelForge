@@ -325,3 +325,7 @@ Build a synthetic measurement record with optional test-specific fields. The fak
 ## `tests/cpu/test_harness.py:measure`
 
 Build a synthetic measurement record with optional test-specific fields. It calls the operation once to check delegation and summarizes only the supplied synthetic timings.
+
+## `tests/cpu/test_harness.py:test_missing_schema_identity_is_rejected`
+
+This test rejects a serialized record whose schema identity is absent. It prevents the parser from silently assigning a known schema to unidentified data.
