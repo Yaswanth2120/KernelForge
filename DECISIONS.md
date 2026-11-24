@@ -328,3 +328,13 @@ Force pushes and deletion of main are blocked. The previous plan limitation no l
 - Interpreter (K0 open item): on Linux CPU, `TRITON_INTERPRET=1` ran the masked-copy probe for
   fp32/fp16/bf16 (`reports/raw/interpreter_probe.txt`). The public ops require CUDA tensors, so
   `interp` CI tests of the real kernels would need wrapper changes; none were added.
+
+## 2026-11-24 — K8 release checks
+
+- README quickstart verified in a fresh clone and virtualenv (macOS, Python 3.12, CPU torch 2.8.0):
+  `pip install -e '.[dev,report]'`, 219 CPU tests, ruff, check-prereg, and `kernelforge report`.
+  Regenerating the report there left `git status` clean: the committed report and plots are
+  exactly what the committed raw JSON produces.
+- docs/GPU_SESSION.md describes commands that were each run on the A100 box on 2026-11-24.
+- Tag v0.1.0 is not created: `main` is protected and the stacked PRs (#4-#10) need the owner's
+  merges first; this agent's merge attempt was blocked by its permission policy.
