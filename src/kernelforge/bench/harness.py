@@ -1,6 +1,7 @@
 """CPU-only timing orchestration and validated measurement records."""
 import json
 import math
+import re
 from collections.abc import Callable, Sequence
 from pathlib import Path
 from statistics import median
@@ -189,7 +190,10 @@ def case_key(record: Measurement):
 def load_launch_records(directory):
     """Read and validate every `launch_*.jsonl` record under a suite directory."""
     records = []
-    for path in sorted(Path(directory).glob("launch_*.jsonl")):
+    # Exact names only: sync tools create copies such as "launch_1 2.jsonl" that must not count.
+    paths = [p for p in Path(directory).glob("launch_*.jsonl")
+             if re.fullmatch(r"launch_\d+\.jsonl", p.name)]
+    for path in sorted(paths):
         for line in path.read_text().splitlines():
             if line.strip():
                 records.append(Measurement.model_validate_json(line))

@@ -187,3 +187,12 @@ def test_report_evaluates_layer_norm_criterion_with_affine_bytes(tmp_path):
     # fp16 N=2048: 2*M*N*2 + N*(2+2) bytes.
     case = {'M': 131072, 'N': 2048, 'dtype': 'fp16', 'selected': True}
     assert gpu_runner.layer_norm_bytes(case) == 2 * 131072 * 2048 * 2 + 2048 * 4
+
+
+def test_loader_ignores_sync_conflict_copies(tmp_path):
+    from kernelforge.bench.harness import load_launch_records
+
+    write_launches(tmp_path / 'copy', [[copy_record('torch_copy_', 2.5, i)] for i in range(3)])
+    duplicate = (tmp_path / 'copy' / 'launch_1.jsonl').read_text()
+    (tmp_path / 'copy' / 'launch_1 2.jsonl').write_text(duplicate)
+    assert len(load_launch_records(tmp_path / 'copy')) == 3

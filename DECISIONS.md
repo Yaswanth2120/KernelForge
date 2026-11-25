@@ -279,3 +279,17 @@ Force pushes and deletion of main are blocked. The previous plan limitation no l
   1000 (fp16/bf16) and 31337 (all dtypes; bf16 at 88.7 GB/s, 0.17x torch). Causes go to K7.
 - Byte accounting: 2*M*N*elem + N*(w_elem + b_elem), weight and bias in the input dtype,
   stats not returned. Accuracy on benchmark inputs passes the frozen rule for all 39 cases.
+
+## 2026-11-24 — Causal attention GPU validation (K5)
+
+- Stages: the spec's five owner-checked stages were collapsed into one implementation because
+  each GPU check now takes minutes; small cases (S=1/31/127, D=64 fp16, first-row exactness) were
+  run first, then the full matrix. No staged intermediate kernels exist in history.
+- A100-SXM4-80GB results: full non-slow matrix at d8830b9: 75 passed, 4 failed. All 4 were test
+  bugs: `mixed_layouts` asserted q was non-contiguous (only k, v are), and PyTorch's flash op used
+  for the LSE baseline rejects a strided last dim. Fixed in 79d7907 (baselines get contiguous
+  copies of the same values; assertion checks any input). At 79d7907 the 8 strided cases and
+  the >2^31-element int64 test passed. Kernel source is identical between the two commits, so
+  80/80 attention GPU tests have passed (`reports/raw/k5_attention_a100/`).
+- Baselines: output vs `F.scaled_dot_product_attention(is_causal=True)` in the same dtype;
+  LSE vs `torch.ops.aten._scaled_dot_product_flash_attention(...)[1]` (natural log, fp32).

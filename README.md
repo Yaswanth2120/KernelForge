@@ -35,7 +35,7 @@ remain explicit stubs that raise `NotImplementedError` on supported GPU calls.
 - [x] Softmax A100 benchmark: copy baseline + sweep, three launches, report generated
 - [x] LayerNorm GPU correctness matrix passed (168/168 incl. both >2^31-element int64 tests, A100, commit 9852793)
 - [x] LayerNorm single/looped threshold measured on A100 (limit 32768)
-- [ ] Causal attention GPU kernel validated
+- [x] Causal attention GPU matrix passed (80/80 incl. the >2^31-element int64 test, A100)
 - [ ] LayerNorm and attention A100 measurements collected
 
 ## Results so far (A100-SXM4-80GB, three launches; full tables in the [report](reports/performance_report.md))
