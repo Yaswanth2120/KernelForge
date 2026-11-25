@@ -15,7 +15,7 @@ from kernelforge import metrics
 from kernelforge.bench import suites
 from kernelforge.bench.harness import Autotune, Environment, Telemetry, Timing, benchmark
 
-SUITES = ("copy", "softmax")
+SUITES = ("copy", "softmax", "layer_norm")
 LAUNCHES = 3
 TELEMETRY_FIELDS = ("clocks.sm", "clocks.max.sm", "clocks.mem", "power.draw", "temperature.gpu",
                     "clocks_throttle_reasons.active")
@@ -191,6 +191,51 @@ def softmax_accuracy(case, x):
             "passed": result.passed}
 
 
+def layer_norm_operations(case):
+    """KernelForge layer_norm and F.layer_norm with same-dtype weight and bias over one input."""
+    import torch
+    import torch.nn.functional as F
+
+    from kernelforge import layer_norm
+    from kernelforge.ops import _layernorm_kernels
+
+    dtype = getattr(torch, TORCH_DTYPES[case["dtype"]])
+    generator = torch.Generator(device="cuda").manual_seed(case["N"])
+    x = torch.randn((case["M"], case["N"]), generator=generator, dtype=dtype, device="cuda")
+    weight = torch.randn(case["N"], generator=generator, dtype=dtype, device="cuda")
+    bias = torch.randn(case["N"], generator=generator, dtype=dtype, device="cuda")
+    shape = (case["N"],)
+
+    def best():
+        return dict(_layernorm_kernels.LAST_LAUNCH)
+
+    return [("kernelforge", lambda: layer_norm(x, shape, weight, bias),
+             "kernelforge.layer_norm(x, (N,), weight, bias)", best, list),
+            ("torch", lambda: F.layer_norm(x, shape, weight, bias),
+             "F.layer_norm(x, (N,), weight, bias)", dict, list)], (x, weight, bias)
+
+
+def layer_norm_accuracy(case, x, weight, bias):
+    """Apply the frozen tolerance rule to one benchmark input (launch 0 only)."""
+    import torch.nn.functional as F
+
+    from kernelforge import layer_norm, reference
+    from kernelforge.tolerance import compare_accuracy
+
+    shape = (case["N"],)
+    result = compare_accuracy(layer_norm(x, shape, weight, bias),
+                              F.layer_norm(x, shape, weight, bias),
+                              reference.layer_norm(x, shape, weight, bias), x.dtype)
+    return {"case": case, "kernel_max_abs": result.kernel.max_abs,
+            "torch_max_abs": result.baseline.max_abs, "allowed_max_abs": result.allowed_max_abs,
+            "passed": result.passed}
+
+
+def layer_norm_bytes(case):
+    elem = ELEM_SIZE[case["dtype"]]
+    return metrics.layer_norm_bytes(case["M"], case["N"], elem, elem, elem)
+
+
 def softmax_bytes(case):
     return metrics.softmax_bytes(case["M"], case["N"], ELEM_SIZE[case["dtype"]])
 
@@ -210,12 +255,14 @@ def run_launch(suite, index, out_dir):
     copy_gbps = None if suite == "copy" else copy_baseline(out_dir)
     env, start = environment(), sample_telemetry()
     records, accuracy = [], []
-    cases = suites.copy_cases() if suite == "copy" else suites.softmax_sweep()
+    cases = suites.copy_cases() if suite == "copy" else suites.row_sweep()
     for case in cases:
         if suite == "copy":
             operations, x, accounting = copy_operations(case), None, copy_bytes
-        else:
+        elif suite == "softmax":
             (operations, x), accounting = softmax_operations(case), softmax_bytes
+        else:
+            (operations, x), accounting = layer_norm_operations(case), layer_norm_bytes
         for impl, operation, call, best, rejected in operations:
             tuning = _first_call_seconds(operation)
             peak = _peak_memory_delta(operation)
@@ -230,6 +277,8 @@ def run_launch(suite, index, out_dir):
                   flush=True)
         if suite == "softmax" and index == 0:
             accuracy.append(softmax_accuracy(case, x))
+        if suite == "layer_norm" and index == 0:
+            accuracy.append(layer_norm_accuracy(case, *x))
         del operations, x
         torch.cuda.empty_cache()
     telemetry = Telemetry(start=start, end=sample_telemetry())

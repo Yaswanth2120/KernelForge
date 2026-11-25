@@ -30,8 +30,8 @@ def rows_for(n, elem_size):
     return (MIN_INPUT_BYTES + n * elem_size - 1) // (n * elem_size)
 
 
-def softmax_sweep():
-    """List sweep cases; the pre-registered pass/fail cases are flagged as selected."""
+def row_sweep():
+    """Row-op (softmax, LayerNorm) sweep cases; the pre-registered pass/fail cases are flagged as selected."""
     selected = {(case["N"], case["dtype"]) for case in selected_rows()}
     return [{"M": rows_for(n, size), "N": n, "dtype": dtype, "selected": (n, dtype) in selected}
             for n, (dtype, size) in product(SWEEP_WIDTHS, ROW_DTYPES.items())]

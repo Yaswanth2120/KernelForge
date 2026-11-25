@@ -39,10 +39,11 @@ def test_unavailable_gpu(monkeypatch, operation, args):
         operation(*args)
 
 
-def test_unimplemented_layer_norm_on_supported_gpu(monkeypatch):
+def test_unimplemented_attention_on_supported_gpu(monkeypatch):
+    # LayerNorm is implemented (K4); attention is the remaining stub until K5.
     monkeypatch.setattr('kernelforge.ops._common.is_triton_available', lambda: True)
     with pytest.raises(NotImplementedError):
-        layer_norm(None, 1)
+        causal_attention(None, None, None)
 
 
 def test_registered_suites():

@@ -1,0 +1,1080 @@
+{
+  "schema": "kernelforge.path_threshold.v1",
+  "op": "layer_norm",
+  "launch_index": 2,
+  "device": "NVIDIA A100-SXM4-80GB",
+  "torch": "2.8.0+cu128",
+  "triton": "3.4.0",
+  "telemetry_start": {
+    "clocks.sm": "1410 MHz",
+    "clocks.mem": "1593 MHz",
+    "power.draw": "85.32 W",
+    "temperature.gpu": "33",
+    "clocks_throttle_reasons.active": "0x0000000000000000"
+  },
+  "cases": [
+    {
+      "N": 1024,
+      "M": 262144,
+      "dtype": "fp16",
+      "path": "single",
+      "ms_p20": 0.6113280057907104,
+      "ms_p50": 0.6133760213851929,
+      "ms_p80": 0.6144000291824341,
+      "gbps": 1750.5508571644998,
+      "best_config": {
+        "path": "single",
+        "block": 1024,
+        "num_warps": 2,
+        "num_stages": 3
+      }
+    },
+    {
+      "N": 1024,
+      "M": 262144,
+      "dtype": "fp16",
+      "path": "looped",
+      "ms_p20": 0.707584023475647,
+      "ms_p50": 0.7096319794654846,
+      "ms_p80": 0.711679995059967,
+      "gbps": 1513.1024968868744,
+      "best_config": {
+        "path": "looped",
+        "block": 1024,
+        "num_warps": 2,
+        "num_stages": 3
+      }
+    },
+    {
+      "N": 1024,
+      "M": 262144,
+      "dtype": "bf16",
+      "path": "single",
+      "ms_p20": 0.6103039979934692,
+      "ms_p50": 0.6123520135879517,
+      "ms_p80": 0.6133760213851929,
+      "gbps": 1753.4782219602823,
+      "best_config": {
+        "path": "single",
+        "block": 1024,
+        "num_warps": 2,
+        "num_stages": 3
+      }
+    },
+    {
+      "N": 1024,
+      "M": 262144,
+      "dtype": "bf16",
+      "path": "looped",
+      "ms_p20": 0.7331839799880981,
+      "ms_p50": 0.7352319955825806,
+      "ms_p80": 0.737280011177063,
+      "gbps": 1460.4178360725296,
+      "best_config": {
+        "path": "looped",
+        "block": 1024,
+        "num_warps": 2,
+        "num_stages": 3
+      }
+    },
+    {
+      "N": 1024,
+      "M": 131072,
+      "dtype": "fp32",
+      "path": "single",
+      "ms_p20": 0.6154239773750305,
+      "ms_p50": 0.6174719929695129,
+      "ms_p80": 0.6184960007667542,
+      "gbps": 1738.9452934313338,
+      "best_config": {
+        "path": "single",
+        "block": 1024,
+        "num_warps": 1,
+        "num_stages": 3
+      }
+    },
+    {
+      "N": 1024,
+      "M": 131072,
+      "dtype": "fp32",
+      "path": "looped",
+      "ms_p20": 0.6440960168838501,
+      "ms_p50": 0.6461439728736877,
+      "ms_p80": 0.647167980670929,
+      "gbps": 1661.7813692891991,
+      "best_config": {
+        "path": "looped",
+        "block": 1024,
+        "num_warps": 1,
+        "num_stages": 3
+      }
+    },
+    {
+      "N": 2048,
+      "M": 131072,
+      "dtype": "fp16",
+      "path": "single",
+      "ms_p20": 0.6113280057907104,
+      "ms_p50": 0.6123520135879517,
+      "ms_p80": 0.6133760213851929,
+      "gbps": 1753.4849109233444,
+      "best_config": {
+        "path": "single",
+        "block": 2048,
+        "num_warps": 4,
+        "num_stages": 3
+      }
+    },
+    {
+      "N": 2048,
+      "M": 131072,
+      "dtype": "fp16",
+      "path": "looped",
+      "ms_p20": 0.6656000018119812,
+      "ms_p50": 0.6676480174064636,
+      "ms_p80": 0.6696959733963013,
+      "gbps": 1608.2576267822599,
+      "best_config": {
+        "path": "looped",
+        "block": 1024,
+        "num_warps": 4,
+        "num_stages": 3
+      }
+    },
+    {
+      "N": 2048,
+      "M": 131072,
+      "dtype": "bf16",
+      "path": "single",
+      "ms_p20": 0.6103039979934692,
+      "ms_p50": 0.6113280057907104,
+      "ms_p80": 0.6123520135879517,
+      "gbps": 1756.4220939153256,
+      "best_config": {
+        "path": "single",
+        "block": 2048,
+        "num_warps": 4,
+        "num_stages": 3
+      }
+    },
+    {
+      "N": 2048,
+      "M": 131072,
+      "dtype": "bf16",
+      "path": "looped",
+      "ms_p20": 0.681984007358551,
+      "ms_p50": 0.6850559711456299,
+      "ms_p80": 0.6871039867401123,
+      "gbps": 1567.3902005471916,
+      "best_config": {
+        "path": "looped",
+        "block": 1024,
+        "num_warps": 4,
+        "num_stages": 3
+      }
+    },
+    {
+      "N": 2048,
+      "M": 65536,
+      "dtype": "fp32",
+      "path": "single",
+      "ms_p20": 0.6164479851722717,
+      "ms_p50": 0.6174719929695129,
+      "ms_p80": 0.6195200085639954,
+      "gbps": 1738.9585604298263,
+      "best_config": {
+        "path": "single",
+        "block": 2048,
+        "num_warps": 4,
+        "num_stages": 3
+      }
+    },
+    {
+      "N": 2048,
+      "M": 65536,
+      "dtype": "fp32",
+      "path": "looped",
+      "ms_p20": 0.6399999856948853,
+      "ms_p50": 0.6410239934921265,
+      "ms_p80": 0.6420480012893677,
+      "gbps": 1675.0671096575556,
+      "best_config": {
+        "path": "looped",
+        "block": 1024,
+        "num_warps": 8,
+        "num_stages": 3
+      }
+    },
+    {
+      "N": 4096,
+      "M": 65536,
+      "dtype": "fp16",
+      "path": "single",
+      "ms_p20": 0.6113280057907104,
+      "ms_p50": 0.6123520135879517,
+      "ms_p80": 0.6133760213851929,
+      "gbps": 1753.498288849469,
+      "best_config": {
+        "path": "single",
+        "block": 4096,
+        "num_warps": 8,
+        "num_stages": 3
+      }
+    },
+    {
+      "N": 4096,
+      "M": 65536,
+      "dtype": "fp16",
+      "path": "looped",
+      "ms_p20": 0.6676480174064636,
+      "ms_p50": 0.6686720252037048,
+      "ms_p80": 0.6707199811935425,
+      "gbps": 1605.8069838840488,
+      "best_config": {
+        "path": "looped",
+        "block": 2048,
+        "num_warps": 2,
+        "num_stages": 3
+      }
+    },
+    {
+      "N": 4096,
+      "M": 65536,
+      "dtype": "bf16",
+      "path": "single",
+      "ms_p20": 0.6113280057907104,
+      "ms_p50": 0.6123520135879517,
+      "ms_p80": 0.6133760213851929,
+      "gbps": 1753.498288849469,
+      "best_config": {
+        "path": "single",
+        "block": 4096,
+        "num_warps": 8,
+        "num_stages": 3
+      }
+    },
+    {
+      "N": 4096,
+      "M": 65536,
+      "dtype": "bf16",
+      "path": "looped",
+      "ms_p20": 0.6799359917640686,
+      "ms_p50": 0.6809599995613098,
+      "ms_p80": 0.6830080151557922,
+      "gbps": 1576.8300762038004,
+      "best_config": {
+        "path": "looped",
+        "block": 1024,
+        "num_warps": 4,
+        "num_stages": 3
+      }
+    },
+    {
+      "N": 4096,
+      "M": 32768,
+      "dtype": "fp32",
+      "path": "single",
+      "ms_p20": 0.6133760213851929,
+      "ms_p50": 0.6154239773750305,
+      "ms_p80": 0.6164479851722717,
+      "gbps": 1744.7721107324637,
+      "best_config": {
+        "path": "single",
+        "block": 4096,
+        "num_warps": 16,
+        "num_stages": 3
+      }
+    },
+    {
+      "N": 4096,
+      "M": 32768,
+      "dtype": "fp32",
+      "path": "looped",
+      "ms_p20": 0.6379520297050476,
+      "ms_p50": 0.6399999856948853,
+      "ms_p80": 0.6410239934921265,
+      "gbps": 1677.7728375011452,
+      "best_config": {
+        "path": "looped",
+        "block": 1024,
+        "num_warps": 16,
+        "num_stages": 3
+      }
+    },
+    {
+      "N": 8192,
+      "M": 32768,
+      "dtype": "fp16",
+      "path": "single",
+      "ms_p20": 0.6205440163612366,
+      "ms_p50": 0.6215680241584778,
+      "ms_p80": 0.6236159801483154,
+      "gbps": 1727.525468276382,
+      "best_config": {
+        "path": "single",
+        "block": 8192,
+        "num_warps": 8,
+        "num_stages": 3
+      }
+    },
+    {
+      "N": 8192,
+      "M": 32768,
+      "dtype": "fp16",
+      "path": "looped",
+      "ms_p20": 0.6707199811935425,
+      "ms_p50": 0.6717439889907837,
+      "ms_p80": 0.6737920045852661,
+      "gbps": 1598.487831075675,
+      "best_config": {
+        "path": "looped",
+        "block": 4096,
+        "num_warps": 4,
+        "num_stages": 3
+      }
+    },
+    {
+      "N": 8192,
+      "M": 32768,
+      "dtype": "bf16",
+      "path": "single",
+      "ms_p20": 0.6215680241584778,
+      "ms_p50": 0.6225919723510742,
+      "ms_p80": 0.6236159801483154,
+      "gbps": 1724.6842871184786,
+      "best_config": {
+        "path": "single",
+        "block": 8192,
+        "num_warps": 8,
+        "num_stages": 3
+      }
+    },
+    {
+      "N": 8192,
+      "M": 32768,
+      "dtype": "bf16",
+      "path": "looped",
+      "ms_p20": 0.6830080151557922,
+      "ms_p50": 0.6850559711456299,
+      "ms_p80": 0.6871039867401123,
+      "gbps": 1567.4260749881646,
+      "best_config": {
+        "path": "looped",
+        "block": 2048,
+        "num_warps": 8,
+        "num_stages": 3
+      }
+    },
+    {
+      "N": 8192,
+      "M": 16384,
+      "dtype": "fp32",
+      "path": "single",
+      "ms_p20": 0.6205440163612366,
+      "ms_p50": 0.6215680241584778,
+      "ms_p80": 0.6246399879455566,
+      "gbps": 1727.5781865609888,
+      "best_config": {
+        "path": "single",
+        "block": 8192,
+        "num_warps": 8,
+        "num_stages": 3
+      }
+    },
+    {
+      "N": 8192,
+      "M": 16384,
+      "dtype": "fp32",
+      "path": "looped",
+      "ms_p20": 0.681984007358551,
+      "ms_p50": 0.6840320229530334,
+      "ms_p80": 0.6860799789428711,
+      "gbps": 1569.8203066053372,
+      "best_config": {
+        "path": "looped",
+        "block": 4096,
+        "num_warps": 4,
+        "num_stages": 3
+      }
+    },
+    {
+      "N": 16384,
+      "M": 16384,
+      "dtype": "fp16",
+      "path": "single",
+      "ms_p20": 0.6205440163612366,
+      "ms_p50": 0.6225919723510742,
+      "ms_p80": 0.6236159801483154,
+      "gbps": 1724.7369186997632,
+      "best_config": {
+        "path": "single",
+        "block": 16384,
+        "num_warps": 16,
+        "num_stages": 3
+      }
+    },
+    {
+      "N": 16384,
+      "M": 16384,
+      "dtype": "fp16",
+      "path": "looped",
+      "ms_p20": 0.6952959895133972,
+      "ms_p50": 0.6983680129051208,
+      "ms_p80": 0.7014399766921997,
+      "gbps": 1537.5952795047124,
+      "best_config": {
+        "path": "looped",
+        "block": 4096,
+        "num_warps": 16,
+        "num_stages": 3
+      }
+    },
+    {
+      "N": 16384,
+      "M": 16384,
+      "dtype": "bf16",
+      "path": "single",
+      "ms_p20": 0.6184960007667542,
+      "ms_p50": 0.6195200085639954,
+      "ms_p80": 0.6215680241584778,
+      "gbps": 1733.2892322380537,
+      "best_config": {
+        "path": "single",
+        "block": 16384,
+        "num_warps": 16,
+        "num_stages": 3
+      }
+    },
+    {
+      "N": 16384,
+      "M": 16384,
+      "dtype": "bf16",
+      "path": "looped",
+      "ms_p20": 0.7188479900360107,
+      "ms_p50": 0.7208960056304932,
+      "ms_p80": 0.7229440212249756,
+      "gbps": 1489.545442911494,
+      "best_config": {
+        "path": "looped",
+        "block": 4096,
+        "num_warps": 16,
+        "num_stages": 3
+      }
+    },
+    {
+      "N": 16384,
+      "M": 8192,
+      "dtype": "fp32",
+      "path": "single",
+      "ms_p20": 0.6739968061447144,
+      "ms_p50": 0.6778879761695862,
+      "ms_p80": 0.6809599995613098,
+      "gbps": 1584.1450707946335,
+      "best_config": {
+        "path": "single",
+        "block": 16384,
+        "num_warps": 16,
+        "num_stages": 3
+      }
+    },
+    {
+      "N": 16384,
+      "M": 8192,
+      "dtype": "fp32",
+      "path": "looped",
+      "ms_p20": 0.7055360078811646,
+      "ms_p50": 0.7086079716682434,
+      "ms_p80": 0.711679995059967,
+      "gbps": 1515.4682686843473,
+      "best_config": {
+        "path": "looped",
+        "block": 4096,
+        "num_warps": 16,
+        "num_stages": 3
+      }
+    },
+    {
+      "N": 32768,
+      "M": 8192,
+      "dtype": "fp16",
+      "path": "single",
+      "ms_p20": 0.7249919772148132,
+      "ms_p50": 0.7301120162010193,
+      "ms_p80": 0.7352319955825806,
+      "gbps": 1470.8330669417912,
+      "best_config": {
+        "path": "single",
+        "block": 32768,
+        "num_warps": 16,
+        "num_stages": 3
+      }
+    },
+    {
+      "N": 32768,
+      "M": 8192,
+      "dtype": "fp16",
+      "path": "looped",
+      "ms_p20": 0.9441279768943787,
+      "ms_p50": 0.9492480158805847,
+      "ms_p80": 0.9562112092971802,
+      "gbps": 1131.2880069639177,
+      "best_config": {
+        "path": "looped",
+        "block": 4096,
+        "num_warps": 16,
+        "num_stages": 3
+      }
+    },
+    {
+      "N": 32768,
+      "M": 8192,
+      "dtype": "bf16",
+      "path": "single",
+      "ms_p20": 0.7239680290222168,
+      "ms_p50": 0.7301120162010193,
+      "ms_p80": 0.7362560033798218,
+      "gbps": 1470.8330669417912,
+      "best_config": {
+        "path": "single",
+        "block": 32768,
+        "num_warps": 16,
+        "num_stages": 3
+      }
+    },
+    {
+      "N": 32768,
+      "M": 8192,
+      "dtype": "bf16",
+      "path": "looped",
+      "ms_p20": 0.9164800047874451,
+      "ms_p50": 0.9236479997634888,
+      "ms_p80": 0.9308159947395325,
+      "gbps": 1162.6430158187732,
+      "best_config": {
+        "path": "looped",
+        "block": 4096,
+        "num_warps": 16,
+        "num_stages": 3
+      }
+    },
+    {
+      "N": 32768,
+      "M": 4096,
+      "dtype": "fp32",
+      "path": "single",
+      "ms_p20": 0.737280011177063,
+      "ms_p50": 0.7393280267715454,
+      "ms_p80": 0.7423999905586243,
+      "gbps": 1452.6758476746754,
+      "best_config": {
+        "path": "single",
+        "block": 32768,
+        "num_warps": 16,
+        "num_stages": 3
+      }
+    },
+    {
+      "N": 32768,
+      "M": 4096,
+      "dtype": "fp32",
+      "path": "looped",
+      "ms_p20": 1.1489280462265015,
+      "ms_p50": 1.1519999504089355,
+      "ms_p80": 1.154047966003418,
+      "gbps": 932.2951512443655,
+      "best_config": {
+        "path": "looped",
+        "block": 4096,
+        "num_warps": 16,
+        "num_stages": 3
+      }
+    },
+    {
+      "N": 65536,
+      "M": 4096,
+      "dtype": "fp16",
+      "path": "single",
+      "ms_p20": 1.4796799421310425,
+      "ms_p50": 1.4837759733200073,
+      "ms_p80": 1.486847996711731,
+      "gbps": 723.831621020843,
+      "best_config": {
+        "path": "single",
+        "block": 65536,
+        "num_warps": 16,
+        "num_stages": 3
+      }
+    },
+    {
+      "N": 65536,
+      "M": 4096,
+      "dtype": "fp16",
+      "path": "looped",
+      "ms_p20": 1.2861440181732178,
+      "ms_p50": 1.2892160415649414,
+      "ms_p80": 1.2912640571594238,
+      "gbps": 833.0674870414257,
+      "best_config": {
+        "path": "looped",
+        "block": 4096,
+        "num_warps": 16,
+        "num_stages": 3
+      }
+    },
+    {
+      "N": 65536,
+      "M": 4096,
+      "dtype": "bf16",
+      "path": "single",
+      "ms_p20": 1.4192639589309692,
+      "ms_p50": 1.4315520524978638,
+      "ms_p80": 1.4403584003448486,
+      "gbps": 750.2374546046084,
+      "best_config": {
+        "path": "single",
+        "block": 65536,
+        "num_warps": 8,
+        "num_stages": 3
+      }
+    },
+    {
+      "N": 65536,
+      "M": 4096,
+      "dtype": "bf16",
+      "path": "looped",
+      "ms_p20": 1.294335961341858,
+      "ms_p50": 1.2974079847335815,
+      "ms_p80": 1.299456000328064,
+      "gbps": 827.807428840931,
+      "best_config": {
+        "path": "looped",
+        "block": 4096,
+        "num_warps": 16,
+        "num_stages": 3
+      }
+    },
+    {
+      "N": 65536,
+      "M": 2048,
+      "dtype": "fp32",
+      "path": "single",
+      "ms_p20": 1.5411200523376465,
+      "ms_p50": 1.5452159643173218,
+      "ms_p80": 1.5482879877090454,
+      "gbps": 695.2206919986178,
+      "best_config": {
+        "path": "single",
+        "block": 65536,
+        "num_warps": 16,
+        "num_stages": 3
+      }
+    },
+    {
+      "N": 65536,
+      "M": 2048,
+      "dtype": "fp32",
+      "path": "looped",
+      "ms_p20": 1.252351999282837,
+      "ms_p50": 1.2554240226745605,
+      "ms_p80": 1.2584960460662842,
+      "gbps": 855.6998214128315,
+      "best_config": {
+        "path": "looped",
+        "block": 2048,
+        "num_warps": 16,
+        "num_stages": 3
+      }
+    },
+    {
+      "N": 4097,
+      "M": 65521,
+      "dtype": "fp16",
+      "path": "single",
+      "ms_p20": 2.092031955718994,
+      "ms_p50": 2.0930559635162354,
+      "ms_p80": 2.0940799713134766,
+      "gbps": 513.0175947116624,
+      "best_config": {
+        "path": "single",
+        "block": 8192,
+        "num_warps": 8,
+        "num_stages": 3
+      }
+    },
+    {
+      "N": 4097,
+      "M": 65521,
+      "dtype": "fp16",
+      "path": "looped",
+      "ms_p20": 1.623039960861206,
+      "ms_p50": 1.623039960861206,
+      "ms_p80": 1.623039960861206,
+      "gbps": 661.5823158354285,
+      "best_config": {
+        "path": "looped",
+        "block": 1024,
+        "num_warps": 8,
+        "num_stages": 3
+      }
+    },
+    {
+      "N": 4097,
+      "M": 65521,
+      "dtype": "bf16",
+      "path": "single",
+      "ms_p20": 2.110464096069336,
+      "ms_p50": 2.111488103866577,
+      "ms_p80": 2.1135358810424805,
+      "gbps": 508.53923071301887,
+      "best_config": {
+        "path": "single",
+        "block": 8192,
+        "num_warps": 8,
+        "num_stages": 3
+      }
+    },
+    {
+      "N": 4097,
+      "M": 65521,
+      "dtype": "bf16",
+      "path": "looped",
+      "ms_p20": 1.602560043334961,
+      "ms_p50": 1.6035840511322021,
+      "ms_p80": 1.6035840511322021,
+      "gbps": 669.6091391292318,
+      "best_config": {
+        "path": "looped",
+        "block": 1024,
+        "num_warps": 8,
+        "num_stages": 3
+      }
+    },
+    {
+      "N": 4097,
+      "M": 32761,
+      "dtype": "fp32",
+      "path": "single",
+      "ms_p20": 1.0209280252456665,
+      "ms_p50": 1.0209280252456665,
+      "ms_p80": 1.0209280252456665,
+      "gbps": 1051.7953131334689,
+      "best_config": {
+        "path": "single",
+        "block": 8192,
+        "num_warps": 8,
+        "num_stages": 3
+      }
+    },
+    {
+      "N": 4097,
+      "M": 32761,
+      "dtype": "fp32",
+      "path": "looped",
+      "ms_p20": 0.8335360288619995,
+      "ms_p50": 0.8366079926490784,
+      "ms_p80": 0.8386560082435608,
+      "gbps": 1283.525045702518,
+      "best_config": {
+        "path": "looped",
+        "block": 1024,
+        "num_warps": 16,
+        "num_stages": 3
+      }
+    },
+    {
+      "N": 6144,
+      "M": 43691,
+      "dtype": "fp16",
+      "path": "single",
+      "ms_p20": 0.6113280057907104,
+      "ms_p50": 0.6123520135879517,
+      "ms_p80": 0.6133760213851929,
+      "gbps": 1753.5250447017181,
+      "best_config": {
+        "path": "single",
+        "block": 8192,
+        "num_warps": 8,
+        "num_stages": 3
+      }
+    },
+    {
+      "N": 6144,
+      "M": 43691,
+      "dtype": "fp16",
+      "path": "looped",
+      "ms_p20": 0.6707199811935425,
+      "ms_p50": 0.6727679967880249,
+      "ms_p80": 0.6737920045852661,
+      "gbps": 1596.054802140542,
+      "best_config": {
+        "path": "looped",
+        "block": 2048,
+        "num_warps": 8,
+        "num_stages": 3
+      }
+    },
+    {
+      "N": 6144,
+      "M": 43691,
+      "dtype": "bf16",
+      "path": "single",
+      "ms_p20": 0.6133760213851929,
+      "ms_p50": 0.6144000291824341,
+      "ms_p80": 0.6154239773750305,
+      "gbps": 1747.6799169896583,
+      "best_config": {
+        "path": "single",
+        "block": 8192,
+        "num_warps": 8,
+        "num_stages": 3
+      }
+    },
+    {
+      "N": 6144,
+      "M": 43691,
+      "dtype": "bf16",
+      "path": "looped",
+      "ms_p20": 0.681984007358551,
+      "ms_p50": 0.6850559711456299,
+      "ms_p80": 0.6871039867401123,
+      "gbps": 1567.4260749881646,
+      "best_config": {
+        "path": "looped",
+        "block": 2048,
+        "num_warps": 8,
+        "num_stages": 3
+      }
+    },
+    {
+      "N": 6144,
+      "M": 21846,
+      "dtype": "fp32",
+      "path": "single",
+      "ms_p20": 0.6133760213851929,
+      "ms_p50": 0.6144000291824341,
+      "ms_p80": 0.6154239773750305,
+      "gbps": 1747.7599169858584,
+      "best_config": {
+        "path": "single",
+        "block": 8192,
+        "num_warps": 16,
+        "num_stages": 3
+      }
+    },
+    {
+      "N": 6144,
+      "M": 21846,
+      "dtype": "fp32",
+      "path": "looped",
+      "ms_p20": 0.6635519862174988,
+      "ms_p50": 0.66457599401474,
+      "ms_p80": 0.6666240096092224,
+      "gbps": 1615.802788049824,
+      "best_config": {
+        "path": "looped",
+        "block": 2048,
+        "num_warps": 16,
+        "num_stages": 3
+      }
+    },
+    {
+      "N": 8193,
+      "M": 32765,
+      "dtype": "fp16",
+      "path": "single",
+      "ms_p20": 2.4883201122283936,
+      "ms_p50": 2.4893438816070557,
+      "ms_p80": 2.490367889404297,
+      "gbps": 431.3615968986888,
+      "best_config": {
+        "path": "single",
+        "block": 16384,
+        "num_warps": 16,
+        "num_stages": 3
+      }
+    },
+    {
+      "N": 8193,
+      "M": 32765,
+      "dtype": "fp16",
+      "path": "looped",
+      "ms_p20": 1.334272027015686,
+      "ms_p50": 1.334272027015686,
+      "ms_p80": 1.3352960348129272,
+      "gbps": 804.7889262894485,
+      "best_config": {
+        "path": "looped",
+        "block": 1024,
+        "num_warps": 16,
+        "num_stages": 3
+      }
+    },
+    {
+      "N": 8193,
+      "M": 32765,
+      "dtype": "bf16",
+      "path": "single",
+      "ms_p20": 2.519244909286499,
+      "ms_p50": 2.521087884902954,
+      "ms_p80": 2.5221118927001953,
+      "gbps": 425.9301543711693,
+      "best_config": {
+        "path": "single",
+        "block": 16384,
+        "num_warps": 16,
+        "num_stages": 3
+      }
+    },
+    {
+      "N": 8193,
+      "M": 32765,
+      "dtype": "bf16",
+      "path": "looped",
+      "ms_p20": 1.316864013671875,
+      "ms_p50": 1.316864013671875,
+      "ms_p80": 1.316864013671875,
+      "gbps": 815.4276681962411,
+      "best_config": {
+        "path": "looped",
+        "block": 1024,
+        "num_warps": 16,
+        "num_stages": 3
+      }
+    },
+    {
+      "N": 8193,
+      "M": 16383,
+      "dtype": "fp32",
+      "path": "single",
+      "ms_p20": 1.30457603931427,
+      "ms_p50": 1.30457603931427,
+      "ms_p80": 1.3056000471115112,
+      "gbps": 823.1585309235516,
+      "best_config": {
+        "path": "single",
+        "block": 16384,
+        "num_warps": 16,
+        "num_stages": 3
+      }
+    },
+    {
+      "N": 8193,
+      "M": 16383,
+      "dtype": "fp32",
+      "path": "looped",
+      "ms_p20": 0.8089600205421448,
+      "ms_p50": 0.8110079765319824,
+      "ms_p80": 0.814079999923706,
+      "gbps": 1324.1212504371113,
+      "best_config": {
+        "path": "looped",
+        "block": 1024,
+        "num_warps": 16,
+        "num_stages": 3
+      }
+    },
+    {
+      "N": 12288,
+      "M": 21846,
+      "dtype": "fp16",
+      "path": "single",
+      "ms_p20": 0.6236159801483154,
+      "ms_p50": 0.6256639957427979,
+      "ms_p80": 0.6266880035400391,
+      "gbps": 1716.2946106961774,
+      "best_config": {
+        "path": "single",
+        "block": 16384,
+        "num_warps": 16,
+        "num_stages": 3
+      }
+    },
+    {
+      "N": 12288,
+      "M": 21846,
+      "dtype": "fp16",
+      "path": "looped",
+      "ms_p20": 0.6983680129051208,
+      "ms_p50": 0.7004160284996033,
+      "ms_p80": 0.7014399766921997,
+      "gbps": 1533.122744635488,
+      "best_config": {
+        "path": "looped",
+        "block": 4096,
+        "num_warps": 16,
+        "num_stages": 3
+      }
+    },
+    {
+      "N": 12288,
+      "M": 21846,
+      "dtype": "bf16",
+      "path": "single",
+      "ms_p20": 0.6318079829216003,
+      "ms_p50": 0.6328319907188416,
+      "ms_p80": 0.634880006313324,
+      "gbps": 1696.8543938182243,
+      "best_config": {
+        "path": "single",
+        "block": 16384,
+        "num_warps": 8,
+        "num_stages": 3
+      }
+    },
+    {
+      "N": 12288,
+      "M": 21846,
+      "dtype": "bf16",
+      "path": "looped",
+      "ms_p20": 0.7157760262489319,
+      "ms_p50": 0.7178239822387695,
+      "ms_p80": 0.719871997833252,
+      "gbps": 1495.9429756734075,
+      "best_config": {
+        "path": "looped",
+        "block": 4096,
+        "num_warps": 16,
+        "num_stages": 3
+      }
+    },
+    {
+      "N": 12288,
+      "M": 10923,
+      "dtype": "fp32",
+      "path": "single",
+      "ms_p20": 0.6533120274543762,
+      "ms_p50": 0.6553599834442139,
+      "ms_p80": 0.6574079990386963,
+      "gbps": 1638.6000413945187,
+      "best_config": {
+        "path": "single",
+        "block": 16384,
+        "num_warps": 16,
+        "num_stages": 3
+      }
+    },
+    {
+      "N": 12288,
+      "M": 10923,
+      "dtype": "fp32",
+      "path": "looped",
+      "ms_p20": 0.7096319794654846,
+      "ms_p50": 0.7137280106544495,
+      "ms_p80": 0.7178239822387695,
+      "gbps": 1504.5968211550467,
+      "best_config": {
+        "path": "looped",
+        "block": 4096,
+        "num_warps": 4,
+        "num_stages": 3
+      }
+    }
+  ],
+  "telemetry_end": {
+    "clocks.sm": "1410 MHz",
+    "clocks.mem": "1593 MHz",
+    "power.draw": "354.89 W",
+    "temperature.gpu": "45",
+    "clocks_throttle_reasons.active": "0x0000000000000000"
+  }
+}
