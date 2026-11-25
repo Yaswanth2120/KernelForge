@@ -25,11 +25,11 @@ PYTHON
     ;;
   bench)
     suite="${2:-}"
-    if [ -z "$suite" ]; then echo 'Usage: scripts/gpu_session.sh bench {softmax|all}' >&2; exit 2; fi
+    if [ -z "$suite" ]; then echo 'Usage: scripts/gpu_session.sh bench {softmax|layer_norm|all}' >&2; exit 2; fi
     mkdir -p reports/raw
     # BW_copy is measured once per box (three launches) and reused by every suite.
     [ -f reports/raw/copy_probe.json ] || kernelforge copy-probe --out reports/raw/copy_probe.json
-    if [ "$suite" = all ]; then suites='softmax'; else suites="$suite"; fi
+    if [ "$suite" = all ]; then suites='softmax layer_norm'; else suites="$suite"; fi
     for name in $suites; do
       kernelforge bench --suite "$name" --launches 3 --out reports/raw
     done

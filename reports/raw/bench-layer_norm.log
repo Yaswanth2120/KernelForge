@@ -1,0 +1,273 @@
+layer_norm kernelforge {'M': 1048576, 'N': 256, 'dtype': 'fp16', 'selected': False} p50=0.7844 ms 1368.9 GB/s
+layer_norm torch {'M': 1048576, 'N': 256, 'dtype': 'fp16', 'selected': False} p50=2.1043 ms 510.3 GB/s
+layer_norm kernelforge {'M': 1048576, 'N': 256, 'dtype': 'bf16', 'selected': False} p50=0.7844 ms 1368.9 GB/s
+layer_norm torch {'M': 1048576, 'N': 256, 'dtype': 'bf16', 'selected': False} p50=2.1084 ms 509.3 GB/s
+layer_norm kernelforge {'M': 524288, 'N': 256, 'dtype': 'fp32', 'selected': False} p50=0.6195 ms 1733.2 GB/s
+layer_norm torch {'M': 524288, 'N': 256, 'dtype': 'fp32', 'selected': False} p50=1.2503 ms 858.8 GB/s
+layer_norm kernelforge {'M': 262144, 'N': 1024, 'dtype': 'fp16', 'selected': False} p50=0.6154 ms 1744.7 GB/s
+layer_norm torch {'M': 262144, 'N': 1024, 'dtype': 'fp16', 'selected': False} p50=1.0260 ms 1046.5 GB/s
+layer_norm kernelforge {'M': 262144, 'N': 1024, 'dtype': 'bf16', 'selected': False} p50=0.6124 ms 1753.5 GB/s
+layer_norm torch {'M': 262144, 'N': 1024, 'dtype': 'bf16', 'selected': False} p50=1.0271 ms 1045.4 GB/s
+layer_norm kernelforge {'M': 131072, 'N': 1024, 'dtype': 'fp32', 'selected': False} p50=0.6195 ms 1733.2 GB/s
+layer_norm torch {'M': 131072, 'N': 1024, 'dtype': 'fp32', 'selected': False} p50=0.6789 ms 1581.6 GB/s
+layer_norm kernelforge {'M': 131072, 'N': 2048, 'dtype': 'fp16', 'selected': True} p50=0.6154 ms 1744.7 GB/s
+layer_norm torch {'M': 131072, 'N': 2048, 'dtype': 'fp16', 'selected': True} p50=0.8305 ms 1293.0 GB/s
+layer_norm kernelforge {'M': 131072, 'N': 2048, 'dtype': 'bf16', 'selected': True} p50=0.6113 ms 1756.4 GB/s
+layer_norm torch {'M': 131072, 'N': 2048, 'dtype': 'bf16', 'selected': True} p50=0.8253 ms 1301.0 GB/s
+layer_norm kernelforge {'M': 65536, 'N': 2048, 'dtype': 'fp32', 'selected': True} p50=0.6175 ms 1739.0 GB/s
+layer_norm torch {'M': 65536, 'N': 2048, 'dtype': 'fp32', 'selected': True} p50=0.7281 ms 1474.8 GB/s
+layer_norm kernelforge {'M': 65536, 'N': 4096, 'dtype': 'fp16', 'selected': True} p50=0.6134 ms 1750.6 GB/s
+layer_norm torch {'M': 65536, 'N': 4096, 'dtype': 'fp16', 'selected': True} p50=0.7895 ms 1360.0 GB/s
+layer_norm kernelforge {'M': 65536, 'N': 4096, 'dtype': 'bf16', 'selected': True} p50=0.6124 ms 1753.5 GB/s
+layer_norm torch {'M': 65536, 'N': 4096, 'dtype': 'bf16', 'selected': True} p50=0.7854 ms 1367.1 GB/s
+layer_norm kernelforge {'M': 32768, 'N': 4096, 'dtype': 'fp32', 'selected': True} p50=0.6144 ms 1747.7 GB/s
+layer_norm torch {'M': 32768, 'N': 4096, 'dtype': 'fp32', 'selected': True} p50=0.9298 ms 1154.9 GB/s
+layer_norm kernelforge {'M': 32768, 'N': 8192, 'dtype': 'fp16', 'selected': True} p50=0.6246 ms 1719.0 GB/s
+layer_norm torch {'M': 32768, 'N': 8192, 'dtype': 'fp16', 'selected': True} p50=1.0127 ms 1060.3 GB/s
+layer_norm kernelforge {'M': 32768, 'N': 8192, 'dtype': 'bf16', 'selected': True} p50=0.6216 ms 1727.5 GB/s
+layer_norm torch {'M': 32768, 'N': 8192, 'dtype': 'bf16', 'selected': True} p50=1.0117 ms 1061.3 GB/s
+layer_norm kernelforge {'M': 16384, 'N': 8192, 'dtype': 'fp32', 'selected': True} p50=0.6226 ms 1724.7 GB/s
+layer_norm torch {'M': 16384, 'N': 8192, 'dtype': 'fp32', 'selected': True} p50=0.9441 ms 1137.4 GB/s
+layer_norm kernelforge {'M': 16384, 'N': 16384, 'dtype': 'fp16', 'selected': False} p50=0.6226 ms 1724.7 GB/s
+layer_norm torch {'M': 16384, 'N': 16384, 'dtype': 'fp16', 'selected': False} p50=1.0301 ms 1042.4 GB/s
+layer_norm kernelforge {'M': 16384, 'N': 16384, 'dtype': 'bf16', 'selected': False} p50=0.6195 ms 1733.3 GB/s
+layer_norm torch {'M': 16384, 'N': 16384, 'dtype': 'bf16', 'selected': False} p50=1.0281 ms 1044.5 GB/s
+layer_norm kernelforge {'M': 8192, 'N': 16384, 'dtype': 'fp32', 'selected': False} p50=0.6758 ms 1588.9 GB/s
+layer_norm torch {'M': 8192, 'N': 16384, 'dtype': 'fp32', 'selected': False} p50=0.9636 ms 1114.5 GB/s
+layer_norm kernelforge {'M': 8192, 'N': 32768, 'dtype': 'fp16', 'selected': False} p50=0.7117 ms 1508.9 GB/s
+layer_norm torch {'M': 8192, 'N': 32768, 'dtype': 'fp16', 'selected': False} p50=1.0465 ms 1026.1 GB/s
+layer_norm kernelforge {'M': 8192, 'N': 32768, 'dtype': 'bf16', 'selected': False} p50=0.7066 ms 1519.9 GB/s
+layer_norm torch {'M': 8192, 'N': 32768, 'dtype': 'bf16', 'selected': False} p50=1.0476 ms 1025.1 GB/s
+layer_norm kernelforge {'M': 4096, 'N': 32768, 'dtype': 'fp32', 'selected': False} p50=0.7393 ms 1452.7 GB/s
+layer_norm torch {'M': 4096, 'N': 32768, 'dtype': 'fp32', 'selected': False} p50=0.9779 ms 1098.3 GB/s
+layer_norm kernelforge {'M': 4096, 'N': 65536, 'dtype': 'fp16', 'selected': False} p50=1.2882 ms 833.7 GB/s
+layer_norm torch {'M': 4096, 'N': 65536, 'dtype': 'fp16', 'selected': False} p50=1.0916 ms 983.9 GB/s
+layer_norm kernelforge {'M': 4096, 'N': 65536, 'dtype': 'bf16', 'selected': False} p50=1.2943 ms 829.8 GB/s
+layer_norm torch {'M': 4096, 'N': 65536, 'dtype': 'bf16', 'selected': False} p50=1.0916 ms 983.9 GB/s
+layer_norm kernelforge {'M': 2048, 'N': 65536, 'dtype': 'fp32', 'selected': False} p50=1.2554 ms 855.7 GB/s
+layer_norm torch {'M': 2048, 'N': 65536, 'dtype': 'fp32', 'selected': False} p50=1.0291 ms 1043.9 GB/s
+layer_norm kernelforge {'M': 2048, 'N': 131072, 'dtype': 'fp16', 'selected': False} p50=1.3025 ms 824.8 GB/s
+layer_norm torch {'M': 2048, 'N': 131072, 'dtype': 'fp16', 'selected': False} p50=1.2032 ms 892.8 GB/s
+layer_norm kernelforge {'M': 2048, 'N': 131072, 'dtype': 'bf16', 'selected': False} p50=1.3066 ms 822.2 GB/s
+layer_norm torch {'M': 2048, 'N': 131072, 'dtype': 'bf16', 'selected': False} p50=1.2012 ms 894.4 GB/s
+layer_norm kernelforge {'M': 1024, 'N': 131072, 'dtype': 'fp32', 'selected': False} p50=1.2749 ms 843.1 GB/s
+layer_norm torch {'M': 1024, 'N': 131072, 'dtype': 'fp32', 'selected': False} p50=0.9964 ms 1078.7 GB/s
+layer_norm kernelforge {'M': 1024, 'N': 262144, 'dtype': 'fp16', 'selected': False} p50=1.3056 ms 823.2 GB/s
+layer_norm torch {'M': 1024, 'N': 262144, 'dtype': 'fp16', 'selected': False} p50=1.2012 ms 894.8 GB/s
+layer_norm kernelforge {'M': 1024, 'N': 262144, 'dtype': 'bf16', 'selected': False} p50=1.3138 ms 818.1 GB/s
+layer_norm torch {'M': 1024, 'N': 262144, 'dtype': 'bf16', 'selected': False} p50=1.1991 ms 896.3 GB/s
+layer_norm kernelforge {'M': 512, 'N': 262144, 'dtype': 'fp32', 'selected': False} p50=1.2872 ms 835.8 GB/s
+layer_norm torch {'M': 512, 'N': 262144, 'dtype': 'fp32', 'selected': False} p50=1.1028 ms 975.5 GB/s
+layer_norm kernelforge {'M': 268436, 'N': 1000, 'dtype': 'fp16', 'selected': False} p50=1.0747 ms 999.1 GB/s
+layer_norm torch {'M': 268436, 'N': 1000, 'dtype': 'fp16', 'selected': False} p50=1.0496 ms 1023.0 GB/s
+layer_norm kernelforge {'M': 268436, 'N': 1000, 'dtype': 'bf16', 'selected': False} p50=1.0701 ms 1003.4 GB/s
+layer_norm torch {'M': 268436, 'N': 1000, 'dtype': 'bf16', 'selected': False} p50=1.0506 ms 1022.0 GB/s
+layer_norm kernelforge {'M': 134218, 'N': 1000, 'dtype': 'fp32', 'selected': False} p50=0.6390 ms 1680.4 GB/s
+layer_norm torch {'M': 134218, 'N': 1000, 'dtype': 'fp32', 'selected': False} p50=0.7076 ms 1517.5 GB/s
+layer_norm kernelforge {'M': 65521, 'N': 4097, 'dtype': 'fp16', 'selected': False} p50=2.0920 ms 513.3 GB/s
+layer_norm torch {'M': 65521, 'N': 4097, 'dtype': 'fp16', 'selected': False} p50=2.2569 ms 475.8 GB/s
+layer_norm kernelforge {'M': 65521, 'N': 4097, 'dtype': 'bf16', 'selected': False} p50=2.1135 ms 508.0 GB/s
+layer_norm torch {'M': 65521, 'N': 4097, 'dtype': 'bf16', 'selected': False} p50=2.2630 ms 474.5 GB/s
+layer_norm kernelforge {'M': 32761, 'N': 4097, 'dtype': 'fp32', 'selected': False} p50=1.0220 ms 1050.7 GB/s
+layer_norm torch {'M': 32761, 'N': 4097, 'dtype': 'fp32', 'selected': False} p50=1.4029 ms 765.4 GB/s
+layer_norm kernelforge {'M': 8567, 'N': 31337, 'dtype': 'fp16', 'selected': False} p50=3.7632 ms 285.4 GB/s
+layer_norm torch {'M': 8567, 'N': 31337, 'dtype': 'fp16', 'selected': False} p50=2.0070 ms 535.1 GB/s
+layer_norm kernelforge {'M': 8567, 'N': 31337, 'dtype': 'bf16', 'selected': False} p50=12.0934 ms 88.8 GB/s
+layer_norm torch {'M': 8567, 'N': 31337, 'dtype': 'bf16', 'selected': False} p50=2.0122 ms 533.7 GB/s
+layer_norm kernelforge {'M': 4284, 'N': 31337, 'dtype': 'fp32', 'selected': False} p50=5.9177 ms 181.5 GB/s
+layer_norm torch {'M': 4284, 'N': 31337, 'dtype': 'fp32', 'selected': False} p50=1.3773 ms 780.0 GB/s
+layer_norm kernelforge {'M': 1048576, 'N': 256, 'dtype': 'fp16', 'selected': False} p50=0.7844 ms 1368.9 GB/s
+layer_norm torch {'M': 1048576, 'N': 256, 'dtype': 'fp16', 'selected': False} p50=2.1074 ms 509.5 GB/s
+layer_norm kernelforge {'M': 1048576, 'N': 256, 'dtype': 'bf16', 'selected': False} p50=0.7844 ms 1368.9 GB/s
+layer_norm torch {'M': 1048576, 'N': 256, 'dtype': 'bf16', 'selected': False} p50=2.1053 ms 510.0 GB/s
+layer_norm kernelforge {'M': 524288, 'N': 256, 'dtype': 'fp32', 'selected': False} p50=0.6113 ms 1756.4 GB/s
+layer_norm torch {'M': 524288, 'N': 256, 'dtype': 'fp32', 'selected': False} p50=1.2483 ms 860.2 GB/s
+layer_norm kernelforge {'M': 262144, 'N': 1024, 'dtype': 'fp16', 'selected': False} p50=0.6134 ms 1750.6 GB/s
+layer_norm torch {'M': 262144, 'N': 1024, 'dtype': 'fp16', 'selected': False} p50=1.0250 ms 1047.5 GB/s
+layer_norm kernelforge {'M': 262144, 'N': 1024, 'dtype': 'bf16', 'selected': False} p50=0.6113 ms 1756.4 GB/s
+layer_norm torch {'M': 262144, 'N': 1024, 'dtype': 'bf16', 'selected': False} p50=1.0240 ms 1048.6 GB/s
+layer_norm kernelforge {'M': 131072, 'N': 1024, 'dtype': 'fp32', 'selected': False} p50=0.6175 ms 1738.9 GB/s
+layer_norm torch {'M': 131072, 'N': 1024, 'dtype': 'fp32', 'selected': False} p50=0.6779 ms 1584.0 GB/s
+layer_norm kernelforge {'M': 131072, 'N': 2048, 'dtype': 'fp16', 'selected': True} p50=0.6124 ms 1753.5 GB/s
+layer_norm torch {'M': 131072, 'N': 2048, 'dtype': 'fp16', 'selected': True} p50=0.8315 ms 1291.4 GB/s
+layer_norm kernelforge {'M': 131072, 'N': 2048, 'dtype': 'bf16', 'selected': True} p50=0.6113 ms 1756.4 GB/s
+layer_norm torch {'M': 131072, 'N': 2048, 'dtype': 'bf16', 'selected': True} p50=0.8243 ms 1302.6 GB/s
+layer_norm kernelforge {'M': 65536, 'N': 2048, 'dtype': 'fp32', 'selected': True} p50=0.6175 ms 1739.0 GB/s
+layer_norm torch {'M': 65536, 'N': 2048, 'dtype': 'fp32', 'selected': True} p50=0.7291 ms 1472.7 GB/s
+layer_norm kernelforge {'M': 65536, 'N': 4096, 'dtype': 'fp16', 'selected': True} p50=0.6124 ms 1753.5 GB/s
+layer_norm torch {'M': 65536, 'N': 4096, 'dtype': 'fp16', 'selected': True} p50=0.7936 ms 1353.0 GB/s
+layer_norm kernelforge {'M': 65536, 'N': 4096, 'dtype': 'bf16', 'selected': True} p50=0.6124 ms 1753.5 GB/s
+layer_norm torch {'M': 65536, 'N': 4096, 'dtype': 'bf16', 'selected': True} p50=0.7885 ms 1361.8 GB/s
+layer_norm kernelforge {'M': 32768, 'N': 4096, 'dtype': 'fp32', 'selected': True} p50=0.6134 ms 1750.6 GB/s
+layer_norm torch {'M': 32768, 'N': 4096, 'dtype': 'fp32', 'selected': True} p50=0.9298 ms 1154.9 GB/s
+layer_norm kernelforge {'M': 32768, 'N': 8192, 'dtype': 'fp16', 'selected': True} p50=0.6216 ms 1727.5 GB/s
+layer_norm torch {'M': 32768, 'N': 8192, 'dtype': 'fp16', 'selected': True} p50=1.0117 ms 1061.3 GB/s
+layer_norm kernelforge {'M': 32768, 'N': 8192, 'dtype': 'bf16', 'selected': True} p50=0.6205 ms 1730.4 GB/s
+layer_norm torch {'M': 32768, 'N': 8192, 'dtype': 'bf16', 'selected': True} p50=1.0122 ms 1060.8 GB/s
+layer_norm kernelforge {'M': 16384, 'N': 8192, 'dtype': 'fp32', 'selected': True} p50=0.6226 ms 1724.7 GB/s
+layer_norm torch {'M': 16384, 'N': 8192, 'dtype': 'fp32', 'selected': True} p50=0.9441 ms 1137.4 GB/s
+layer_norm kernelforge {'M': 16384, 'N': 16384, 'dtype': 'fp16', 'selected': False} p50=0.6216 ms 1727.6 GB/s
+layer_norm torch {'M': 16384, 'N': 16384, 'dtype': 'fp16', 'selected': False} p50=1.0301 ms 1042.4 GB/s
+layer_norm kernelforge {'M': 16384, 'N': 16384, 'dtype': 'bf16', 'selected': False} p50=0.6205 ms 1730.4 GB/s
+layer_norm torch {'M': 16384, 'N': 16384, 'dtype': 'bf16', 'selected': False} p50=1.0291 ms 1043.4 GB/s
+layer_norm kernelforge {'M': 8192, 'N': 16384, 'dtype': 'fp32', 'selected': False} p50=0.6697 ms 1603.5 GB/s
+layer_norm torch {'M': 8192, 'N': 16384, 'dtype': 'fp32', 'selected': False} p50=0.9626 ms 1115.6 GB/s
+layer_norm kernelforge {'M': 8192, 'N': 32768, 'dtype': 'fp16', 'selected': False} p50=0.7127 ms 1506.8 GB/s
+layer_norm torch {'M': 8192, 'N': 32768, 'dtype': 'fp16', 'selected': False} p50=1.0465 ms 1026.1 GB/s
+layer_norm kernelforge {'M': 8192, 'N': 32768, 'dtype': 'bf16', 'selected': False} p50=0.7076 ms 1517.7 GB/s
+layer_norm torch {'M': 8192, 'N': 32768, 'dtype': 'bf16', 'selected': False} p50=1.0465 ms 1026.1 GB/s
+layer_norm kernelforge {'M': 4096, 'N': 32768, 'dtype': 'fp32', 'selected': False} p50=0.7414 ms 1448.7 GB/s
+layer_norm torch {'M': 4096, 'N': 32768, 'dtype': 'fp32', 'selected': False} p50=0.9810 ms 1094.8 GB/s
+layer_norm kernelforge {'M': 4096, 'N': 65536, 'dtype': 'fp16', 'selected': False} p50=1.2882 ms 833.7 GB/s
+layer_norm torch {'M': 4096, 'N': 65536, 'dtype': 'fp16', 'selected': False} p50=1.0906 ms 984.8 GB/s
+layer_norm kernelforge {'M': 4096, 'N': 65536, 'dtype': 'bf16', 'selected': False} p50=1.2974 ms 827.8 GB/s
+layer_norm torch {'M': 4096, 'N': 65536, 'dtype': 'bf16', 'selected': False} p50=1.0895 ms 985.7 GB/s
+layer_norm kernelforge {'M': 2048, 'N': 65536, 'dtype': 'fp32', 'selected': False} p50=1.2554 ms 855.7 GB/s
+layer_norm torch {'M': 2048, 'N': 65536, 'dtype': 'fp32', 'selected': False} p50=1.0291 ms 1043.9 GB/s
+layer_norm kernelforge {'M': 2048, 'N': 131072, 'dtype': 'fp16', 'selected': False} p50=1.3015 ms 825.4 GB/s
+layer_norm torch {'M': 2048, 'N': 131072, 'dtype': 'fp16', 'selected': False} p50=1.2032 ms 892.8 GB/s
+layer_norm kernelforge {'M': 2048, 'N': 131072, 'dtype': 'bf16', 'selected': False} p50=1.3087 ms 820.9 GB/s
+layer_norm torch {'M': 2048, 'N': 131072, 'dtype': 'bf16', 'selected': False} p50=1.2006 ms 894.7 GB/s
+layer_norm kernelforge {'M': 1024, 'N': 131072, 'dtype': 'fp32', 'selected': False} p50=1.2739 ms 843.7 GB/s
+layer_norm torch {'M': 1024, 'N': 131072, 'dtype': 'fp32', 'selected': False} p50=0.9912 ms 1084.3 GB/s
+layer_norm kernelforge {'M': 1024, 'N': 262144, 'dtype': 'fp16', 'selected': False} p50=1.3066 ms 822.6 GB/s
+layer_norm torch {'M': 1024, 'N': 262144, 'dtype': 'fp16', 'selected': False} p50=1.2042 ms 892.5 GB/s
+layer_norm kernelforge {'M': 1024, 'N': 262144, 'dtype': 'bf16', 'selected': False} p50=1.3138 ms 818.1 GB/s
+layer_norm torch {'M': 1024, 'N': 262144, 'dtype': 'bf16', 'selected': False} p50=1.2012 ms 894.8 GB/s
+layer_norm kernelforge {'M': 512, 'N': 262144, 'dtype': 'fp32', 'selected': False} p50=1.2861 ms 836.5 GB/s
+layer_norm torch {'M': 512, 'N': 262144, 'dtype': 'fp32', 'selected': False} p50=1.1039 ms 974.6 GB/s
+layer_norm kernelforge {'M': 268436, 'N': 1000, 'dtype': 'fp16', 'selected': False} p50=1.0783 ms 995.8 GB/s
+layer_norm torch {'M': 268436, 'N': 1000, 'dtype': 'fp16', 'selected': False} p50=1.0486 ms 1024.0 GB/s
+layer_norm kernelforge {'M': 268436, 'N': 1000, 'dtype': 'bf16', 'selected': False} p50=1.0701 ms 1003.4 GB/s
+layer_norm torch {'M': 268436, 'N': 1000, 'dtype': 'bf16', 'selected': False} p50=1.0506 ms 1022.0 GB/s
+layer_norm kernelforge {'M': 134218, 'N': 1000, 'dtype': 'fp32', 'selected': False} p50=0.6400 ms 1677.7 GB/s
+layer_norm torch {'M': 134218, 'N': 1000, 'dtype': 'fp32', 'selected': False} p50=0.7076 ms 1517.5 GB/s
+layer_norm kernelforge {'M': 65521, 'N': 4097, 'dtype': 'fp16', 'selected': False} p50=2.0920 ms 513.3 GB/s
+layer_norm torch {'M': 65521, 'N': 4097, 'dtype': 'fp16', 'selected': False} p50=2.2477 ms 477.7 GB/s
+layer_norm kernelforge {'M': 65521, 'N': 4097, 'dtype': 'bf16', 'selected': False} p50=2.1130 ms 508.2 GB/s
+layer_norm torch {'M': 65521, 'N': 4097, 'dtype': 'bf16', 'selected': False} p50=2.2692 ms 473.2 GB/s
+layer_norm kernelforge {'M': 32761, 'N': 4097, 'dtype': 'fp32', 'selected': False} p50=1.0220 ms 1050.7 GB/s
+layer_norm torch {'M': 32761, 'N': 4097, 'dtype': 'fp32', 'selected': False} p50=1.4054 ms 764.0 GB/s
+layer_norm kernelforge {'M': 8567, 'N': 31337, 'dtype': 'fp16', 'selected': False} p50=3.7755 ms 284.5 GB/s
+layer_norm torch {'M': 8567, 'N': 31337, 'dtype': 'fp16', 'selected': False} p50=2.0091 ms 534.6 GB/s
+layer_norm kernelforge {'M': 8567, 'N': 31337, 'dtype': 'bf16', 'selected': False} p50=12.1042 ms 88.7 GB/s
+layer_norm torch {'M': 8567, 'N': 31337, 'dtype': 'bf16', 'selected': False} p50=2.0122 ms 533.7 GB/s
+layer_norm kernelforge {'M': 4284, 'N': 31337, 'dtype': 'fp32', 'selected': False} p50=5.9064 ms 181.9 GB/s
+layer_norm torch {'M': 4284, 'N': 31337, 'dtype': 'fp32', 'selected': False} p50=1.3783 ms 779.4 GB/s
+layer_norm kernelforge {'M': 1048576, 'N': 256, 'dtype': 'fp16', 'selected': False} p50=0.7844 ms 1368.9 GB/s
+layer_norm torch {'M': 1048576, 'N': 256, 'dtype': 'fp16', 'selected': False} p50=2.0992 ms 511.5 GB/s
+layer_norm kernelforge {'M': 1048576, 'N': 256, 'dtype': 'bf16', 'selected': False} p50=0.7834 ms 1370.7 GB/s
+layer_norm torch {'M': 1048576, 'N': 256, 'dtype': 'bf16', 'selected': False} p50=2.1053 ms 510.0 GB/s
+layer_norm kernelforge {'M': 524288, 'N': 256, 'dtype': 'fp32', 'selected': False} p50=0.6113 ms 1756.4 GB/s
+layer_norm torch {'M': 524288, 'N': 256, 'dtype': 'fp32', 'selected': False} p50=1.2452 ms 862.3 GB/s
+layer_norm kernelforge {'M': 262144, 'N': 1024, 'dtype': 'fp16', 'selected': False} p50=0.6134 ms 1750.6 GB/s
+layer_norm torch {'M': 262144, 'N': 1024, 'dtype': 'fp16', 'selected': False} p50=1.0260 ms 1046.5 GB/s
+layer_norm kernelforge {'M': 262144, 'N': 1024, 'dtype': 'bf16', 'selected': False} p50=0.6113 ms 1756.4 GB/s
+layer_norm torch {'M': 262144, 'N': 1024, 'dtype': 'bf16', 'selected': False} p50=1.0240 ms 1048.6 GB/s
+layer_norm kernelforge {'M': 131072, 'N': 1024, 'dtype': 'fp32', 'selected': False} p50=0.6164 ms 1741.8 GB/s
+layer_norm torch {'M': 131072, 'N': 1024, 'dtype': 'fp32', 'selected': False} p50=0.6799 ms 1579.2 GB/s
+layer_norm kernelforge {'M': 131072, 'N': 2048, 'dtype': 'fp16', 'selected': True} p50=0.6134 ms 1750.6 GB/s
+layer_norm torch {'M': 131072, 'N': 2048, 'dtype': 'fp16', 'selected': True} p50=0.8335 ms 1288.2 GB/s
+layer_norm kernelforge {'M': 131072, 'N': 2048, 'dtype': 'bf16', 'selected': True} p50=0.6113 ms 1756.4 GB/s
+layer_norm torch {'M': 131072, 'N': 2048, 'dtype': 'bf16', 'selected': True} p50=0.8253 ms 1301.0 GB/s
+layer_norm kernelforge {'M': 65536, 'N': 2048, 'dtype': 'fp32', 'selected': True} p50=0.6175 ms 1739.0 GB/s
+layer_norm torch {'M': 65536, 'N': 2048, 'dtype': 'fp32', 'selected': True} p50=0.7301 ms 1470.7 GB/s
+layer_norm kernelforge {'M': 65536, 'N': 4096, 'dtype': 'fp16', 'selected': True} p50=0.6124 ms 1753.5 GB/s
+layer_norm torch {'M': 65536, 'N': 4096, 'dtype': 'fp16', 'selected': True} p50=0.7916 ms 1356.5 GB/s
+layer_norm kernelforge {'M': 65536, 'N': 4096, 'dtype': 'bf16', 'selected': True} p50=0.6124 ms 1753.5 GB/s
+layer_norm torch {'M': 65536, 'N': 4096, 'dtype': 'bf16', 'selected': True} p50=0.7875 ms 1363.6 GB/s
+layer_norm kernelforge {'M': 32768, 'N': 4096, 'dtype': 'fp32', 'selected': True} p50=0.6134 ms 1750.6 GB/s
+layer_norm torch {'M': 32768, 'N': 4096, 'dtype': 'fp32', 'selected': True} p50=0.9298 ms 1154.9 GB/s
+layer_norm kernelforge {'M': 32768, 'N': 8192, 'dtype': 'fp16', 'selected': True} p50=0.6226 ms 1724.7 GB/s
+layer_norm torch {'M': 32768, 'N': 8192, 'dtype': 'fp16', 'selected': True} p50=1.0117 ms 1061.3 GB/s
+layer_norm kernelforge {'M': 32768, 'N': 8192, 'dtype': 'bf16', 'selected': True} p50=0.6216 ms 1727.5 GB/s
+layer_norm torch {'M': 32768, 'N': 8192, 'dtype': 'bf16', 'selected': True} p50=1.0117 ms 1061.3 GB/s
+layer_norm kernelforge {'M': 16384, 'N': 8192, 'dtype': 'fp32', 'selected': True} p50=0.6226 ms 1724.7 GB/s
+layer_norm torch {'M': 16384, 'N': 8192, 'dtype': 'fp32', 'selected': True} p50=0.9441 ms 1137.4 GB/s
+layer_norm kernelforge {'M': 16384, 'N': 16384, 'dtype': 'fp16', 'selected': False} p50=0.6205 ms 1730.4 GB/s
+layer_norm torch {'M': 16384, 'N': 16384, 'dtype': 'fp16', 'selected': False} p50=1.0291 ms 1043.4 GB/s
+layer_norm kernelforge {'M': 16384, 'N': 16384, 'dtype': 'bf16', 'selected': False} p50=0.6195 ms 1733.3 GB/s
+layer_norm torch {'M': 16384, 'N': 16384, 'dtype': 'bf16', 'selected': False} p50=1.0281 ms 1044.5 GB/s
+layer_norm kernelforge {'M': 8192, 'N': 16384, 'dtype': 'fp32', 'selected': False} p50=0.6687 ms 1606.0 GB/s
+layer_norm torch {'M': 8192, 'N': 16384, 'dtype': 'fp32', 'selected': False} p50=0.9636 ms 1114.5 GB/s
+layer_norm kernelforge {'M': 8192, 'N': 32768, 'dtype': 'fp16', 'selected': False} p50=0.7122 ms 1507.8 GB/s
+layer_norm torch {'M': 8192, 'N': 32768, 'dtype': 'fp16', 'selected': False} p50=1.0465 ms 1026.1 GB/s
+layer_norm kernelforge {'M': 8192, 'N': 32768, 'dtype': 'bf16', 'selected': False} p50=0.7096 ms 1513.3 GB/s
+layer_norm torch {'M': 8192, 'N': 32768, 'dtype': 'bf16', 'selected': False} p50=1.0476 ms 1025.1 GB/s
+layer_norm kernelforge {'M': 4096, 'N': 32768, 'dtype': 'fp32', 'selected': False} p50=0.7393 ms 1452.7 GB/s
+layer_norm torch {'M': 4096, 'N': 32768, 'dtype': 'fp32', 'selected': False} p50=0.9800 ms 1096.0 GB/s
+layer_norm kernelforge {'M': 4096, 'N': 65536, 'dtype': 'fp16', 'selected': False} p50=1.2882 ms 833.7 GB/s
+layer_norm torch {'M': 4096, 'N': 65536, 'dtype': 'fp16', 'selected': False} p50=1.0906 ms 984.8 GB/s
+layer_norm kernelforge {'M': 4096, 'N': 65536, 'dtype': 'bf16', 'selected': False} p50=1.2974 ms 827.8 GB/s
+layer_norm torch {'M': 4096, 'N': 65536, 'dtype': 'bf16', 'selected': False} p50=1.0916 ms 983.9 GB/s
+layer_norm kernelforge {'M': 2048, 'N': 65536, 'dtype': 'fp32', 'selected': False} p50=1.2564 ms 855.0 GB/s
+layer_norm torch {'M': 2048, 'N': 65536, 'dtype': 'fp32', 'selected': False} p50=1.0281 ms 1044.9 GB/s
+layer_norm kernelforge {'M': 2048, 'N': 131072, 'dtype': 'fp16', 'selected': False} p50=1.3036 ms 824.1 GB/s
+layer_norm torch {'M': 2048, 'N': 131072, 'dtype': 'fp16', 'selected': False} p50=1.2027 ms 893.2 GB/s
+layer_norm kernelforge {'M': 2048, 'N': 131072, 'dtype': 'bf16', 'selected': False} p50=1.3087 ms 820.9 GB/s
+layer_norm torch {'M': 2048, 'N': 131072, 'dtype': 'bf16', 'selected': False} p50=1.2012 ms 894.4 GB/s
+layer_norm kernelforge {'M': 1024, 'N': 131072, 'dtype': 'fp32', 'selected': False} p50=1.2728 ms 844.4 GB/s
+layer_norm torch {'M': 1024, 'N': 131072, 'dtype': 'fp32', 'selected': False} p50=0.9902 ms 1085.4 GB/s
+layer_norm kernelforge {'M': 1024, 'N': 262144, 'dtype': 'fp16', 'selected': False} p50=1.3087 ms 821.3 GB/s
+layer_norm torch {'M': 1024, 'N': 262144, 'dtype': 'fp16', 'selected': False} p50=1.2042 ms 892.5 GB/s
+layer_norm kernelforge {'M': 1024, 'N': 262144, 'dtype': 'bf16', 'selected': False} p50=1.3117 ms 819.4 GB/s
+layer_norm torch {'M': 1024, 'N': 262144, 'dtype': 'bf16', 'selected': False} p50=1.2022 ms 894.0 GB/s
+layer_norm kernelforge {'M': 512, 'N': 262144, 'dtype': 'fp32', 'selected': False} p50=1.2861 ms 836.5 GB/s
+layer_norm torch {'M': 512, 'N': 262144, 'dtype': 'fp32', 'selected': False} p50=1.1034 ms 975.1 GB/s
+layer_norm kernelforge {'M': 268436, 'N': 1000, 'dtype': 'fp16', 'selected': False} p50=1.0783 ms 995.8 GB/s
+layer_norm torch {'M': 268436, 'N': 1000, 'dtype': 'fp16', 'selected': False} p50=1.0486 ms 1024.0 GB/s
+layer_norm kernelforge {'M': 268436, 'N': 1000, 'dtype': 'bf16', 'selected': False} p50=1.0701 ms 1003.4 GB/s
+layer_norm torch {'M': 268436, 'N': 1000, 'dtype': 'bf16', 'selected': False} p50=1.0506 ms 1022.0 GB/s
+layer_norm kernelforge {'M': 134218, 'N': 1000, 'dtype': 'fp32', 'selected': False} p50=0.6400 ms 1677.7 GB/s
+layer_norm torch {'M': 134218, 'N': 1000, 'dtype': 'fp32', 'selected': False} p50=0.7066 ms 1519.7 GB/s
+layer_norm kernelforge {'M': 65521, 'N': 4097, 'dtype': 'fp16', 'selected': False} p50=2.0920 ms 513.3 GB/s
+layer_norm torch {'M': 65521, 'N': 4097, 'dtype': 'fp16', 'selected': False} p50=2.2467 ms 477.9 GB/s
+layer_norm kernelforge {'M': 65521, 'N': 4097, 'dtype': 'bf16', 'selected': False} p50=2.1100 ms 508.9 GB/s
+layer_norm torch {'M': 65521, 'N': 4097, 'dtype': 'bf16', 'selected': False} p50=2.2651 ms 474.1 GB/s
+layer_norm kernelforge {'M': 32761, 'N': 4097, 'dtype': 'fp32', 'selected': False} p50=1.0209 ms 1051.8 GB/s
+layer_norm torch {'M': 32761, 'N': 4097, 'dtype': 'fp32', 'selected': False} p50=1.4029 ms 765.4 GB/s
+layer_norm kernelforge {'M': 8567, 'N': 31337, 'dtype': 'fp16', 'selected': False} p50=3.7632 ms 285.4 GB/s
+layer_norm torch {'M': 8567, 'N': 31337, 'dtype': 'fp16', 'selected': False} p50=2.0060 ms 535.4 GB/s
+layer_norm kernelforge {'M': 8567, 'N': 31337, 'dtype': 'bf16', 'selected': False} p50=12.1057 ms 88.7 GB/s
+layer_norm torch {'M': 8567, 'N': 31337, 'dtype': 'bf16', 'selected': False} p50=2.0122 ms 533.7 GB/s
+layer_norm kernelforge {'M': 4284, 'N': 31337, 'dtype': 'fp32', 'selected': False} p50=5.9059 ms 181.9 GB/s
+layer_norm torch {'M': 4284, 'N': 31337, 'dtype': 'fp32', 'selected': False} p50=1.3773 ms 780.0 GB/s
+Wrote reports/performance_report.md; failed criteria cases: 0
+## Pre-registered criterion 2: Softmax ratio >= 0.80
+
+| N | dtype | M | GB/s | ratio to BW_copy | threshold | result | n |
+|---|---|---|---|---|---|---|---|
+| 2048 | fp16 | 131072 | 1744.7 | 0.993 | 0.80 | PASS | 3 |
+| 2048 | bf16 | 131072 | 1730.3 | 0.984 | 0.80 | PASS | 3 |
+| 2048 | fp32 | 65536 | 1744.7 | 0.993 | 0.80 | PASS | 3 |
+| 4096 | fp16 | 65536 | 1741.8 | 0.991 | 0.80 | PASS | 3 |
+| 4096 | bf16 | 65536 | 1738.9 | 0.989 | 0.80 | PASS | 3 |
+| 4096 | fp32 | 32768 | 1736.1 | 0.988 | 0.80 | PASS | 3 |
+| 8192 | fp16 | 32768 | 1741.8 | 0.991 | 0.80 | PASS | 3 |
+| 8192 | bf16 | 32768 | 1736.1 | 0.988 | 0.80 | PASS | 3 |
+| 8192 | fp32 | 16384 | 1730.3 | 0.984 | 0.80 | PASS | 3 |
+
+## Pre-registered criterion 3: LayerNorm ratio >= 0.80
+
+| N | dtype | M | GB/s | ratio to BW_copy | threshold | result | n |
+|---|---|---|---|---|---|---|---|
+| 2048 | fp16 | 131072 | 1750.6 | 0.996 | 0.80 | PASS | 3 |
+| 2048 | bf16 | 131072 | 1756.4 | 0.999 | 0.80 | PASS | 3 |
+| 2048 | fp32 | 65536 | 1739.0 | 0.989 | 0.80 | PASS | 3 |
+| 4096 | fp16 | 65536 | 1753.5 | 0.998 | 0.80 | PASS | 3 |
+| 4096 | bf16 | 65536 | 1753.5 | 0.998 | 0.80 | PASS | 3 |
+| 4096 | fp32 | 32768 | 1750.6 | 0.996 | 0.80 | PASS | 3 |
+| 8192 | fp16 | 32768 | 1724.7 | 0.981 | 0.80 | PASS | 3 |
+| 8192 | bf16 | 32768 | 1727.5 | 0.983 | 0.80 | PASS | 3 |
+| 8192 | fp32 | 16384 | 1724.7 | 0.981 | 0.80 | PASS | 3 |
+
+## Memory-copy baseline (BW_copy)
+
+| implementation | call | GB/s | ms p50 (launch range) | n |
+|---|---|---|---|---|
+| triton_copy | `kernelforge.ops._copy_kernels.triton_copy(x, y)` | 1757.9 | 1.2216 (1.2216-1.2237) | 3 |
+| torch_copy_ | `y.copy_(x)` | 1746.2 | 1.2298 (1.2298-1.2298) | 3 |
+
+BW_copy = **1757.9 GB/s** (triton_copy), 0.862 of the 2039 GB/s datasheet figure. Buffer: 1073741824 bytes, counted as one read plus one write.
+
+## Softmax sweep

@@ -197,3 +197,85 @@ Force pushes and deletion of main are blocked. The previous plan limitation no l
 - Result (A100, git e72400d, three launches, no clock drops): BW_copy 1757.9 GB/s (Triton copy;
   0.862 of datasheet). All 9 selected softmax cases PASS criterion 2 (ratios 0.984-0.993).
   KernelForge was faster than torch.softmax in all 39 sweep cases (1.02x-2.92x).
+
+## 2026-11-24 — LayerNorm path threshold: protocol stated before measuring
+
+- The LayerNorm limit was first set to 65536 by borrowing the softmax measurement. That does not
+  transfer: the LayerNorm single path keeps x and the centered row live, and at 65536 each
+  single-block variant took minutes in ptxas. The GPU test run was stopped before finishing
+  (11 earlier failures were fixed; see the next entry); no LayerNorm result depends on 65536.
+- Script renamed to `scripts/measure_path_threshold.py` with `--op softmax|layer_norm`; the
+  softmax entries above refer to its earlier name. Same widths, dtypes, >= 512 MiB inputs, three
+  fresh processes, autotune before timing. LayerNorm uses same-dtype weight and bias.
+- Rule (stated now, before any LayerNorm timing): LAYER_NORM_SINGLE_BLOCK_LIMIT = the largest
+  decision N where single p50 <= 1.01 x looped p50 (median of three launch medians) for every
+  dtype, at that N and every smaller decision N. This is the softmax tie band, adopted up front.
+
+## 2026-11-24 — LayerNorm first GPU run: 11 failures and their fixes
+
+- Approximate `/` and `sqrt` (Triton's default fast-math lowering) shifted the mean of constant
+  rows (93/31 != 3 exactly) and gave 2-ulp rstd error at N=262144 (allowed 2.381e-7, got
+  2.384e-7). Statistics now use `tl.div_rn` and `tl.sqrt_rn` (IEEE round-to-nearest).
+- PyTorch's CUDA `native_layer_norm` rejects fp32 weight/bias with fp16/bf16 input. The
+  same-dtype torch baseline casts the parameters to the input dtype; the reference keeps fp32.
+- PyTorch returns mean NaN for a row containing +inf (its Welford update hits inf - inf); the
+  fp32 reference and this kernel return +inf. For that test, stats are compared to the reference
+  with the same floor and an exact non-finite pattern, which is stricter, not looser.
+- My determinism check compared `return_stats=True` with `return_stats=False` outputs bitwise.
+  Those are separately compiled and tuned variants whose reduction order may differ by one ulp.
+  The spec requires the same call twice to be bitwise identical; the test now does exactly that
+  and checks the no-stats output with the frozen tolerance rule instead.
+
+## 2026-11-24 — LayerNorm path threshold: measured result
+
+- A100-SXM4-80GB, git 464eba1, three launches, no clock drops
+  (`reports/raw/layer_norm_threshold/`). Single/looped ratios: N<=4096 0.989-1.010;
+  8192-32768 0.730-0.955 (single faster); 65536 1.396-1.543 (single slower).
+- Pre-stated rule (1% tie band) gives LAYER_NORM_SINGLE_BLOCK_LIMIT = 32768 (was a borrowed,
+  unmeasured 65536). N=1024 fp16 was 1.010, inside the band. No frozen case changes path:
+  pre-registered N (2048/4096/8192) use the single path under both values.
+- Observed, not yet explained: irregular widths 4097 and 8193 are 2-4x slower than 4096/8192 on
+  BOTH LayerNorm paths in fp16/bf16 (e.g. 4097 fp16: single 1.89 ms, looped 1.53 ms vs 0.62 ms
+  at 4096). Softmax at 4097 does not show this. Hypothesis for K7: unaligned rows with runtime
+  N/row_stride prevent vectorized loads. Not a pre-registered shape.
+
+## 2026-11-24 — LayerNorm looped path redesigned after GPU accuracy failures
+
+- GPU run at ca704df: 163 passed, 5 failed, all on the looped path (N > 32768):
+  (a) a +inf row's mean became NaN, because Chan's merge computes finite - inf on the next tile;
+  (b) rstd at N=262144 was 2 ulp off (allowed ~1.99 ulp) and a multi-dim N=131100 fp32 output
+  was 2.86e-6 vs 2.54e-6 allowed, because scalar running statistics were rounded at the scale
+  of the whole row across 64+ tiles.
+- Looped path is now a per-lane two-pass centered design (the spec allows "two-pass centered"):
+  lane sums across tiles, then one tree reduction for the mean; lane sums of (x - mean)^2 for
+  the variance; then a normalizing pass. Three reads + one write (was two reads + one write).
+- Both paths sum the row in fp64 and round the mean once to fp32. Reason: a bf16 row of 32769
+  normals with mean ~0.005 had mean error 7.0e-10 vs PyTorch 2.3e-10 (allowed 4.66e-10); the
+  sum is the only cancellation-prone statistic. Stored statistics remain fp32 as specified.
+- My previous inf-row test compared finite-row stats to the reference with only the eps floor,
+  which no summation order can meet for cancellation-heavy means. The test now checks the
+  finite row with the usual PyTorch-relative rule and the NaN/+inf rows' stats pattern exactly
+  against the reference (PyTorch's own mean is NaN for the +inf row).
+- The LayerNorm threshold measured at 464eba1 used the old looped kernel and is superseded;
+  it is re-measured with the same pre-stated rule (1% tie band) at the commit below.
+
+## 2026-11-24 — LayerNorm path threshold re-measured with the redesigned kernels
+
+- Commit 9852793, A100-SXM4-80GB, three launches, no clock drops, same pre-stated 1% rule:
+  limit stays 32768 (`reports/raw/layer_norm_threshold/`; the superseded 464eba1 data is kept in
+  `reports/raw/layer_norm_threshold_464eba1_superseded/`). Single/looped ratios: N<=16384
+  0.83-0.96; 32768 0.64-0.79; 65536 1.11-1.23. The fp64 row sum costs ~1% at N<=8192 and
+  ~6% at 32768 on the single path (0.62 ms -> 0.62 ms; 0.69 ms -> 0.73 ms).
+- Irregular widths remain 1.6-2.5x slower than neighbouring powers of two on both paths
+  (unchanged observation; analysis deferred to K7).
+
+## 2026-11-24 — K4 LayerNorm benchmark result
+
+- A100-SXM4-80GB, commit 9852793 (bench launched on the clean LayerNorm branch tip), three
+  launches, no clock drops; reuses BW_copy = 1757.9 GB/s measured on the same machine and day.
+- Criterion 3: all 9 pre-registered cases PASS (ratios 0.981-0.999).
+- Sweep (not pass/fail): faster than F.layer_norm for power-of-two N <= 32768 (1.10-2.68x);
+  slower at N >= 65536 (0.78-0.92x; looped path reads three times) and at irregular widths
+  1000 (fp16/bf16) and 31337 (all dtypes; bf16 at 88.7 GB/s, 0.17x torch). Causes go to K7.
+- Byte accounting: 2*M*N*elem + N*(w_elem + b_elem), weight and bias in the input dtype,
+  stats not returned. Accuracy on benchmark inputs passes the frozen rule for all 39 cases.

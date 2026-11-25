@@ -10,9 +10,19 @@ from kernelforge.bench import suites
 from kernelforge.bench.harness import group_launches, load_launch_records
 
 DATASHEET_GBPS = 2039.0
-SOFTMAX_RATIO_THRESHOLD = 0.80
+RATIO_THRESHOLD = 0.80
 DTYPE_ORDER = ("fp16", "bf16", "fp32")
+ELEM_SIZE = {"fp16": 2, "bf16": 2, "fp32": 4}
 KERNELFORGE_COLOR, TORCH_COLOR, REFERENCE_COLOR = "#2a78d6", "#eb6834", "#898781"
+# Row-wise bandwidth-bound operations share shapes, criteria form, and report sections.
+ROW_OPS = {
+    "softmax": {"title": "Softmax", "criterion": 2, "torch": "torch.softmax",
+                "call": "torch.softmax(x, dim=-1)", "bytes": "2*M*N*elem_size"},
+    "layer_norm": {"title": "LayerNorm", "criterion": 3, "torch": "F.layer_norm",
+                   "call": "F.layer_norm(x, (N,), weight, bias)",
+                   "bytes": "2*M*N*elem_size + N*(weight_elem + bias_elem); weight and bias "
+                            "use the input dtype; stats are not returned"},
+}
 
 
 def is_a100(device):
@@ -81,15 +91,15 @@ def copy_section(copy_summary):
     return lines
 
 
-def softmax_criteria(groups):
-    """Criterion 2 table on the pre-registered cases; returns (lines, number of failures)."""
-    lines = ["## Pre-registered criterion 2: softmax ratio >= 0.80", "",
+def row_criteria(groups, op):
+    """Ratio >= 0.80 table on the pre-registered cases; returns (lines, number of failures)."""
+    info = ROW_OPS[op]
+    lines = [f"## Pre-registered criterion {info['criterion']}: {info['title']} ratio >= 0.80", "",
              "| N | dtype | M | GB/s | ratio to BW_copy | threshold | result | n |",
              "|---|---|---|---|---|---|---|---|"]
     failures = 0
-    selected = [{**case, "selected": True} for case in suites.selected_rows()]
-    for case in selected:
-        aggregate, group = groups.get(_key("softmax", "kernelforge", case), (None, []))
+    for case in [{**case, "selected": True} for case in suites.selected_rows()]:
+        aggregate, group = groups.get(_key(op, "kernelforge", case), (None, []))
         prefix = f"| {case['N']} | {case['dtype']} | {case['M']} |"
         if aggregate is None:
             lines.append(f"{prefix} - | - | 0.80 | not measured | {len(group)} |")
@@ -98,24 +108,25 @@ def softmax_criteria(groups):
             lines.append(f"{prefix} {aggregate.gbps:.1f} | - | 0.80 | not evaluated: "
                          f"{group[0].env.device} is not an A100 | {aggregate.n} |")
             continue
-        passed = aggregate.ratio_to_copy >= SOFTMAX_RATIO_THRESHOLD
+        passed = aggregate.ratio_to_copy >= RATIO_THRESHOLD
         failures += not passed
         lines.append(f"{prefix} {aggregate.gbps:.1f} | {aggregate.ratio_to_copy:.3f} | 0.80 | "
                      f"{'PASS' if passed else 'FAIL'} | {aggregate.n} |")
     return lines + [""], failures
 
 
-def softmax_sweep(groups):
-    """Full sweep with the torch.softmax baseline measured the same way."""
-    lines = ["## Softmax sweep", "",
-             ("Effective bandwidth = 2*M*N*elem_size / median time (median of three launch medians;"
-             " launch range in parentheses). Selected cases are marked *. Baseline call: "
-             "`torch.softmax(x, dim=-1)`."), "",
-             ("| N | dtype | M | KernelForge GB/s | ms p50 (range) | torch GB/s | KF/torch | "
-             "KF ratio to BW_copy | n |"), "|---|---|---|---|---|---|---|---|---|"]
-    for case in suites.softmax_sweep():
-        ours, _ = groups.get(_key("softmax", "kernelforge", case), (None, []))
-        theirs, _ = groups.get(_key("softmax", "torch", case), (None, []))
+def row_sweep(groups, op):
+    """Full sweep with the PyTorch baseline measured the same way."""
+    info = ROW_OPS[op]
+    lines = [f"## {info['title']} sweep", "",
+             (f"Effective bandwidth = {info['bytes']}, divided by the median time (median of three "
+              "launch medians; launch range in parentheses). Selected cases are marked *. "
+              f"Baseline call: `{info['call']}`."), "",
+             (f"| N | dtype | M | KernelForge GB/s | ms p50 (range) | {info['torch']} GB/s | "
+              "KF/torch | KF ratio to BW_copy | n |"), "|---|---|---|---|---|---|---|---|---|"]
+    for case in suites.row_sweep():
+        ours, _ = groups.get(_key(op, "kernelforge", case), (None, []))
+        theirs, _ = groups.get(_key(op, "torch", case), (None, []))
         name = f"{case['N']}{'*' if case['selected'] else ''}"
         if ours is None or theirs is None:
             lines.append(f"| {name} | {case['dtype']} | {case['M']} | not measured | | | | | |")
@@ -127,10 +138,10 @@ def softmax_sweep(groups):
     return lines + [""]
 
 
-def accuracy_section(raw_dir):
+def accuracy_section(raw_dir, op):
     """Kernel vs reference error next to PyTorch's own error, from launch 0 inputs."""
-    path = Path(raw_dir) / "softmax" / "accuracy.json"
-    lines = ["## Accuracy (softmax, benchmark inputs)", ""]
+    path = Path(raw_dir) / op / "accuracy.json"
+    lines = [f"## Accuracy ({ROW_OPS[op]['title']}, benchmark inputs)", ""]
     if not path.exists():
         return lines + ["Not measured.", ""]
     lines += ["| N | dtype | KernelForge max abs err | torch max abs err | allowed | result |",
@@ -143,38 +154,37 @@ def accuracy_section(raw_dir):
     return lines + [""]
 
 
-def memory_section(groups):
+def memory_section(groups, op):
     """Peak allocation beyond the inputs for one call (includes the output tensor)."""
-    lines = ["## Peak memory (softmax)", "",
+    lines = [f"## Peak memory ({ROW_OPS[op]['title']})", "",
              ("Delta of `max_memory_allocated()` over the allocated inputs for one call; the "
-             "output tensor is included."), "",
+              "output tensor is included."), "",
              "| N | dtype | input bytes | KernelForge delta | torch delta |", "|---|---|---|---|---|"]
-    for case in suites.softmax_sweep():
-        _ours, ours_group = groups.get(_key("softmax", "kernelforge", case), (None, []))
-        _theirs, theirs_group = groups.get(_key("softmax", "torch", case), (None, []))
-        if not ours_group or not theirs_group:
+    for case in suites.row_sweep():
+        _, ours = groups.get(_key(op, "kernelforge", case), (None, []))
+        _, theirs = groups.get(_key(op, "torch", case), (None, []))
+        if not ours or not theirs:
             continue
-        size = case["M"] * case["N"] * {"fp16": 2, "bf16": 2, "fp32": 4}[case["dtype"]]
-        lines.append(f"| {case['N']} | {case['dtype']} | {size} | "
-                     f"{max(r.peak_mem_delta_bytes for r in ours_group)} | "
-                     f"{max(r.peak_mem_delta_bytes for r in theirs_group)} |")
+        lines.append(f"| {case['N']} | {case['dtype']} | "
+                     f"{case['M'] * case['N'] * ELEM_SIZE[case['dtype']]} | "
+                     f"{max(r.peak_mem_delta_bytes for r in ours)} | "
+                     f"{max(r.peak_mem_delta_bytes for r in theirs)} |")
     return lines + [""]
 
 
-def autotune_section(groups):
+def autotune_section(groups, op):
     """Winning configuration per case and how many candidates were pruned or invalid."""
-    lines = ["## Autotune (softmax)", "",
+    lines = [f"## Autotune ({ROW_OPS[op]['title']})", "",
              "First-call seconds include compilation and autotuning and are excluded from timing.",
              "", ("| N | dtype | winner (launch 0) | same winner in all launches | rejected configs |"
-             " first-call s (max) |"), "|---|---|---|---|---|---|"]
-    for case in suites.softmax_sweep():
-        _, group = groups.get(_key("softmax", "kernelforge", case), (None, []))
+                  " first-call s (max) |"), "|---|---|---|---|---|---|"]
+    for case in suites.row_sweep():
+        _, group = groups.get(_key(op, "kernelforge", case), (None, []))
         if not group:
             continue
         winners = [record.autotune.best_config for record in group]
-        rejected = group[0].autotune.invalid_configs
         statuses = {}
-        for config in rejected:
+        for config in group[0].autotune.invalid_configs:
             statuses[config.get("status", "?")] = statuses.get(config.get("status", "?"), 0) + 1
         seconds = [r.autotune.tuning_seconds for r in group if r.autotune.tuning_seconds is not None]
         seconds_cell = f"{max(seconds):.1f}" if seconds else "-"
@@ -184,35 +194,33 @@ def autotune_section(groups):
     return lines + [""]
 
 
-def where_we_lose(groups):
+def where_we_lose(groups, op):
     """Cases slower than torch, and sweep cases below the 0.80 ratio, listed separately."""
+    info = ROW_OPS[op]
     slower, below = [], []
-    for case in suites.softmax_sweep():
-        ours, _ = groups.get(_key("softmax", "kernelforge", case), (None, []))
-        theirs, _ = groups.get(_key("softmax", "torch", case), (None, []))
+    for case in suites.row_sweep():
+        ours, _ = groups.get(_key(op, "kernelforge", case), (None, []))
+        theirs, _ = groups.get(_key(op, "torch", case), (None, []))
         if ours is None or theirs is None:
             continue
         name = f"N={case['N']} {case['dtype']}"
         if ours.gbps < theirs.gbps:
             slower.append(f"- {name}: {ours.gbps:.1f} GB/s vs torch {theirs.gbps:.1f} GB/s (n=3).")
-        if ours.ratio_to_copy is not None and ours.ratio_to_copy < SOFTMAX_RATIO_THRESHOLD:
+        if ours.ratio_to_copy is not None and ours.ratio_to_copy < RATIO_THRESHOLD:
             below.append(f"- {name}{' (selected)' if case['selected'] else ''}: ratio "
                          f"{ours.ratio_to_copy:.3f}, {ours.gbps:.1f} GB/s (n=3).")
-    lines = ["## Where we lose and why", "", "### Softmax slower than torch.softmax", ""]
+    lines = [f"### {info['title']} slower than {info['torch']}", ""]
     lines += slower or ["None of the measured cases."]
-    lines += ["", "### Softmax below the 0.80 bandwidth ratio", ""]
-    lines += below or ["None of the measured cases."]
-    lines += ["", ("Explanations require profiling evidence; see docs/PROFILING.md (K7). Until "
-              "then the cause is recorded as not yet understood."), ""]
-    return lines
+    lines += ["", f"### {info['title']} below the 0.80 bandwidth ratio", ""]
+    return lines + (below or ["None of the measured cases."]) + [""]
 
 
 def telemetry_section(all_groups):
     """Start/end nvidia-smi samples per launch, flagging lowered clocks or throttling."""
     lines = ["## GPU telemetry per launch", "",
              ("Flagged when the end SM clock is below 97% of max or a non-idle throttle reason "
-             "is active."), "", ("| suite | launch | start SM/mem MHz, W, C | end SM/mem MHz, W, C |"
-             " end throttle reasons | flag |"), "|---|---|---|---|---|---|"]
+              "is active."), "", ("| suite | launch | start SM/mem MHz, W, C | end SM/mem MHz, W, C |"
+                                  " end throttle reasons | flag |"), "|---|---|---|---|---|---|"]
     seen = False
     for suite, groups in all_groups.items():
         launches = {}
@@ -222,16 +230,16 @@ def telemetry_section(all_groups):
         for index, telemetry in sorted(launches.items()):
             seen = True
             sample = telemetry.model_dump()
-
-            def describe(point):
-                return (f"{point.get('clocks.sm', '?')}/{point.get('clocks.mem', '?')}, "
-                        f"{point.get('power.draw', '?')}, {point.get('temperature.gpu', '?')}")
-
             flag = "CLOCK DROP" if gpu_clock_drop(sample) else "ok"
-            lines.append(f"| {suite} | {index} | {describe(sample['start'])} | "
-                         f"{describe(sample['end'])} | "
+            lines.append(f"| {suite} | {index} | {_describe(sample['start'])} | "
+                         f"{_describe(sample['end'])} | "
                          f"{sample['end'].get('clocks_throttle_reasons.active', '?')} | {flag} |")
     return (lines if seen else lines[:2] + ["No telemetry recorded."]) + [""]
+
+
+def _describe(point):
+    return (f"{point.get('clocks.sm', '?')}/{point.get('clocks.mem', '?')}, "
+            f"{point.get('power.draw', '?')}, {point.get('temperature.gpu', '?')}")
 
 
 def gpu_clock_drop(telemetry):
@@ -241,7 +249,7 @@ def gpu_clock_drop(telemetry):
     return clock_drop(telemetry)
 
 
-def plot_softmax(groups, copy_summary, plots_dir):
+def plot_row_op(groups, copy_summary, plots_dir, op):
     """Small multiples (one panel per dtype) of GB/s vs power-of-two N; None without data."""
     try:
         import matplotlib
@@ -250,15 +258,16 @@ def plot_softmax(groups, copy_summary, plots_dir):
         import matplotlib.pyplot as plt
     except ImportError:
         return None
+    info = ROW_OPS[op]
     widths = sorted(n for n in suites.SWEEP_WIDTHS if n & (n - 1) == 0)
     figure, axes = plt.subplots(1, 3, figsize=(12, 3.6), sharey=True)
     plotted = False
     for axis, dtype in zip(axes, DTYPE_ORDER):
         for impl, color, label in (("kernelforge", KERNELFORGE_COLOR, "KernelForge"),
-                                   ("torch", TORCH_COLOR, "torch.softmax")):
+                                   ("torch", TORCH_COLOR, info["torch"])):
             points = []
-            for case in suites.softmax_sweep():
-                aggregate, _ = groups.get(_key("softmax", impl, case), (None, []))
+            for case in suites.row_sweep():
+                aggregate, _ = groups.get(_key(op, impl, case), (None, []))
                 if case["dtype"] == dtype and case["N"] in widths and aggregate is not None:
                     points.append((case["N"], aggregate.gbps))
             if points:
@@ -279,10 +288,10 @@ def plot_softmax(groups, copy_summary, plots_dir):
     if not plotted:
         plt.close(figure)
         return None
-    figure.suptitle("Softmax effective bandwidth, median of 3 launches", fontsize=12)
+    figure.suptitle(f"{info['title']} effective bandwidth, median of 3 launches", fontsize=12)
     figure.tight_layout()
     Path(plots_dir).mkdir(parents=True, exist_ok=True)
-    path = Path(plots_dir) / "softmax_bandwidth.png"
+    path = Path(plots_dir) / f"{op}_bandwidth.png"
     figure.savefig(path, dpi=150)
     plt.close(figure)
     return path
@@ -293,24 +302,34 @@ def render(raw_dir, plots_dir=None):
     raw_dir = Path(raw_dir)
     copy_path = raw_dir / "copy_probe.json"
     copy_summary = json.loads(copy_path.read_text()) if copy_path.exists() else None
-    softmax_groups = load_groups(raw_dir, "softmax")
+    groups = {op: load_groups(raw_dir, op) for op in ROW_OPS}
     lines = ["# Performance report", "",
              "Generated by `kernelforge report` from `reports/raw/`; do not edit by hand.", ""]
-    lines += environment_section({"softmax": softmax_groups}, copy_summary)
-    criteria, failures = softmax_criteria(softmax_groups)
-    lines += criteria + copy_section(copy_summary) + softmax_sweep(softmax_groups)
-    if plots_dir is not None:
-        plot = plot_softmax(softmax_groups, copy_summary, plots_dir)
+    lines += environment_section(groups, copy_summary)
+    failures = 0
+    for op in ROW_OPS:
+        criteria, failed = row_criteria(groups[op], op)
+        lines += criteria
+        failures += failed
+    lines += copy_section(copy_summary)
+    for op in ROW_OPS:
+        lines += row_sweep(groups[op], op)
+        plot = plot_row_op(groups[op], copy_summary, plots_dir, op) if plots_dir else None
         if plot is not None:
-            lines += [f"![Softmax effective bandwidth](plots/{plot.name})", ""]
-    lines += accuracy_section(raw_dir) + memory_section(softmax_groups)
-    lines += autotune_section(softmax_groups) + where_we_lose(softmax_groups)
-    lines += telemetry_section({"copy": load_groups(raw_dir, "copy"), "softmax": softmax_groups})
-    lines += ["## Not yet measured", "", ("LayerNorm (K4), causal attention (K6), and profiling "
-              "(K7) sections are added when their measurements exist."), "",
+            lines += [f"![{ROW_OPS[op]['title']} effective bandwidth](plots/{plot.name})", ""]
+        lines += accuracy_section(raw_dir, op) + memory_section(groups[op], op)
+        lines += autotune_section(groups[op], op)
+    lines += ["## Where we lose and why", ""]
+    for op in ROW_OPS:
+        lines += where_we_lose(groups[op], op)
+    lines += [("Explanations require profiling evidence; see docs/PROFILING.md (K7). Until then "
+               "the cause is recorded as not yet understood."), ""]
+    lines += telemetry_section({"copy": load_groups(raw_dir, "copy"), **groups})
+    lines += ["## Not yet measured", "", ("Causal attention (K6) and profiling (K7) sections are "
+              "added when their measurements exist."), "",
               "## Reproduction", "", "```sh", "bash scripts/gpu_session.sh setup",
-              "bash scripts/gpu_session.sh bench softmax", ("kernelforge report --raw reports/raw "
-              "--out reports"), "```", ""]
+              "bash scripts/gpu_session.sh bench all",
+              "kernelforge report --raw reports/raw --out reports", "```", ""]
     return "\n".join(lines), failures
 
 
