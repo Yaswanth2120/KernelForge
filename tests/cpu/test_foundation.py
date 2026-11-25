@@ -93,3 +93,35 @@ def test_cli_prereg(capsys, tmp_path):
     assert main(['check-prereg']) == 0
     assert 'match' in capsys.readouterr().out
     assert main(['check-prereg', '--path', str(tmp_path / 'missing')]) == 1
+
+
+@pytest.mark.parametrize(('gpu', 'op', 'marker', 'path'), [
+    (False, None, 'not gpu and not slow', 'tests/cpu'),
+    (False, 'layer_norm', 'not gpu and not slow', 'tests/cpu/test_layernorm_interface.py'),
+    (True, None, 'gpu and not slow', 'tests/gpu'),
+    (True, 'causal_attention', 'gpu and not slow', 'tests/gpu/test_attention.py'),
+])
+def test_cli_test_selection(gpu, op, marker, path):
+    from kernelforge.cli import pytest_args
+
+    assert pytest_args(gpu, op)[-3:] == ['-m', marker, path]
+    assert Path(path).exists()
+
+
+@pytest.mark.parametrize(('pytest_code', 'exit_code'), [(0, 0), (1, 1), (4, 2), (5, 2)])
+def test_cli_test_exit_codes(monkeypatch, pytest_code, exit_code):
+    calls = []
+
+    def fake_run(command, check):
+        calls.append(command)
+        return subprocess.CompletedProcess(command, pytest_code)
+
+    monkeypatch.setattr('kernelforge.cli.subprocess.run', fake_run)
+    assert main(['test', '--op', 'softmax']) == exit_code
+    assert calls[0][-1] == 'tests/cpu/test_softmax_interface.py'
+
+
+def test_cli_test_rejects_unknown_op():
+    with pytest.raises(SystemExit) as exc:
+        main(['test', '--op', 'conv'])
+    assert exc.value.code == 2

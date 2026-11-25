@@ -4,10 +4,15 @@ Exit codes: 0 ok; 1 test/criterion failure; 2 usage error; 3 environment check f
 """
 import argparse
 import json
+import subprocess
+import sys
 from pathlib import Path
 
 from kernelforge.bench.suites import check_prereg
 from kernelforge.env import doctor, timing_source
+
+# Test-file stem per op: tests/cpu/test_<stem>_interface.py and tests/gpu/test_<stem>.py.
+OP_TEST_STEMS = {"softmax": "softmax", "layer_norm": "layernorm", "causal_attention": "attention"}
 
 
 def _parser():
@@ -24,10 +29,32 @@ def _parser():
     bench.add_argument("--out", type=Path, default=Path("reports/raw"))
     copy = commands.add_parser("copy-probe")
     copy.add_argument("--out", type=Path, default=Path("reports/raw/copy_probe.json"))
+    tests = commands.add_parser("test")
+    tests.add_argument("--gpu", action="store_true")
+    tests.add_argument("--op", choices=sorted(OP_TEST_STEMS))
     report = commands.add_parser("report")
     report.add_argument("--raw", type=Path, default=Path("reports/raw"))
     report.add_argument("--out", type=Path, default=Path("reports"))
     return parser
+
+
+def pytest_args(gpu, op):
+    """The pytest command line for the CPU suite or the (non-slow) GPU suite, optionally one op."""
+    if gpu:
+        marker, path = "gpu and not slow", "tests/gpu"
+        if op:
+            path = f"tests/gpu/test_{OP_TEST_STEMS[op]}.py"
+    else:
+        marker, path = "not gpu and not slow", "tests/cpu"
+        if op:
+            path = f"tests/cpu/test_{OP_TEST_STEMS[op]}_interface.py"
+    return [sys.executable, "-m", "pytest", "-m", marker, path]
+
+
+def _test(args):
+    # pytest exits 1 on failing tests and 2-5 on usage or collection problems.
+    returncode = subprocess.run(pytest_args(args.gpu, args.op), check=False).returncode
+    return returncode if returncode in (0, 1) else 2
 
 
 def _gpu_ready():
@@ -102,6 +129,8 @@ def main(argv=None):
         return _copy_probe(args)
     if args.command == "report":
         return _report(args)
+    if args.command == "test":
+        return _test(args)
     result = doctor(args.probe_ncu)
     print(json.dumps(result, indent=2))
     if args.timing_source:

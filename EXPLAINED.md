@@ -24,6 +24,14 @@ Reject edits to the registered protocol or executable suite definitions. Its res
 
 Parse commands and delegate to CPU-safe application functions. Its result is used by the calling interface or diagnostic; it makes no kernel correctness claim.
 
+## `src/kernelforge/cli.py:pytest_args`
+
+Builds the pytest command for `kernelforge test`: the CPU suite by default, or the non-slow GPU suite with `--gpu`. `--op` narrows the run to one op's test file. Slow int64 tests are left out because they need about 25 GiB of GPU memory.
+
+## `src/kernelforge/cli.py:_test`
+
+Runs that pytest command in a child process and converts its exit code to the CLI's convention: 0 means pass, 1 means a test failed, and 2 covers anything else pytest reports, such as collection errors.
+
 ## `src/kernelforge/env.py:command_output`
 
 Capture a bounded external diagnostic without failing offline. Its result is used by the calling interface or diagnostic; it makes no kernel correctness claim.
