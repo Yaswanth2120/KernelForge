@@ -110,11 +110,23 @@ def _looped_softmax(X, Y, M: tl.constexpr, N: tl.constexpr, LEADING_SHAPE: tl.co
         tl.store(Y + row * N + offsets, probabilities, mask=active)
 
 
+def _key_arguments(x):
+    """Kernel arguments that also form the autotune key (everything except the tensors)."""
+    return {"M": x.numel() // x.shape[-1], "N": x.shape[-1],
+            "LEADING_SHAPE": tuple(x.shape[:-1]), "LEADING_STRIDES": tuple(x.stride()[:-1]),
+            "DTYPE": str(x.dtype), "DEVICE": x.device.index}
+
+
+def autotune_entry(x, single_block_limit):
+    """Return the pruning/winner record for the last launch on a tensor shaped like x."""
+    path = "single" if x.shape[-1] <= single_block_limit else "looped"
+    arguments = _key_arguments(x)
+    return PRUNING_LOG.get((path, *(arguments[name] for name in KEY_FIELDS)))
+
+
 def launch_softmax(x, output, grid, single_block_limit):
     """Launch a path and retain its winning configuration for later GPU artifacts."""
-    arguments = {"X": x, "Y": output, "M": x.numel() // x.shape[-1], "N": x.shape[-1],
-                 "LEADING_SHAPE": tuple(x.shape[:-1]), "LEADING_STRIDES": tuple(x.stride()[:-1]),
-                 "DTYPE": str(x.dtype), "DEVICE": x.device.index}
+    arguments = {"X": x, "Y": output, **_key_arguments(x)}
     path = "single" if x.shape[-1] <= single_block_limit else "looped"
     kernel = _single_softmax if path == "single" else _looped_softmax
     if path == "single":

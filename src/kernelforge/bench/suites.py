@@ -20,6 +20,28 @@ def selected_attention():
             for (b, s), d, dtype in product(ATTENTION_PAIRS, (64, 128), ("fp16", "bf16"))]
 
 
+# Full sweep (reported, not pass/fail): small, path-threshold, large, and irregular widths.
+SWEEP_WIDTHS = (256, 1024, 2048, 4096, 8192, 16384, 32768, 65536, 131072, 262144, 1000, 4097, 31337)
+COPY_BUFFER_BYTES = 1024**3
+
+
+def rows_for(n, elem_size):
+    """Pick the smallest row count whose input reaches the registered 512 MiB."""
+    return (MIN_INPUT_BYTES + n * elem_size - 1) // (n * elem_size)
+
+
+def softmax_sweep():
+    """List sweep cases; the pre-registered pass/fail cases are flagged as selected."""
+    selected = {(case["N"], case["dtype"]) for case in selected_rows()}
+    return [{"M": rows_for(n, size), "N": n, "dtype": dtype, "selected": (n, dtype) in selected}
+            for n, (dtype, size) in product(SWEEP_WIDTHS, ROW_DTYPES.items())]
+
+
+def copy_cases():
+    """One >= 1 GiB buffer per copy implementation, counted as one read plus one write."""
+    return [{"buffer_bytes": COPY_BUFFER_BYTES, "dtype": "fp32"}]
+
+
 def check_prereg(path):
     """Reject edits to the registered protocol or executable suite definitions."""
     import hashlib

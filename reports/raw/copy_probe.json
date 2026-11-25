@@ -1,0 +1,37 @@
+{
+  "schema": "kernelforge.copy_probe.v1",
+  "bw_copy_gbps": 1757.8809668933548,
+  "best_impl": "triton_copy",
+  "per_impl": {
+    "triton_copy": {
+      "gbps": 1757.8809668933548,
+      "ms_p50": 1.2216320037841797,
+      "ms_min": 1.2216320037841797,
+      "ms_max": 1.223680019378662,
+      "n": 3,
+      "baseline_call": "kernelforge.ops._copy_kernels.triton_copy(x, y)"
+    },
+    "torch_copy_": {
+      "gbps": 1746.1715990495222,
+      "ms_p50": 1.2298239469528198,
+      "ms_min": 1.2298239469528198,
+      "ms_max": 1.2298239469528198,
+      "n": 3,
+      "baseline_call": "y.copy_(x)"
+    }
+  },
+  "case": {
+    "buffer_bytes": 1073741824,
+    "dtype": "fp32"
+  },
+  "env": {
+    "device": "NVIDIA A100-SXM4-80GB",
+    "cc": "8.0",
+    "torch": "2.8.0+cu128",
+    "triton": "3.4.0",
+    "cuda": "12.8",
+    "driver": "595.91.07",
+    "git_sha": "e72400d",
+    "date": "2026-11-24"
+  }
+}

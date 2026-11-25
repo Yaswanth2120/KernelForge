@@ -13,7 +13,9 @@ from kernelforge.env import command_output, doctor
 
 @pytest.mark.parametrize('module', ['kernelforge', 'kernelforge.ops', 'kernelforge.reference',
                                    'kernelforge.tolerance', 'kernelforge.metrics',
-                                   'kernelforge.bench.harness', 'kernelforge.report'])
+                                   'kernelforge.bench.harness', 'kernelforge.report',
+                                   'kernelforge.bench.suites', 'kernelforge.bench.gpu_runner',
+                                   'kernelforge.bench.copy_probe', 'kernelforge.cli'])
 def test_import_without_triton(module):
     code = f"""
 import builtins

@@ -24,7 +24,19 @@ PYTHON
     python -m pytest tests/gpu -m gpu -ra --tb=short --junitxml=reports/raw/gpu-tests.xml "$@"
     ;;
   bench)
-    echo 'Benchmark runner is not implemented yet; no measurements produced.' >&2; exit 2
+    suite="${2:-}"
+    if [ -z "$suite" ]; then echo 'Usage: scripts/gpu_session.sh bench {softmax|all}' >&2; exit 2; fi
+    mkdir -p reports/raw
+    # BW_copy is measured once per box (three launches) and reused by every suite.
+    [ -f reports/raw/copy_probe.json ] || kernelforge copy-probe --out reports/raw/copy_probe.json
+    if [ "$suite" = all ]; then suites='softmax'; else suites="$suite"; fi
+    for name in $suites; do
+      kernelforge bench --suite "$name" --launches 3 --out reports/raw
+    done
+    status=0
+    kernelforge report --raw reports/raw --out reports || status=$?
+    sed -n '/^## Pre-registered/,/^## Softmax sweep/p' reports/performance_report.md
+    exit "$status"
     ;;
   package) bash scripts/collect_results.sh ;;
   *) echo 'Usage: scripts/gpu_session.sh {setup|test|bench <suite>|package}' >&2; exit 2 ;;
