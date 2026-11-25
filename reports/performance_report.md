@@ -573,6 +573,108 @@ Space: BLOCK_M, BLOCK_N in {32, 64, 128} with BLOCK_N <= BLOCK_M, num_warps {4, 
 | 4x32x4097x128 | fp16 | `{"block_m": 128, "block_n": 64, "num_warps": 8, "num_stages": 4}` | yes | 128/128/w4/s4, 128/128/w8/s4 | 9.8 |
 | 4x32x4097x128 | bf16 | `{"block_m": 128, "block_n": 64, "num_warps": 8, "num_stages": 4}` | yes | 128/128/w4/s4, 128/128/w8/s4 | 9.8 |
 
+## Profiling findings
+
+Narrative and analysis: docs/PROFILING.md. Experiment timings are single-process do_bench medians (controlled comparisons, not criteria).
+
+- Nsight Compute: return code 255; ERR_NVGPUCTRPERM (counter access denied). No hardware-counter metrics were collected.
+
+- Roofline ridge point: 312 TFLOPS / BW_copy 1758 GB/s = 177 FLOP/byte. Softmax and LayerNorm (< 3 FLOP/byte) are memory bound; causal attention (S/4 FLOP/byte, 512-2048 for the selected S) is compute bound.
+
+### Kernel traces (torch.profiler)
+
+| call | kernel | us | grid | block | regs/thread | shared B | est. occupancy % |
+|---|---|---|---|---|---|---|---|
+| softmax N=8192 fp16 (kernelforge) | `_single_softmax` | 606 | [32768, 1, 1] | [256, 1, 1] | 48 | 32 | 63 |
+| softmax N=8192 fp16 (torch) | `void at::native::(anonymous namespace)::cunn_SoftMaxForwardR` | 1828 | [32768, 1, 1] | [1024, 1, 1] | 35 | 128 | 50 |
+| layer_norm N=8192 fp16 (kernelforge) | `_single_layer_norm` | 609 | [32768, 1, 1] | [256, 1, 1] | 64 | 64 | 50 |
+| layer_norm N=8192 fp16 (torch) | `void at::native::(anonymous namespace)::vectorized_layer_nor` | 981 | [32768, 1, 1] | [32, 4, 1] | 31 | 24 | 100 |
+
+### Experiment: natural vs 64-aligned row stride (same N)
+
+| op | N | dtype | natural ms | aligned ms |
+|---|---|---|---|---|
+| softmax | 4096 | bf16 | 0.618 | 0.618 |
+| layer_norm | 4096 | bf16 | 0.612 | 0.613 |
+| softmax | 4096 | fp32 | 0.618 | 0.619 |
+| layer_norm | 4096 | fp32 | 0.614 | 0.615 |
+| softmax | 4097 | bf16 | 0.652 | 0.715 |
+| layer_norm | 4097 | bf16 | 2.111 | 2.071 |
+| softmax | 4097 | fp32 | 0.631 | 0.624 |
+| layer_norm | 4097 | fp32 | 1.024 | 1.022 |
+| softmax | 31337 | bf16 | 0.742 | 1.193 |
+| layer_norm | 31337 | bf16 | 12.242 | 12.258 |
+| softmax | 31337 | fp32 | 0.693 | 0.731 |
+| layer_norm | 31337 | fp32 | 5.867 | 5.844 |
+
+### Experiment: LayerNorm single path, forced num_warps (fp16, BLOCK = N)
+
+| N | num_warps | ms | GB/s |
+|---|---|---|---|
+| 8192 | 1 | 0.724 | 1484 |
+| 8192 | 2 | 0.626 | 1715 |
+| 8192 | 4 | 0.625 | 1717 |
+| 8192 | 8 | 0.620 | 1733 |
+| 8192 | 16 | 0.639 | 1680 |
+| 32768 | 1 | 5.707 | 188 |
+| 32768 | 2 | 6.344 | 169 |
+| 32768 | 4 | 0.729 | 1473 |
+| 32768 | 8 | 0.686 | 1565 |
+| 32768 | 16 | 0.637 | 1686 |
+
+### Experiment: attention tiles forced (4x32x4096, bf16)
+
+| D | BLOCK_M | BLOCK_N | warps | stages | TFLOPS |
+|---|---|---|---|---|---|
+| 64 | 128 | 64 | 4 | 2 | 159.1 |
+| 64 | 128 | 64 | 4 | 3 | 158.6 |
+| 64 | 128 | 128 | 8 | 3 | 149.9 |
+| 64 | 64 | 64 | 4 | 3 | 146.8 |
+| 64 | 64 | 32 | 4 | 3 | 137.8 |
+| 64 | 128 | 32 | 4 | 3 | 136.2 |
+| 64 | 128 | 64 | 8 | 3 | 133.0 |
+| 64 | 128 | 32 | 4 | 2 | 132.1 |
+| 64 | 128 | 128 | 8 | 2 | 131.3 |
+| 64 | 64 | 64 | 4 | 2 | 126.6 |
+| 64 | 128 | 128 | 4 | 3 | 126.2 |
+| 64 | 64 | 32 | 4 | 2 | 125.0 |
+| 64 | 128 | 64 | 8 | 2 | 114.9 |
+| 64 | 128 | 32 | 8 | 3 | 107.8 |
+| 64 | 128 | 128 | 4 | 2 | 88.2 |
+| 64 | 128 | 32 | 8 | 2 | 87.3 |
+| 64 | 64 | 64 | 8 | 3 | 71.8 |
+| 64 | 64 | 64 | 8 | 2 | 61.7 |
+| 64 | 64 | 32 | 8 | 3 | 56.6 |
+| 64 | 64 | 32 | 8 | 2 | 49.2 |
+| 128 | 128 | 64 | 8 | 3 | 153.4 |
+| 128 | 128 | 64 | 8 | 2 | 152.4 |
+| 128 | 128 | 32 | 4 | 2 | 149.4 |
+| 128 | 128 | 32 | 4 | 3 | 143.1 |
+| 128 | 128 | 64 | 4 | 2 | 118.0 |
+| 128 | 128 | 32 | 8 | 2 | 115.2 |
+| 128 | 128 | 32 | 8 | 3 | 114.9 |
+| 128 | 128 | 128 | 8 | 2 | 114.7 |
+| 128 | 128 | 128 | 8 | 3 | 113.5 |
+| 128 | 64 | 64 | 4 | 2 | 101.4 |
+| 128 | 64 | 32 | 4 | 3 | 84.7 |
+| 128 | 64 | 32 | 4 | 2 | 84.0 |
+| 128 | 64 | 64 | 4 | 3 | 82.7 |
+| 128 | 64 | 64 | 8 | 3 | 73.5 |
+| 128 | 64 | 64 | 8 | 2 | 65.7 |
+| 128 | 64 | 32 | 8 | 3 | 43.3 |
+| 128 | 64 | 32 | 8 | 2 | 40.1 |
+| 128 | 128 | 64 | 4 | 3 | 3.1 |
+| 128 | 128 | 128 | 4 | 2 | 2.9 |
+| 128 | 128 | 128 | 4 | 3 | 2.8 |
+
+### Compiled variants (Triton metadata)
+
+| kernel | variants | with spills | max spills | max shared B |
+|---|---|---|---|---|
+| softmax_single | 110 | 30 | 2978 | 8192 |
+| layer_norm_single | 49 | 21 | 4974 | 8192 |
+| attention | 76 | 28 | 3206 | 229376 |
+
 ## Where we lose and why
 
 ### Softmax slower than torch.softmax
@@ -664,7 +766,7 @@ None of the measured cases.
 
 None of the measured cases.
 
-Explanations require profiling evidence; see docs/PROFILING.md (K7). Until then the cause is recorded as not yet understood.
+Evidence-backed explanations, and the cases still not understood, are in docs/PROFILING.md (section "Where we lose").
 
 ## GPU telemetry per launch
 

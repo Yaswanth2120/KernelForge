@@ -1,0 +1,225 @@
+{
+  "env": {
+    "device": "NVIDIA A100-SXM4-80GB",
+    "torch": "2.8.0+cu128",
+    "triton": "3.4.0"
+  },
+  "result": [
+    {
+      "op": "softmax",
+      "N": 4096,
+      "dtype": "bf16",
+      "layout": "natural",
+      "row_stride": 4096,
+      "ms_p50": 0.6181120276451111,
+      "gbps": 1737.1314195110415
+    },
+    {
+      "op": "layer_norm",
+      "N": 4096,
+      "dtype": "bf16",
+      "layout": "natural",
+      "row_stride": 4096,
+      "ms_p50": 0.6115359961986542,
+      "gbps": 1755.811318833962
+    },
+    {
+      "op": "softmax",
+      "N": 4096,
+      "dtype": "bf16",
+      "layout": "aligned",
+      "row_stride": 4096,
+      "ms_p50": 0.6183040142059326,
+      "gbps": 1736.5920313148397
+    },
+    {
+      "op": "layer_norm",
+      "N": 4096,
+      "dtype": "bf16",
+      "layout": "aligned",
+      "row_stride": 4096,
+      "ms_p50": 0.6134399771690369,
+      "gbps": 1750.3616718219268
+    },
+    {
+      "op": "softmax",
+      "N": 4096,
+      "dtype": "fp32",
+      "layout": "natural",
+      "row_stride": 4096,
+      "ms_p50": 0.6184319853782654,
+      "gbps": 1736.2326810170455
+    },
+    {
+      "op": "layer_norm",
+      "N": 4096,
+      "dtype": "fp32",
+      "layout": "natural",
+      "row_stride": 4096,
+      "ms_p50": 0.6143680214881897,
+      "gbps": 1747.7176325015496
+    },
+    {
+      "op": "softmax",
+      "N": 4096,
+      "dtype": "fp32",
+      "layout": "aligned",
+      "row_stride": 4096,
+      "ms_p50": 0.6192960143089294,
+      "gbps": 1733.810325258084
+    },
+    {
+      "op": "layer_norm",
+      "N": 4096,
+      "dtype": "fp32",
+      "layout": "aligned",
+      "row_stride": 4096,
+      "ms_p50": 0.6145920157432556,
+      "gbps": 1747.0806591938435
+    },
+    {
+      "op": "softmax",
+      "N": 4097,
+      "dtype": "bf16",
+      "layout": "natural",
+      "row_stride": 4097,
+      "ms_p50": 0.6518080234527588,
+      "gbps": 1647.3533760939092
+    },
+    {
+      "op": "layer_norm",
+      "N": 4097,
+      "dtype": "bf16",
+      "layout": "natural",
+      "row_stride": 4097,
+      "ms_p50": 2.1112799644470215,
+      "gbps": 508.58160266832954
+    },
+    {
+      "op": "softmax",
+      "N": 4097,
+      "dtype": "bf16",
+      "layout": "aligned",
+      "row_stride": 4160,
+      "ms_p50": 0.7150240242481232,
+      "gbps": 1501.7091896025454
+    },
+    {
+      "op": "layer_norm",
+      "N": 4097,
+      "dtype": "bf16",
+      "layout": "aligned",
+      "row_stride": 4160,
+      "ms_p50": 2.070528030395508,
+      "gbps": 518.5914569796444
+    },
+    {
+      "op": "softmax",
+      "N": 4097,
+      "dtype": "fp32",
+      "layout": "natural",
+      "row_stride": 4097,
+      "ms_p50": 0.6306720077991486,
+      "gbps": 1702.5879105482152
+    },
+    {
+      "op": "layer_norm",
+      "N": 4097,
+      "dtype": "fp32",
+      "layout": "natural",
+      "row_stride": 4097,
+      "ms_p50": 1.0239199995994568,
+      "gbps": 1048.6898746191553
+    },
+    {
+      "op": "softmax",
+      "N": 4097,
+      "dtype": "fp32",
+      "layout": "aligned",
+      "row_stride": 4160,
+      "ms_p50": 0.6238240003585815,
+      "gbps": 1721.2780133223175
+    },
+    {
+      "op": "layer_norm",
+      "N": 4097,
+      "dtype": "fp32",
+      "layout": "aligned",
+      "row_stride": 4160,
+      "ms_p50": 1.0216000080108643,
+      "gbps": 1051.0713856499704
+    },
+    {
+      "op": "softmax",
+      "N": 31337,
+      "dtype": "bf16",
+      "layout": "natural",
+      "row_stride": 31337,
+      "ms_p50": 0.7423839867115021,
+      "gbps": 1446.497143286728
+    },
+    {
+      "op": "layer_norm",
+      "N": 31337,
+      "dtype": "bf16",
+      "layout": "natural",
+      "row_stride": 31337,
+      "ms_p50": 12.241936206817627,
+      "gbps": 87.71948308323655
+    },
+    {
+      "op": "softmax",
+      "N": 31337,
+      "dtype": "bf16",
+      "layout": "aligned",
+      "row_stride": 31360,
+      "ms_p50": 1.1933759450912476,
+      "gbps": 899.847462500923
+    },
+    {
+      "op": "layer_norm",
+      "N": 31337,
+      "dtype": "bf16",
+      "layout": "aligned",
+      "row_stride": 31360,
+      "ms_p50": 12.257503986358643,
+      "gbps": 87.60807397616131
+    },
+    {
+      "op": "softmax",
+      "N": 31337,
+      "dtype": "fp32",
+      "layout": "natural",
+      "row_stride": 31337,
+      "ms_p50": 0.6931520104408264,
+      "gbps": 1549.4172242492323
+    },
+    {
+      "op": "layer_norm",
+      "N": 31337,
+      "dtype": "fp32",
+      "layout": "natural",
+      "row_stride": 31337,
+      "ms_p50": 5.866559982299805,
+      "gbps": 183.06838543206683
+    },
+    {
+      "op": "softmax",
+      "N": 31337,
+      "dtype": "fp32",
+      "layout": "aligned",
+      "row_stride": 31360,
+      "ms_p50": 0.7306560277938843,
+      "gbps": 1469.8868183469865
+    },
+    {
+      "op": "layer_norm",
+      "N": 31337,
+      "dtype": "fp32",
+      "layout": "aligned",
+      "row_stride": 31360,
+      "ms_p50": 5.844271898269653,
+      "gbps": 183.76654657665392
+    }
+  ]
+}

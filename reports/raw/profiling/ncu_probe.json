@@ -1,0 +1,13 @@
+{
+  "env": {
+    "device": "NVIDIA A100-SXM4-80GB",
+    "torch": "2.8.0+cu128",
+    "triton": "3.4.0"
+  },
+  "result": {
+    "command": "/usr/bin/ncu --metrics dram__throughput.avg.pct_of_peak_sustained_elapsed python -c <add kernel>",
+    "returncode": 255,
+    "stdout_tail": "==PROF== Connected to process 129598 (/usr/bin/python3.12)\n==ERROR== ERR_NVGPUCTRPERM - The user does not have permission to access NVIDIA GPU Performance Counters on the target device 0. For instructions on enabling permissions and to get more information see https://developer.nvidia.com/ERR_NVGPUCTRPERM\n==PROF== Disconnected from process 129598\n==WARNING== No kernels were profiled.\n==WARNING== Profiling kernels launched by child processes requires the --target-processes all option.\n",
+    "stderr_tail": ""
+  }
+}
