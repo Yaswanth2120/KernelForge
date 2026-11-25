@@ -12,7 +12,16 @@ case "${1:-}" in
     if ! find tests/gpu -name 'test_*.py' | read -r _; then
       echo 'No GPU tests available yet.' >&2; exit 1
     fi
-    python -m pytest tests/gpu -m gpu -ra
+    python - <<'PYTHON'
+import sys
+from kernelforge import is_triton_available
+if not is_triton_available():
+    print('GPU tests require NVIDIA sm_80+ CUDA and PyTorch-bundled Triton.', file=sys.stderr)
+    raise SystemExit(3)
+PYTHON
+    shift
+    mkdir -p reports/raw
+    python -m pytest tests/gpu -m gpu -ra --tb=short --junitxml=reports/raw/gpu-tests.xml "$@"
     ;;
   bench)
     echo 'Benchmark runner is not implemented yet; no measurements produced.' >&2; exit 2

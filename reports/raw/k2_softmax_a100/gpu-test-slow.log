@@ -1,0 +1,12 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-8.4.2, pluggy-1.7.0 -- /root/kf-venv/bin/python
+cachedir: .pytest_cache
+rootdir: /root/kernelforge
+configfile: pyproject.toml
+collecting ... collected 130 items / 128 deselected / 2 selected
+
+tests/gpu/test_softmax.py::test_int64_offsets_over_two_billion_elements[8192] PASSED [ 50%]
+tests/gpu/test_softmax.py::test_int64_offsets_over_two_billion_elements[32768] PASSED [100%]
+
+------- generated xml file: /root/kernelforge/reports/raw/gpu-tests.xml --------
+====================== 2 passed, 128 deselected in 9.88s =======================
