@@ -1,0 +1,5 @@
+# CUDA_VISIBLE_DEVICES= TRITON_INTERPRET=1 python scripts/interpreter_probe.py
+Linux-6.8.0-138-generic-x86_64-with-glibc2.39 2.8.0+cu128 3.4.0
+torch.float32: masked CPU copy passed
+torch.float16: masked CPU copy passed
+torch.bfloat16: masked CPU copy passed

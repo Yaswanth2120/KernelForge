@@ -1,0 +1,2124 @@
+{
+  "env": {
+    "device": "NVIDIA A100-SXM4-80GB",
+    "torch": "2.8.0+cu128",
+    "triton": "3.4.0"
+  },
+  "result": [
+    {
+      "kernel": "softmax_single",
+      "num_warps": 1,
+      "num_stages": 1,
+      "registers": 255,
+      "spills": 96,
+      "shared_bytes": 0,
+      "constants": {}
+    },
+    {
+      "kernel": "softmax_single",
+      "num_warps": 2,
+      "num_stages": 1,
+      "registers": 147,
+      "spills": 0,
+      "shared_bytes": 8,
+      "constants": {}
+    },
+    {
+      "kernel": "softmax_single",
+      "num_warps": 4,
+      "num_stages": 1,
+      "registers": 80,
+      "spills": 0,
+      "shared_bytes": 16,
+      "constants": {}
+    },
+    {
+      "kernel": "softmax_single",
+      "num_warps": 8,
+      "num_stages": 1,
+      "registers": 48,
+      "spills": 0,
+      "shared_bytes": 32,
+      "constants": {}
+    },
+    {
+      "kernel": "softmax_single",
+      "num_warps": 16,
+      "num_stages": 1,
+      "registers": 32,
+      "spills": 0,
+      "shared_bytes": 64,
+      "constants": {}
+    },
+    {
+      "kernel": "softmax_single",
+      "num_warps": 1,
+      "num_stages": 1,
+      "registers": 255,
+      "spills": 96,
+      "shared_bytes": 0,
+      "constants": {}
+    },
+    {
+      "kernel": "softmax_single",
+      "num_warps": 2,
+      "num_stages": 1,
+      "registers": 147,
+      "spills": 0,
+      "shared_bytes": 8,
+      "constants": {}
+    },
+    {
+      "kernel": "softmax_single",
+      "num_warps": 4,
+      "num_stages": 1,
+      "registers": 80,
+      "spills": 0,
+      "shared_bytes": 16,
+      "constants": {}
+    },
+    {
+      "kernel": "softmax_single",
+      "num_warps": 8,
+      "num_stages": 1,
+      "registers": 48,
+      "spills": 0,
+      "shared_bytes": 32,
+      "constants": {}
+    },
+    {
+      "kernel": "softmax_single",
+      "num_warps": 16,
+      "num_stages": 1,
+      "registers": 32,
+      "spills": 0,
+      "shared_bytes": 64,
+      "constants": {}
+    },
+    {
+      "kernel": "softmax_single",
+      "num_warps": 1,
+      "num_stages": 1,
+      "registers": 144,
+      "spills": 0,
+      "shared_bytes": 0,
+      "constants": {}
+    },
+    {
+      "kernel": "softmax_single",
+      "num_warps": 2,
+      "num_stages": 1,
+      "registers": 80,
+      "spills": 0,
+      "shared_bytes": 8,
+      "constants": {}
+    },
+    {
+      "kernel": "softmax_single",
+      "num_warps": 4,
+      "num_stages": 1,
+      "registers": 47,
+      "spills": 0,
+      "shared_bytes": 16,
+      "constants": {}
+    },
+    {
+      "kernel": "softmax_single",
+      "num_warps": 8,
+      "num_stages": 1,
+      "registers": 32,
+      "spills": 0,
+      "shared_bytes": 32,
+      "constants": {}
+    },
+    {
+      "kernel": "softmax_single",
+      "num_warps": 16,
+      "num_stages": 1,
+      "registers": 25,
+      "spills": 0,
+      "shared_bytes": 64,
+      "constants": {}
+    },
+    {
+      "kernel": "softmax_single",
+      "num_warps": 1,
+      "num_stages": 1,
+      "registers": 144,
+      "spills": 0,
+      "shared_bytes": 0,
+      "constants": {}
+    },
+    {
+      "kernel": "softmax_single",
+      "num_warps": 2,
+      "num_stages": 1,
+      "registers": 80,
+      "spills": 0,
+      "shared_bytes": 8,
+      "constants": {}
+    },
+    {
+      "kernel": "softmax_single",
+      "num_warps": 4,
+      "num_stages": 1,
+      "registers": 47,
+      "spills": 0,
+      "shared_bytes": 16,
+      "constants": {}
+    },
+    {
+      "kernel": "softmax_single",
+      "num_warps": 8,
+      "num_stages": 1,
+      "registers": 32,
+      "spills": 0,
+      "shared_bytes": 32,
+      "constants": {}
+    },
+    {
+      "kernel": "softmax_single",
+      "num_warps": 16,
+      "num_stages": 1,
+      "registers": 25,
+      "spills": 0,
+      "shared_bytes": 64,
+      "constants": {}
+    },
+    {
+      "kernel": "softmax_single",
+      "num_warps": 1,
+      "num_stages": 1,
+      "registers": 144,
+      "spills": 0,
+      "shared_bytes": 0,
+      "constants": {}
+    },
+    {
+      "kernel": "softmax_single",
+      "num_warps": 2,
+      "num_stages": 1,
+      "registers": 80,
+      "spills": 0,
+      "shared_bytes": 8,
+      "constants": {}
+    },
+    {
+      "kernel": "softmax_single",
+      "num_warps": 4,
+      "num_stages": 1,
+      "registers": 47,
+      "spills": 0,
+      "shared_bytes": 16,
+      "constants": {}
+    },
+    {
+      "kernel": "softmax_single",
+      "num_warps": 8,
+      "num_stages": 1,
+      "registers": 32,
+      "spills": 0,
+      "shared_bytes": 32,
+      "constants": {}
+    },
+    {
+      "kernel": "softmax_single",
+      "num_warps": 16,
+      "num_stages": 1,
+      "registers": 27,
+      "spills": 0,
+      "shared_bytes": 64,
+      "constants": {}
+    },
+    {
+      "kernel": "softmax_single",
+      "num_warps": 1,
+      "num_stages": 1,
+      "registers": 144,
+      "spills": 0,
+      "shared_bytes": 0,
+      "constants": {}
+    },
+    {
+      "kernel": "softmax_single",
+      "num_warps": 2,
+      "num_stages": 1,
+      "registers": 80,
+      "spills": 0,
+      "shared_bytes": 8,
+      "constants": {}
+    },
+    {
+      "kernel": "softmax_single",
+      "num_warps": 4,
+      "num_stages": 1,
+      "registers": 47,
+      "spills": 0,
+      "shared_bytes": 16,
+      "constants": {}
+    },
+    {
+      "kernel": "softmax_single",
+      "num_warps": 8,
+      "num_stages": 1,
+      "registers": 32,
+      "spills": 0,
+      "shared_bytes": 32,
+      "constants": {}
+    },
+    {
+      "kernel": "softmax_single",
+      "num_warps": 16,
+      "num_stages": 1,
+      "registers": 27,
+      "spills": 0,
+      "shared_bytes": 64,
+      "constants": {}
+    },
+    {
+      "kernel": "softmax_single",
+      "num_warps": 1,
+      "num_stages": 1,
+      "registers": 168,
+      "spills": 0,
+      "shared_bytes": 0,
+      "constants": {}
+    },
+    {
+      "kernel": "softmax_single",
+      "num_warps": 2,
+      "num_stages": 1,
+      "registers": 80,
+      "spills": 0,
+      "shared_bytes": 8,
+      "constants": {}
+    },
+    {
+      "kernel": "softmax_single",
+      "num_warps": 4,
+      "num_stages": 1,
+      "registers": 48,
+      "spills": 0,
+      "shared_bytes": 16,
+      "constants": {}
+    },
+    {
+      "kernel": "softmax_single",
+      "num_warps": 8,
+      "num_stages": 1,
+      "registers": 32,
+      "spills": 0,
+      "shared_bytes": 32,
+      "constants": {}
+    },
+    {
+      "kernel": "softmax_single",
+      "num_warps": 16,
+      "num_stages": 1,
+      "registers": 32,
+      "spills": 0,
+      "shared_bytes": 64,
+      "constants": {}
+    },
+    {
+      "kernel": "softmax_single",
+      "num_warps": 1,
+      "num_stages": 1,
+      "registers": 168,
+      "spills": 0,
+      "shared_bytes": 0,
+      "constants": {}
+    },
+    {
+      "kernel": "softmax_single",
+      "num_warps": 2,
+      "num_stages": 1,
+      "registers": 80,
+      "spills": 0,
+      "shared_bytes": 8,
+      "constants": {}
+    },
+    {
+      "kernel": "softmax_single",
+      "num_warps": 4,
+      "num_stages": 1,
+      "registers": 48,
+      "spills": 0,
+      "shared_bytes": 16,
+      "constants": {}
+    },
+    {
+      "kernel": "softmax_single",
+      "num_warps": 8,
+      "num_stages": 1,
+      "registers": 32,
+      "spills": 0,
+      "shared_bytes": 32,
+      "constants": {}
+    },
+    {
+      "kernel": "softmax_single",
+      "num_warps": 16,
+      "num_stages": 1,
+      "registers": 32,
+      "spills": 0,
+      "shared_bytes": 64,
+      "constants": {}
+    },
+    {
+      "kernel": "softmax_single",
+      "num_warps": 1,
+      "num_stages": 1,
+      "registers": 255,
+      "spills": 0,
+      "shared_bytes": 512,
+      "constants": {}
+    },
+    {
+      "kernel": "softmax_single",
+      "num_warps": 2,
+      "num_stages": 1,
+      "registers": 158,
+      "spills": 0,
+      "shared_bytes": 1024,
+      "constants": {}
+    },
+    {
+      "kernel": "softmax_single",
+      "num_warps": 4,
+      "num_stages": 1,
+      "registers": 80,
+      "spills": 0,
+      "shared_bytes": 2048,
+      "constants": {}
+    },
+    {
+      "kernel": "softmax_single",
+      "num_warps": 8,
+      "num_stages": 1,
+      "registers": 48,
+      "spills": 0,
+      "shared_bytes": 4096,
+      "constants": {}
+    },
+    {
+      "kernel": "softmax_single",
+      "num_warps": 16,
+      "num_stages": 1,
+      "registers": 32,
+      "spills": 0,
+      "shared_bytes": 8192,
+      "constants": {}
+    },
+    {
+      "kernel": "softmax_single",
+      "num_warps": 1,
+      "num_stages": 1,
+      "registers": 255,
+      "spills": 0,
+      "shared_bytes": 512,
+      "constants": {}
+    },
+    {
+      "kernel": "softmax_single",
+      "num_warps": 2,
+      "num_stages": 1,
+      "registers": 158,
+      "spills": 0,
+      "shared_bytes": 1024,
+      "constants": {}
+    },
+    {
+      "kernel": "softmax_single",
+      "num_warps": 4,
+      "num_stages": 1,
+      "registers": 80,
+      "spills": 0,
+      "shared_bytes": 2048,
+      "constants": {}
+    },
+    {
+      "kernel": "softmax_single",
+      "num_warps": 8,
+      "num_stages": 1,
+      "registers": 48,
+      "spills": 0,
+      "shared_bytes": 4096,
+      "constants": {}
+    },
+    {
+      "kernel": "softmax_single",
+      "num_warps": 16,
+      "num_stages": 1,
+      "registers": 32,
+      "spills": 0,
+      "shared_bytes": 8192,
+      "constants": {}
+    },
+    {
+      "kernel": "softmax_single",
+      "num_warps": 1,
+      "num_stages": 1,
+      "registers": 168,
+      "spills": 0,
+      "shared_bytes": 0,
+      "constants": {}
+    },
+    {
+      "kernel": "softmax_single",
+      "num_warps": 2,
+      "num_stages": 1,
+      "registers": 96,
+      "spills": 0,
+      "shared_bytes": 8,
+      "constants": {}
+    },
+    {
+      "kernel": "softmax_single",
+      "num_warps": 4,
+      "num_stages": 1,
+      "registers": 48,
+      "spills": 0,
+      "shared_bytes": 16,
+      "constants": {}
+    },
+    {
+      "kernel": "softmax_single",
+      "num_warps": 8,
+      "num_stages": 1,
+      "registers": 32,
+      "spills": 0,
+      "shared_bytes": 32,
+      "constants": {}
+    },
+    {
+      "kernel": "softmax_single",
+      "num_warps": 16,
+      "num_stages": 1,
+      "registers": 32,
+      "spills": 0,
+      "shared_bytes": 64,
+      "constants": {}
+    },
+    {
+      "kernel": "softmax_single",
+      "num_warps": 1,
+      "num_stages": 1,
+      "registers": 168,
+      "spills": 0,
+      "shared_bytes": 0,
+      "constants": {}
+    },
+    {
+      "kernel": "softmax_single",
+      "num_warps": 2,
+      "num_stages": 1,
+      "registers": 96,
+      "spills": 0,
+      "shared_bytes": 8,
+      "constants": {}
+    },
+    {
+      "kernel": "softmax_single",
+      "num_warps": 4,
+      "num_stages": 1,
+      "registers": 48,
+      "spills": 0,
+      "shared_bytes": 16,
+      "constants": {}
+    },
+    {
+      "kernel": "softmax_single",
+      "num_warps": 8,
+      "num_stages": 1,
+      "registers": 32,
+      "spills": 0,
+      "shared_bytes": 32,
+      "constants": {}
+    },
+    {
+      "kernel": "softmax_single",
+      "num_warps": 16,
+      "num_stages": 1,
+      "registers": 32,
+      "spills": 0,
+      "shared_bytes": 64,
+      "constants": {}
+    },
+    {
+      "kernel": "softmax_single",
+      "num_warps": 1,
+      "num_stages": 1,
+      "registers": 168,
+      "spills": 0,
+      "shared_bytes": 512,
+      "constants": {}
+    },
+    {
+      "kernel": "softmax_single",
+      "num_warps": 2,
+      "num_stages": 1,
+      "registers": 96,
+      "spills": 0,
+      "shared_bytes": 1024,
+      "constants": {}
+    },
+    {
+      "kernel": "softmax_single",
+      "num_warps": 4,
+      "num_stages": 1,
+      "registers": 48,
+      "spills": 0,
+      "shared_bytes": 2048,
+      "constants": {}
+    },
+    {
+      "kernel": "softmax_single",
+      "num_warps": 8,
+      "num_stages": 1,
+      "registers": 40,
+      "spills": 0,
+      "shared_bytes": 4096,
+      "constants": {}
+    },
+    {
+      "kernel": "softmax_single",
+      "num_warps": 16,
+      "num_stages": 1,
+      "registers": 32,
+      "spills": 0,
+      "shared_bytes": 8192,
+      "constants": {}
+    },
+    {
+      "kernel": "softmax_single",
+      "num_warps": 1,
+      "num_stages": 1,
+      "registers": 168,
+      "spills": 0,
+      "shared_bytes": 512,
+      "constants": {}
+    },
+    {
+      "kernel": "softmax_single",
+      "num_warps": 2,
+      "num_stages": 1,
+      "registers": 96,
+      "spills": 0,
+      "shared_bytes": 1024,
+      "constants": {}
+    },
+    {
+      "kernel": "softmax_single",
+      "num_warps": 4,
+      "num_stages": 1,
+      "registers": 48,
+      "spills": 0,
+      "shared_bytes": 2048,
+      "constants": {}
+    },
+    {
+      "kernel": "softmax_single",
+      "num_warps": 8,
+      "num_stages": 1,
+      "registers": 40,
+      "spills": 0,
+      "shared_bytes": 4096,
+      "constants": {}
+    },
+    {
+      "kernel": "softmax_single",
+      "num_warps": 16,
+      "num_stages": 1,
+      "registers": 32,
+      "spills": 0,
+      "shared_bytes": 8192,
+      "constants": {}
+    },
+    {
+      "kernel": "softmax_single",
+      "num_warps": 1,
+      "num_stages": 1,
+      "registers": 64,
+      "spills": 2350,
+      "shared_bytes": 0,
+      "constants": {}
+    },
+    {
+      "kernel": "softmax_single",
+      "num_warps": 2,
+      "num_stages": 1,
+      "registers": 32,
+      "spills": 1632,
+      "shared_bytes": 8,
+      "constants": {}
+    },
+    {
+      "kernel": "softmax_single",
+      "num_warps": 4,
+      "num_stages": 1,
+      "registers": 255,
+      "spills": 26,
+      "shared_bytes": 16,
+      "constants": {}
+    },
+    {
+      "kernel": "softmax_single",
+      "num_warps": 8,
+      "num_stages": 1,
+      "registers": 255,
+      "spills": 0,
+      "shared_bytes": 32,
+      "constants": {}
+    },
+    {
+      "kernel": "softmax_single",
+      "num_warps": 16,
+      "num_stages": 1,
+      "registers": 128,
+      "spills": 0,
+      "shared_bytes": 64,
+      "constants": {}
+    },
+    {
+      "kernel": "softmax_single",
+      "num_warps": 1,
+      "num_stages": 1,
+      "registers": 64,
+      "spills": 2350,
+      "shared_bytes": 0,
+      "constants": {}
+    },
+    {
+      "kernel": "softmax_single",
+      "num_warps": 2,
+      "num_stages": 1,
+      "registers": 32,
+      "spills": 1632,
+      "shared_bytes": 8,
+      "constants": {}
+    },
+    {
+      "kernel": "softmax_single",
+      "num_warps": 4,
+      "num_stages": 1,
+      "registers": 255,
+      "spills": 26,
+      "shared_bytes": 16,
+      "constants": {}
+    },
+    {
+      "kernel": "softmax_single",
+      "num_warps": 8,
+      "num_stages": 1,
+      "registers": 255,
+      "spills": 0,
+      "shared_bytes": 32,
+      "constants": {}
+    },
+    {
+      "kernel": "softmax_single",
+      "num_warps": 16,
+      "num_stages": 1,
+      "registers": 128,
+      "spills": 0,
+      "shared_bytes": 64,
+      "constants": {}
+    },
+    {
+      "kernel": "softmax_single",
+      "num_warps": 1,
+      "num_stages": 1,
+      "registers": 64,
+      "spills": 2978,
+      "shared_bytes": 512,
+      "constants": {}
+    },
+    {
+      "kernel": "softmax_single",
+      "num_warps": 2,
+      "num_stages": 1,
+      "registers": 32,
+      "spills": 1906,
+      "shared_bytes": 1024,
+      "constants": {}
+    },
+    {
+      "kernel": "softmax_single",
+      "num_warps": 4,
+      "num_stages": 1,
+      "registers": 255,
+      "spills": 300,
+      "shared_bytes": 2048,
+      "constants": {}
+    },
+    {
+      "kernel": "softmax_single",
+      "num_warps": 8,
+      "num_stages": 1,
+      "registers": 255,
+      "spills": 8,
+      "shared_bytes": 4096,
+      "constants": {}
+    },
+    {
+      "kernel": "softmax_single",
+      "num_warps": 16,
+      "num_stages": 1,
+      "registers": 128,
+      "spills": 12,
+      "shared_bytes": 8192,
+      "constants": {}
+    },
+    {
+      "kernel": "softmax_single",
+      "num_warps": 1,
+      "num_stages": 1,
+      "registers": 64,
+      "spills": 2978,
+      "shared_bytes": 512,
+      "constants": {}
+    },
+    {
+      "kernel": "softmax_single",
+      "num_warps": 2,
+      "num_stages": 1,
+      "registers": 32,
+      "spills": 1906,
+      "shared_bytes": 1024,
+      "constants": {}
+    },
+    {
+      "kernel": "softmax_single",
+      "num_warps": 4,
+      "num_stages": 1,
+      "registers": 255,
+      "spills": 300,
+      "shared_bytes": 2048,
+      "constants": {}
+    },
+    {
+      "kernel": "softmax_single",
+      "num_warps": 8,
+      "num_stages": 1,
+      "registers": 255,
+      "spills": 8,
+      "shared_bytes": 4096,
+      "constants": {}
+    },
+    {
+      "kernel": "softmax_single",
+      "num_warps": 16,
+      "num_stages": 1,
+      "registers": 128,
+      "spills": 12,
+      "shared_bytes": 8192,
+      "constants": {}
+    },
+    {
+      "kernel": "softmax_single",
+      "num_warps": 1,
+      "num_stages": 1,
+      "registers": 64,
+      "spills": 1542,
+      "shared_bytes": 0,
+      "constants": {}
+    },
+    {
+      "kernel": "softmax_single",
+      "num_warps": 2,
+      "num_stages": 1,
+      "registers": 32,
+      "spills": 1228,
+      "shared_bytes": 8,
+      "constants": {}
+    },
+    {
+      "kernel": "softmax_single",
+      "num_warps": 4,
+      "num_stages": 1,
+      "registers": 255,
+      "spills": 24,
+      "shared_bytes": 16,
+      "constants": {}
+    },
+    {
+      "kernel": "softmax_single",
+      "num_warps": 8,
+      "num_stages": 1,
+      "registers": 255,
+      "spills": 0,
+      "shared_bytes": 32,
+      "constants": {}
+    },
+    {
+      "kernel": "softmax_single",
+      "num_warps": 16,
+      "num_stages": 1,
+      "registers": 128,
+      "spills": 0,
+      "shared_bytes": 64,
+      "constants": {}
+    },
+    {
+      "kernel": "softmax_single",
+      "num_warps": 1,
+      "num_stages": 1,
+      "registers": 64,
+      "spills": 1542,
+      "shared_bytes": 0,
+      "constants": {}
+    },
+    {
+      "kernel": "softmax_single",
+      "num_warps": 2,
+      "num_stages": 1,
+      "registers": 32,
+      "spills": 1228,
+      "shared_bytes": 8,
+      "constants": {}
+    },
+    {
+      "kernel": "softmax_single",
+      "num_warps": 4,
+      "num_stages": 1,
+      "registers": 255,
+      "spills": 24,
+      "shared_bytes": 16,
+      "constants": {}
+    },
+    {
+      "kernel": "softmax_single",
+      "num_warps": 8,
+      "num_stages": 1,
+      "registers": 255,
+      "spills": 0,
+      "shared_bytes": 32,
+      "constants": {}
+    },
+    {
+      "kernel": "softmax_single",
+      "num_warps": 16,
+      "num_stages": 1,
+      "registers": 128,
+      "spills": 0,
+      "shared_bytes": 64,
+      "constants": {}
+    },
+    {
+      "kernel": "softmax_single",
+      "num_warps": 1,
+      "num_stages": 1,
+      "registers": 64,
+      "spills": 1626,
+      "shared_bytes": 512,
+      "constants": {}
+    },
+    {
+      "kernel": "softmax_single",
+      "num_warps": 2,
+      "num_stages": 1,
+      "registers": 32,
+      "spills": 1274,
+      "shared_bytes": 1024,
+      "constants": {}
+    },
+    {
+      "kernel": "softmax_single",
+      "num_warps": 4,
+      "num_stages": 1,
+      "registers": 255,
+      "spills": 44,
+      "shared_bytes": 2048,
+      "constants": {}
+    },
+    {
+      "kernel": "softmax_single",
+      "num_warps": 8,
+      "num_stages": 1,
+      "registers": 255,
+      "spills": 0,
+      "shared_bytes": 4096,
+      "constants": {}
+    },
+    {
+      "kernel": "softmax_single",
+      "num_warps": 16,
+      "num_stages": 1,
+      "registers": 128,
+      "spills": 0,
+      "shared_bytes": 8192,
+      "constants": {}
+    },
+    {
+      "kernel": "softmax_single",
+      "num_warps": 1,
+      "num_stages": 1,
+      "registers": 64,
+      "spills": 1626,
+      "shared_bytes": 512,
+      "constants": {}
+    },
+    {
+      "kernel": "softmax_single",
+      "num_warps": 2,
+      "num_stages": 1,
+      "registers": 32,
+      "spills": 1274,
+      "shared_bytes": 1024,
+      "constants": {}
+    },
+    {
+      "kernel": "softmax_single",
+      "num_warps": 4,
+      "num_stages": 1,
+      "registers": 255,
+      "spills": 44,
+      "shared_bytes": 2048,
+      "constants": {}
+    },
+    {
+      "kernel": "softmax_single",
+      "num_warps": 8,
+      "num_stages": 1,
+      "registers": 255,
+      "spills": 0,
+      "shared_bytes": 4096,
+      "constants": {}
+    },
+    {
+      "kernel": "softmax_single",
+      "num_warps": 16,
+      "num_stages": 1,
+      "registers": 128,
+      "spills": 0,
+      "shared_bytes": 8192,
+      "constants": {}
+    },
+    {
+      "kernel": "layer_norm_single",
+      "num_warps": 1,
+      "num_stages": 3,
+      "registers": 255,
+      "spills": 156,
+      "shared_bytes": 0,
+      "constants": {}
+    },
+    {
+      "kernel": "layer_norm_single",
+      "num_warps": 2,
+      "num_stages": 3,
+      "registers": 255,
+      "spills": 0,
+      "shared_bytes": 16,
+      "constants": {}
+    },
+    {
+      "kernel": "layer_norm_single",
+      "num_warps": 4,
+      "num_stages": 3,
+      "registers": 104,
+      "spills": 0,
+      "shared_bytes": 32,
+      "constants": {}
+    },
+    {
+      "kernel": "layer_norm_single",
+      "num_warps": 8,
+      "num_stages": 3,
+      "registers": 64,
+      "spills": 0,
+      "shared_bytes": 64,
+      "constants": {}
+    },
+    {
+      "kernel": "layer_norm_single",
+      "num_warps": 16,
+      "num_stages": 3,
+      "registers": 54,
+      "spills": 0,
+      "shared_bytes": 128,
+      "constants": {}
+    },
+    {
+      "kernel": "layer_norm_single",
+      "num_warps": 1,
+      "num_stages": 3,
+      "registers": 255,
+      "spills": 0,
+      "shared_bytes": 0,
+      "constants": {}
+    },
+    {
+      "kernel": "layer_norm_single",
+      "num_warps": 2,
+      "num_stages": 3,
+      "registers": 104,
+      "spills": 0,
+      "shared_bytes": 16,
+      "constants": {}
+    },
+    {
+      "kernel": "layer_norm_single",
+      "num_warps": 4,
+      "num_stages": 3,
+      "registers": 64,
+      "spills": 0,
+      "shared_bytes": 32,
+      "constants": {}
+    },
+    {
+      "kernel": "layer_norm_single",
+      "num_warps": 8,
+      "num_stages": 3,
+      "registers": 46,
+      "spills": 0,
+      "shared_bytes": 64,
+      "constants": {}
+    },
+    {
+      "kernel": "layer_norm_single",
+      "num_warps": 16,
+      "num_stages": 3,
+      "registers": 37,
+      "spills": 0,
+      "shared_bytes": 128,
+      "constants": {}
+    },
+    {
+      "kernel": "layer_norm_single",
+      "num_warps": 1,
+      "num_stages": 3,
+      "registers": 248,
+      "spills": 0,
+      "shared_bytes": 0,
+      "constants": {}
+    },
+    {
+      "kernel": "layer_norm_single",
+      "num_warps": 2,
+      "num_stages": 3,
+      "registers": 165,
+      "spills": 0,
+      "shared_bytes": 16,
+      "constants": {}
+    },
+    {
+      "kernel": "layer_norm_single",
+      "num_warps": 4,
+      "num_stages": 3,
+      "registers": 76,
+      "spills": 0,
+      "shared_bytes": 32,
+      "constants": {}
+    },
+    {
+      "kernel": "layer_norm_single",
+      "num_warps": 8,
+      "num_stages": 3,
+      "registers": 48,
+      "spills": 0,
+      "shared_bytes": 64,
+      "constants": {}
+    },
+    {
+      "kernel": "layer_norm_single",
+      "num_warps": 16,
+      "num_stages": 3,
+      "registers": 40,
+      "spills": 0,
+      "shared_bytes": 128,
+      "constants": {}
+    },
+    {
+      "kernel": "layer_norm_single",
+      "num_warps": 1,
+      "num_stages": 3,
+      "registers": 64,
+      "spills": 1250,
+      "shared_bytes": 512,
+      "constants": {}
+    },
+    {
+      "kernel": "layer_norm_single",
+      "num_warps": 2,
+      "num_stages": 3,
+      "registers": 32,
+      "spills": 666,
+      "shared_bytes": 1024,
+      "constants": {}
+    },
+    {
+      "kernel": "layer_norm_single",
+      "num_warps": 4,
+      "num_stages": 3,
+      "registers": 218,
+      "spills": 0,
+      "shared_bytes": 2048,
+      "constants": {}
+    },
+    {
+      "kernel": "layer_norm_single",
+      "num_warps": 8,
+      "num_stages": 3,
+      "registers": 120,
+      "spills": 0,
+      "shared_bytes": 4096,
+      "constants": {}
+    },
+    {
+      "kernel": "layer_norm_single",
+      "num_warps": 16,
+      "num_stages": 3,
+      "registers": 64,
+      "spills": 0,
+      "shared_bytes": 8192,
+      "constants": {}
+    },
+    {
+      "kernel": "layer_norm_single",
+      "num_warps": 8,
+      "num_stages": 3,
+      "registers": 120,
+      "spills": 0,
+      "shared_bytes": 4096,
+      "constants": {}
+    },
+    {
+      "kernel": "layer_norm_single",
+      "num_warps": 1,
+      "num_stages": 3,
+      "registers": 96,
+      "spills": 818,
+      "shared_bytes": 512,
+      "constants": {}
+    },
+    {
+      "kernel": "layer_norm_single",
+      "num_warps": 2,
+      "num_stages": 3,
+      "registers": 32,
+      "spills": 526,
+      "shared_bytes": 1024,
+      "constants": {}
+    },
+    {
+      "kernel": "layer_norm_single",
+      "num_warps": 4,
+      "num_stages": 3,
+      "registers": 255,
+      "spills": 0,
+      "shared_bytes": 2048,
+      "constants": {}
+    },
+    {
+      "kernel": "layer_norm_single",
+      "num_warps": 8,
+      "num_stages": 3,
+      "registers": 123,
+      "spills": 0,
+      "shared_bytes": 4096,
+      "constants": {}
+    },
+    {
+      "kernel": "layer_norm_single",
+      "num_warps": 16,
+      "num_stages": 3,
+      "registers": 64,
+      "spills": 0,
+      "shared_bytes": 8192,
+      "constants": {}
+    },
+    {
+      "kernel": "layer_norm_single",
+      "num_warps": 8,
+      "num_stages": 3,
+      "registers": 123,
+      "spills": 0,
+      "shared_bytes": 4096,
+      "constants": {}
+    },
+    {
+      "kernel": "layer_norm_single",
+      "num_warps": 1,
+      "num_stages": 3,
+      "registers": 64,
+      "spills": 4974,
+      "shared_bytes": 512,
+      "constants": {}
+    },
+    {
+      "kernel": "layer_norm_single",
+      "num_warps": 2,
+      "num_stages": 3,
+      "registers": 32,
+      "spills": 2694,
+      "shared_bytes": 1024,
+      "constants": {}
+    },
+    {
+      "kernel": "layer_norm_single",
+      "num_warps": 4,
+      "num_stages": 3,
+      "registers": 32,
+      "spills": 1314,
+      "shared_bytes": 2048,
+      "constants": {}
+    },
+    {
+      "kernel": "layer_norm_single",
+      "num_warps": 8,
+      "num_stages": 3,
+      "registers": 32,
+      "spills": 624,
+      "shared_bytes": 4096,
+      "constants": {}
+    },
+    {
+      "kernel": "layer_norm_single",
+      "num_warps": 16,
+      "num_stages": 3,
+      "registers": 40,
+      "spills": 268,
+      "shared_bytes": 8192,
+      "constants": {}
+    },
+    {
+      "kernel": "layer_norm_single",
+      "num_warps": 16,
+      "num_stages": 3,
+      "registers": 40,
+      "spills": 268,
+      "shared_bytes": 8192,
+      "constants": {}
+    },
+    {
+      "kernel": "layer_norm_single",
+      "num_warps": 1,
+      "num_stages": 3,
+      "registers": 64,
+      "spills": 3534,
+      "shared_bytes": 512,
+      "constants": {}
+    },
+    {
+      "kernel": "layer_norm_single",
+      "num_warps": 2,
+      "num_stages": 3,
+      "registers": 32,
+      "spills": 1774,
+      "shared_bytes": 1024,
+      "constants": {}
+    },
+    {
+      "kernel": "layer_norm_single",
+      "num_warps": 4,
+      "num_stages": 3,
+      "registers": 32,
+      "spills": 936,
+      "shared_bytes": 2048,
+      "constants": {}
+    },
+    {
+      "kernel": "layer_norm_single",
+      "num_warps": 8,
+      "num_stages": 3,
+      "registers": 32,
+      "spills": 512,
+      "shared_bytes": 4096,
+      "constants": {}
+    },
+    {
+      "kernel": "layer_norm_single",
+      "num_warps": 16,
+      "num_stages": 3,
+      "registers": 32,
+      "spills": 234,
+      "shared_bytes": 8192,
+      "constants": {}
+    },
+    {
+      "kernel": "layer_norm_single",
+      "num_warps": 4,
+      "num_stages": 3,
+      "registers": 32,
+      "spills": 936,
+      "shared_bytes": 2048,
+      "constants": {}
+    },
+    {
+      "kernel": "layer_norm_single",
+      "num_warps": 1,
+      "num_stages": 3,
+      "registers": 255,
+      "spills": 46,
+      "shared_bytes": 0,
+      "constants": {}
+    },
+    {
+      "kernel": "layer_norm_single",
+      "num_warps": 2,
+      "num_stages": 3,
+      "registers": 170,
+      "spills": 0,
+      "shared_bytes": 16,
+      "constants": {}
+    },
+    {
+      "kernel": "layer_norm_single",
+      "num_warps": 4,
+      "num_stages": 3,
+      "registers": 97,
+      "spills": 0,
+      "shared_bytes": 32,
+      "constants": {}
+    },
+    {
+      "kernel": "layer_norm_single",
+      "num_warps": 8,
+      "num_stages": 3,
+      "registers": 62,
+      "spills": 0,
+      "shared_bytes": 64,
+      "constants": {}
+    },
+    {
+      "kernel": "layer_norm_single",
+      "num_warps": 16,
+      "num_stages": 3,
+      "registers": 46,
+      "spills": 0,
+      "shared_bytes": 128,
+      "constants": {}
+    },
+    {
+      "kernel": "layer_norm_single",
+      "num_warps": 1,
+      "num_stages": 3,
+      "registers": 64,
+      "spills": 1422,
+      "shared_bytes": 0,
+      "constants": {}
+    },
+    {
+      "kernel": "layer_norm_single",
+      "num_warps": 2,
+      "num_stages": 3,
+      "registers": 32,
+      "spills": 910,
+      "shared_bytes": 16,
+      "constants": {}
+    },
+    {
+      "kernel": "layer_norm_single",
+      "num_warps": 4,
+      "num_stages": 3,
+      "registers": 255,
+      "spills": 46,
+      "shared_bytes": 32,
+      "constants": {}
+    },
+    {
+      "kernel": "layer_norm_single",
+      "num_warps": 8,
+      "num_stages": 3,
+      "registers": 173,
+      "spills": 0,
+      "shared_bytes": 64,
+      "constants": {}
+    },
+    {
+      "kernel": "layer_norm_single",
+      "num_warps": 16,
+      "num_stages": 3,
+      "registers": 100,
+      "spills": 0,
+      "shared_bytes": 128,
+      "constants": {}
+    },
+    {
+      "kernel": "attention",
+      "num_warps": 4,
+      "num_stages": 2,
+      "registers": 164,
+      "spills": 0,
+      "shared_bytes": 26624,
+      "constants": {}
+    },
+    {
+      "kernel": "attention",
+      "num_warps": 4,
+      "num_stages": 3,
+      "registers": 168,
+      "spills": 0,
+      "shared_bytes": 43008,
+      "constants": {}
+    },
+    {
+      "kernel": "attention",
+      "num_warps": 4,
+      "num_stages": 4,
+      "registers": 168,
+      "spills": 0,
+      "shared_bytes": 59392,
+      "constants": {}
+    },
+    {
+      "kernel": "attention",
+      "num_warps": 8,
+      "num_stages": 2,
+      "registers": 150,
+      "spills": 0,
+      "shared_bytes": 26624,
+      "constants": {}
+    },
+    {
+      "kernel": "attention",
+      "num_warps": 8,
+      "num_stages": 3,
+      "registers": 128,
+      "spills": 0,
+      "shared_bytes": 43008,
+      "constants": {}
+    },
+    {
+      "kernel": "attention",
+      "num_warps": 8,
+      "num_stages": 4,
+      "registers": 128,
+      "spills": 0,
+      "shared_bytes": 59392,
+      "constants": {}
+    },
+    {
+      "kernel": "attention",
+      "num_warps": 4,
+      "num_stages": 2,
+      "registers": 255,
+      "spills": 0,
+      "shared_bytes": 36864,
+      "constants": {}
+    },
+    {
+      "kernel": "attention",
+      "num_warps": 4,
+      "num_stages": 3,
+      "registers": 255,
+      "spills": 0,
+      "shared_bytes": 53248,
+      "constants": {}
+    },
+    {
+      "kernel": "attention",
+      "num_warps": 4,
+      "num_stages": 4,
+      "registers": 255,
+      "spills": 0,
+      "shared_bytes": 69632,
+      "constants": {}
+    },
+    {
+      "kernel": "attention",
+      "num_warps": 8,
+      "num_stages": 2,
+      "registers": 189,
+      "spills": 0,
+      "shared_bytes": 36864,
+      "constants": {}
+    },
+    {
+      "kernel": "attention",
+      "num_warps": 8,
+      "num_stages": 3,
+      "registers": 192,
+      "spills": 0,
+      "shared_bytes": 53248,
+      "constants": {}
+    },
+    {
+      "kernel": "attention",
+      "num_warps": 8,
+      "num_stages": 4,
+      "registers": 189,
+      "spills": 0,
+      "shared_bytes": 69632,
+      "constants": {}
+    },
+    {
+      "kernel": "attention",
+      "num_warps": 4,
+      "num_stages": 2,
+      "registers": 255,
+      "spills": 4,
+      "shared_bytes": 57344,
+      "constants": {}
+    },
+    {
+      "kernel": "attention",
+      "num_warps": 4,
+      "num_stages": 3,
+      "registers": 255,
+      "spills": 0,
+      "shared_bytes": 90112,
+      "constants": {}
+    },
+    {
+      "kernel": "attention",
+      "num_warps": 4,
+      "num_stages": 4,
+      "registers": 255,
+      "spills": 0,
+      "shared_bytes": 122880,
+      "constants": {}
+    },
+    {
+      "kernel": "attention",
+      "num_warps": 8,
+      "num_stages": 2,
+      "registers": 255,
+      "spills": 0,
+      "shared_bytes": 57344,
+      "constants": {}
+    },
+    {
+      "kernel": "attention",
+      "num_warps": 8,
+      "num_stages": 3,
+      "registers": 255,
+      "spills": 0,
+      "shared_bytes": 90112,
+      "constants": {}
+    },
+    {
+      "kernel": "attention",
+      "num_warps": 8,
+      "num_stages": 4,
+      "registers": 255,
+      "spills": 0,
+      "shared_bytes": 122880,
+      "constants": {}
+    },
+    {
+      "kernel": "attention",
+      "num_warps": 4,
+      "num_stages": 2,
+      "registers": 255,
+      "spills": 40,
+      "shared_bytes": 49152,
+      "constants": {}
+    },
+    {
+      "kernel": "attention",
+      "num_warps": 4,
+      "num_stages": 3,
+      "registers": 255,
+      "spills": 28,
+      "shared_bytes": 65536,
+      "constants": {}
+    },
+    {
+      "kernel": "attention",
+      "num_warps": 4,
+      "num_stages": 4,
+      "registers": 255,
+      "spills": 28,
+      "shared_bytes": 81920,
+      "constants": {}
+    },
+    {
+      "kernel": "attention",
+      "num_warps": 8,
+      "num_stages": 2,
+      "registers": 255,
+      "spills": 0,
+      "shared_bytes": 49152,
+      "constants": {}
+    },
+    {
+      "kernel": "attention",
+      "num_warps": 8,
+      "num_stages": 3,
+      "registers": 255,
+      "spills": 0,
+      "shared_bytes": 65536,
+      "constants": {}
+    },
+    {
+      "kernel": "attention",
+      "num_warps": 8,
+      "num_stages": 4,
+      "registers": 255,
+      "spills": 0,
+      "shared_bytes": 81920,
+      "constants": {}
+    },
+    {
+      "kernel": "attention",
+      "num_warps": 4,
+      "num_stages": 2,
+      "registers": 255,
+      "spills": 162,
+      "shared_bytes": 65536,
+      "constants": {}
+    },
+    {
+      "kernel": "attention",
+      "num_warps": 4,
+      "num_stages": 3,
+      "registers": 32,
+      "spills": 1646,
+      "shared_bytes": 98304,
+      "constants": {}
+    },
+    {
+      "kernel": "attention",
+      "num_warps": 4,
+      "num_stages": 4,
+      "registers": 255,
+      "spills": 122,
+      "shared_bytes": 131072,
+      "constants": {}
+    },
+    {
+      "kernel": "attention",
+      "num_warps": 8,
+      "num_stages": 2,
+      "registers": 255,
+      "spills": 16,
+      "shared_bytes": 65536,
+      "constants": {}
+    },
+    {
+      "kernel": "attention",
+      "num_warps": 8,
+      "num_stages": 3,
+      "registers": 255,
+      "spills": 18,
+      "shared_bytes": 98304,
+      "constants": {}
+    },
+    {
+      "kernel": "attention",
+      "num_warps": 8,
+      "num_stages": 4,
+      "registers": 255,
+      "spills": 0,
+      "shared_bytes": 131072,
+      "constants": {}
+    },
+    {
+      "kernel": "attention",
+      "num_warps": 4,
+      "num_stages": 2,
+      "registers": 32,
+      "spills": 3206,
+      "shared_bytes": 98304,
+      "constants": {}
+    },
+    {
+      "kernel": "attention",
+      "num_warps": 4,
+      "num_stages": 3,
+      "registers": 32,
+      "spills": 3182,
+      "shared_bytes": 163840,
+      "constants": {}
+    },
+    {
+      "kernel": "attention",
+      "num_warps": 4,
+      "num_stages": 4,
+      "registers": null,
+      "spills": null,
+      "shared_bytes": 229376,
+      "constants": {}
+    },
+    {
+      "kernel": "attention",
+      "num_warps": 8,
+      "num_stages": 2,
+      "registers": 255,
+      "spills": 128,
+      "shared_bytes": 98304,
+      "constants": {}
+    },
+    {
+      "kernel": "attention",
+      "num_warps": 8,
+      "num_stages": 3,
+      "registers": 255,
+      "spills": 104,
+      "shared_bytes": 163840,
+      "constants": {}
+    },
+    {
+      "kernel": "attention",
+      "num_warps": 8,
+      "num_stages": 4,
+      "registers": null,
+      "spills": null,
+      "shared_bytes": 229376,
+      "constants": {}
+    },
+    {
+      "kernel": "attention",
+      "num_warps": 4,
+      "num_stages": 2,
+      "registers": 166,
+      "spills": 0,
+      "shared_bytes": 16384,
+      "constants": {}
+    },
+    {
+      "kernel": "attention",
+      "num_warps": 4,
+      "num_stages": 3,
+      "registers": 128,
+      "spills": 0,
+      "shared_bytes": 24576,
+      "constants": {}
+    },
+    {
+      "kernel": "attention",
+      "num_warps": 8,
+      "num_stages": 2,
+      "registers": 155,
+      "spills": 0,
+      "shared_bytes": 16384,
+      "constants": {}
+    },
+    {
+      "kernel": "attention",
+      "num_warps": 8,
+      "num_stages": 3,
+      "registers": 152,
+      "spills": 0,
+      "shared_bytes": 24576,
+      "constants": {}
+    },
+    {
+      "kernel": "attention",
+      "num_warps": 4,
+      "num_stages": 2,
+      "registers": 184,
+      "spills": 0,
+      "shared_bytes": 24576,
+      "constants": {}
+    },
+    {
+      "kernel": "attention",
+      "num_warps": 4,
+      "num_stages": 3,
+      "registers": 174,
+      "spills": 0,
+      "shared_bytes": 40960,
+      "constants": {}
+    },
+    {
+      "kernel": "attention",
+      "num_warps": 8,
+      "num_stages": 2,
+      "registers": 174,
+      "spills": 0,
+      "shared_bytes": 24576,
+      "constants": {}
+    },
+    {
+      "kernel": "attention",
+      "num_warps": 8,
+      "num_stages": 3,
+      "registers": 170,
+      "spills": 0,
+      "shared_bytes": 40960,
+      "constants": {}
+    },
+    {
+      "kernel": "attention",
+      "num_warps": 4,
+      "num_stages": 2,
+      "registers": 244,
+      "spills": 0,
+      "shared_bytes": 24576,
+      "constants": {}
+    },
+    {
+      "kernel": "attention",
+      "num_warps": 4,
+      "num_stages": 3,
+      "registers": 252,
+      "spills": 0,
+      "shared_bytes": 32768,
+      "constants": {}
+    },
+    {
+      "kernel": "attention",
+      "num_warps": 8,
+      "num_stages": 2,
+      "registers": 155,
+      "spills": 0,
+      "shared_bytes": 24576,
+      "constants": {}
+    },
+    {
+      "kernel": "attention",
+      "num_warps": 8,
+      "num_stages": 3,
+      "registers": 152,
+      "spills": 0,
+      "shared_bytes": 32768,
+      "constants": {}
+    },
+    {
+      "kernel": "attention",
+      "num_warps": 4,
+      "num_stages": 2,
+      "registers": 255,
+      "spills": 2,
+      "shared_bytes": 32768,
+      "constants": {}
+    },
+    {
+      "kernel": "attention",
+      "num_warps": 4,
+      "num_stages": 3,
+      "registers": 255,
+      "spills": 0,
+      "shared_bytes": 49152,
+      "constants": {}
+    },
+    {
+      "kernel": "attention",
+      "num_warps": 8,
+      "num_stages": 2,
+      "registers": 173,
+      "spills": 0,
+      "shared_bytes": 32768,
+      "constants": {}
+    },
+    {
+      "kernel": "attention",
+      "num_warps": 8,
+      "num_stages": 3,
+      "registers": 170,
+      "spills": 0,
+      "shared_bytes": 49152,
+      "constants": {}
+    },
+    {
+      "kernel": "attention",
+      "num_warps": 4,
+      "num_stages": 2,
+      "registers": 255,
+      "spills": 212,
+      "shared_bytes": 49152,
+      "constants": {}
+    },
+    {
+      "kernel": "attention",
+      "num_warps": 4,
+      "num_stages": 3,
+      "registers": 255,
+      "spills": 114,
+      "shared_bytes": 81920,
+      "constants": {}
+    },
+    {
+      "kernel": "attention",
+      "num_warps": 8,
+      "num_stages": 2,
+      "registers": 255,
+      "spills": 6,
+      "shared_bytes": 49152,
+      "constants": {}
+    },
+    {
+      "kernel": "attention",
+      "num_warps": 8,
+      "num_stages": 3,
+      "registers": 255,
+      "spills": 0,
+      "shared_bytes": 81920,
+      "constants": {}
+    },
+    {
+      "kernel": "attention",
+      "num_warps": 4,
+      "num_stages": 2,
+      "registers": 255,
+      "spills": 0,
+      "shared_bytes": 36864,
+      "constants": {}
+    },
+    {
+      "kernel": "attention",
+      "num_warps": 4,
+      "num_stages": 3,
+      "registers": 255,
+      "spills": 0,
+      "shared_bytes": 53248,
+      "constants": {}
+    },
+    {
+      "kernel": "attention",
+      "num_warps": 8,
+      "num_stages": 2,
+      "registers": 189,
+      "spills": 0,
+      "shared_bytes": 36864,
+      "constants": {}
+    },
+    {
+      "kernel": "attention",
+      "num_warps": 8,
+      "num_stages": 3,
+      "registers": 192,
+      "spills": 0,
+      "shared_bytes": 53248,
+      "constants": {}
+    },
+    {
+      "kernel": "attention",
+      "num_warps": 4,
+      "num_stages": 2,
+      "registers": 255,
+      "spills": 4,
+      "shared_bytes": 57344,
+      "constants": {}
+    },
+    {
+      "kernel": "attention",
+      "num_warps": 4,
+      "num_stages": 3,
+      "registers": 255,
+      "spills": 0,
+      "shared_bytes": 90112,
+      "constants": {}
+    },
+    {
+      "kernel": "attention",
+      "num_warps": 8,
+      "num_stages": 2,
+      "registers": 255,
+      "spills": 0,
+      "shared_bytes": 57344,
+      "constants": {}
+    },
+    {
+      "kernel": "attention",
+      "num_warps": 8,
+      "num_stages": 3,
+      "registers": 255,
+      "spills": 0,
+      "shared_bytes": 90112,
+      "constants": {}
+    },
+    {
+      "kernel": "attention",
+      "num_warps": 4,
+      "num_stages": 2,
+      "registers": 255,
+      "spills": 40,
+      "shared_bytes": 49152,
+      "constants": {}
+    },
+    {
+      "kernel": "attention",
+      "num_warps": 4,
+      "num_stages": 3,
+      "registers": 255,
+      "spills": 28,
+      "shared_bytes": 65536,
+      "constants": {}
+    },
+    {
+      "kernel": "attention",
+      "num_warps": 8,
+      "num_stages": 2,
+      "registers": 255,
+      "spills": 0,
+      "shared_bytes": 49152,
+      "constants": {}
+    },
+    {
+      "kernel": "attention",
+      "num_warps": 8,
+      "num_stages": 3,
+      "registers": 255,
+      "spills": 0,
+      "shared_bytes": 65536,
+      "constants": {}
+    },
+    {
+      "kernel": "attention",
+      "num_warps": 4,
+      "num_stages": 2,
+      "registers": 255,
+      "spills": 162,
+      "shared_bytes": 65536,
+      "constants": {}
+    },
+    {
+      "kernel": "attention",
+      "num_warps": 4,
+      "num_stages": 3,
+      "registers": 32,
+      "spills": 1646,
+      "shared_bytes": 98304,
+      "constants": {}
+    },
+    {
+      "kernel": "attention",
+      "num_warps": 8,
+      "num_stages": 2,
+      "registers": 255,
+      "spills": 16,
+      "shared_bytes": 65536,
+      "constants": {}
+    },
+    {
+      "kernel": "attention",
+      "num_warps": 8,
+      "num_stages": 3,
+      "registers": 255,
+      "spills": 18,
+      "shared_bytes": 98304,
+      "constants": {}
+    },
+    {
+      "kernel": "attention",
+      "num_warps": 4,
+      "num_stages": 2,
+      "registers": 32,
+      "spills": 3206,
+      "shared_bytes": 98304,
+      "constants": {}
+    },
+    {
+      "kernel": "attention",
+      "num_warps": 4,
+      "num_stages": 3,
+      "registers": 32,
+      "spills": 3182,
+      "shared_bytes": 163840,
+      "constants": {}
+    },
+    {
+      "kernel": "attention",
+      "num_warps": 8,
+      "num_stages": 2,
+      "registers": 255,
+      "spills": 128,
+      "shared_bytes": 98304,
+      "constants": {}
+    },
+    {
+      "kernel": "attention",
+      "num_warps": 8,
+      "num_stages": 3,
+      "registers": 255,
+      "spills": 104,
+      "shared_bytes": 163840,
+      "constants": {}
+    }
+  ]
+}
