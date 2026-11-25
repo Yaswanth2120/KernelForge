@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "kernelforge"
-version = "0.0.1"
+version = "0.1.0"
 description = "Triton GPU kernels with reproducible correctness and performance measurement"
 readme = "README.md"
 requires-python = ">=3.10,<3.13"

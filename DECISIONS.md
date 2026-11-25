@@ -338,3 +338,19 @@ Force pushes and deletion of main are blocked. The previous plan limitation no l
 - docs/GPU_SESSION.md describes commands that were each run on the A100 box on 2026-11-24.
 - Tag v0.1.0 is not created: `main` is protected and the stacked PRs (#4-#10) need the owner's
   merges first; this agent's merge attempt was blocked by its permission policy.
+
+## 2026-11-24 — v0.1.0 release
+
+- Section 11 lists `kernelforge test [--gpu] [--op OP]`, but K0-K8 never implemented it (found
+  while checking the README against the CLI). Added it: without `--gpu` it runs
+  `pytest -m "not gpu and not slow" tests/cpu`; with `--gpu` it runs `-m "gpu and not slow"
+  tests/gpu`. `--op` narrows the run to one op's test file. Slow (int64) GPU tests stay behind
+  `scripts/gpu_session.sh test -m 'gpu and slow'` because they need about 25 GiB and long
+  runtimes. Exit codes follow section 11: pytest's 0 and 1 pass through, and every other pytest
+  code (usage or collection errors, no tests collected) maps to 2. The GPU code path wraps the
+  same pytest selection that already passed on the A100, so no GPU rerun was done.
+- CPU test count is now 228 (219 plus 9 for the new subcommand).
+- Package version bumped from 0.0.1 to 0.1.0. PRs #4-#10 were merged in order (owner's request),
+  so the K8 note about the tag being blocked is superseded; tag `v0.1.0` is on the release commit.
+- `.gitignore` now ignores `* 2.*`: iCloud Drive repeatedly created identical "name 2.ext"
+  copies of tracked files in the Desktop checkout; all 75 were byte-identical to their originals.

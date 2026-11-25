@@ -9,3 +9,6 @@ dist/
 AGENTS.md
 *.tar.gz
 .DS_Store
+
+# iCloud Drive conflict copies ("name 2.ext")
+* 2.*
