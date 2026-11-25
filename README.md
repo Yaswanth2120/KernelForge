@@ -32,11 +32,19 @@ remain explicit stubs that raise `NotImplementedError` on supported GPU calls.
 - [x] Softmax CPU interface and resource-pruning policy verified
 - [x] Softmax GPU correctness matrix passed (130/130 incl. both >2^31-element int64 tests, A100, torch 2.8.0 / Triton 3.4.0)
 - [x] Softmax single/looped path threshold measured on A100 (limit 65536; see DECISIONS.md)
+- [x] Softmax A100 benchmark: copy baseline + sweep, three launches, report generated
 - [ ] LayerNorm and attention GPU kernels validated
-- [ ] A100 measurements collected
+- [ ] LayerNorm and attention A100 measurements collected
 
-The softmax correctness claim is limited to the tested matrix on the recorded environment.
-No performance claim is made. No performance results are available. Targets and measurement rules are frozen in [PREREG.md](PREREG.md).
+## Results so far (A100-SXM4-80GB, three launches; full tables in the [report](reports/performance_report.md))
+
+| criterion | cases | result |
+|---|---|---|
+| Softmax effective bandwidth >= 0.80 x BW_copy (1757.9 GB/s) | 9 pre-registered | 9/9 PASS (0.984-0.993) |
+
+KernelForge softmax was faster than `torch.softmax` on all 39 sweep shapes. Sweep shapes with
+N >= 65536 fall below the 0.80 ratio (not pass/fail); see the report's "Where we lose" section.
+Claims are limited to the measured environment. Targets and measurement rules are frozen in [PREREG.md](PREREG.md).
 CPU helpers and their contracts are described in [validation](docs/VALIDATION.md).
 See [GPU setup](docs/GPU_SESSION.md), [profiling](docs/PROFILING.md), and [contributing](CONTRIBUTING.md).
 

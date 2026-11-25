@@ -497,3 +497,135 @@ This test checks that invalid devices and missing Triton produce a false availab
 ## `tests/cpu/test_softmax_interface.py:unavailable`
 
 This helper raises a selected fake environment error for the availability test. It lets the test check both device rejection and import failure without needing CUDA or Triton installed.
+
+## `src/kernelforge/ops/_copy_kernels.py:_copy`
+
+Each program copies one contiguous tile of `BLOCK` elements, masking the tail so any length works. Offsets are int64 so buffers larger than 2^31 elements are safe. It exists only to measure how fast the GPU can move bytes (BW_copy).
+
+## `src/kernelforge/ops/_copy_kernels.py:triton_copy`
+
+Launches `_copy` with one program per tile and returns the autotuned winner. The benchmark compares it with `torch.Tensor.copy_` and keeps whichever is faster as the bandwidth ceiling.
+
+## `src/kernelforge/ops/_softmax_kernels.py:_key_arguments`
+
+Builds the scalar kernel arguments that double as the autotune key (shape, strides, dtype, device). Sharing this function keeps the launch and the later lookup of its autotune record from disagreeing.
+
+## `src/kernelforge/ops/_softmax_kernels.py:autotune_entry`
+
+Looks up the pruning log and winner for the most recent launch on a tensor shaped like `x`. The benchmark runner copies it into each result record.
+
+## `src/kernelforge/bench/suites.py:rows_for`
+
+Returns the smallest row count M that makes an M x N input at least 512 MiB, about 13x the A100's L2 cache, so timings reflect HBM rather than cache.
+
+## `src/kernelforge/bench/suites.py:softmax_sweep`
+
+Lists every benchmarked softmax shape (small, threshold, large, and irregular N for each dtype) and marks the pre-registered pass/fail cases as `selected`.
+
+## `src/kernelforge/bench/suites.py:copy_cases`
+
+Describes the single 1 GiB fp32 buffer used for the copy baseline; bytes are counted as one read plus one write.
+
+## `src/kernelforge/bench/harness.py:case_key`
+
+Identifies a measured configuration by operation, implementation, and case, ignoring which launch produced it, so the three launches can be grouped.
+
+## `src/kernelforge/bench/harness.py:load_launch_records`
+
+Reads every `launch_*.jsonl` file in a suite directory and validates each line against the result schema, so malformed or hand-edited records fail loudly.
+
+## `src/kernelforge/bench/harness.py:group_launches`
+
+Groups records per configuration and aggregates only groups with exactly three launches; other groups keep their records but no aggregate, so no ratio can be printed for them.
+
+## `src/kernelforge/bench/gpu_runner.py:DoBenchTimer.measure`
+
+Calls `triton.testing.do_bench` with quantiles 0.2/0.5/0.8 on an already-tuned callable and returns them as a `Timing`. do_bench flushes L2 before each timed call (see DECISIONS.md).
+
+## `src/kernelforge/bench/gpu_runner.py:parse_telemetry`
+
+Turns one `nvidia-smi` CSV line into a field dictionary, or an error entry if the line has the wrong shape.
+
+## `src/kernelforge/bench/gpu_runner.py:sample_telemetry`
+
+Queries SM clock, max SM clock, memory clock, power, temperature, and throttle reasons for GPU 0. It is called at the start and end of every launch.
+
+## `src/kernelforge/bench/gpu_runner.py:clock_drop`
+
+Flags a launch whose end sample shows the SM clock below 97% of its maximum or any throttle reason other than "idle". Missing telemetry is flagged too, because it cannot rule out a drop.
+
+## `src/kernelforge/bench/gpu_runner.py:git_sha`
+
+Returns the short commit SHA and appends `-dirty` when tracked source files differ from it, so a result never claims to come from code that did not run.
+
+## `src/kernelforge/bench/gpu_runner.py:environment`
+
+Captures device name, compute capability, torch/Triton/CUDA/driver versions, git SHA, and date for every result record.
+
+## `src/kernelforge/bench/gpu_runner.py:launch_command`
+
+Builds the command for one launch. Each of the three launches is a fresh Python process so compilation caches, allocator state, and clocks are independent.
+
+## `src/kernelforge/bench/gpu_runner.py:run_suite`
+
+Runs exactly three launches one after another and refuses any other count, because the registered protocol takes the median of three process medians.
+
+## `src/kernelforge/bench/gpu_runner.py:copy_baseline`
+
+Reads BW_copy from `copy_probe.json`. Benchmarks refuse to run without it, because every bandwidth ratio depends on it.
+
+## `src/kernelforge/bench/gpu_runner.py:_first_call_seconds`
+
+Times the first call, which compiles and autotunes. This time is recorded separately and excluded from benchmark timing.
+
+## `src/kernelforge/bench/gpu_runner.py:_peak_memory_delta`
+
+Resets PyTorch's peak-memory counter, runs one call, and reports the peak allocation above what was already allocated (the inputs). The output tensor is included in the delta.
+
+## `src/kernelforge/bench/gpu_runner.py:copy_operations`
+
+Builds the two copy implementations over the same buffer, together with their call strings and autotune metadata accessors.
+
+## `src/kernelforge/bench/gpu_runner.py:softmax_operations`
+
+Creates a seeded input for one case and returns KernelForge softmax and `torch.softmax` as callables over that same tensor.
+
+## `src/kernelforge/bench/gpu_runner.py:softmax_accuracy`
+
+Applies the frozen tolerance rule to the benchmark-sized input of launch 0, so the accuracy table covers the same shapes as the performance tables.
+
+## `src/kernelforge/bench/gpu_runner.py:run_launch`
+
+Measures every case once in the current process: tune, measure memory, time, then write all records with the launch's start/end telemetry to `launch_<i>.jsonl`.
+
+## `src/kernelforge/bench/copy_probe.py:summarize`
+
+Aggregates the three copy launches per implementation and takes the faster median as BW_copy. It refuses to summarize fewer than three launches.
+
+## `src/kernelforge/bench/copy_probe.py:run`
+
+Runs the copy suite's three launches on the GPU and writes the BW_copy summary JSON that benchmarks read.
+
+## `src/kernelforge/report.py:render`
+
+Builds the whole Markdown report from files under `reports/raw/` only, and returns how many pre-registered cases failed. Criteria are evaluated only for three-launch aggregates recorded on a device whose name contains "A100".
+
+## `src/kernelforge/report.py:softmax_criteria`
+
+Checks criterion 2 (ratio >= 0.80) on each pre-registered softmax case. Missing data prints "not measured" with its launch count, and non-A100 data prints "not evaluated".
+
+## `src/kernelforge/report.py:where_we_lose`
+
+Lists, separately, cases slower than PyTorch and sweep cases below the 0.80 ratio. It does not invent explanations; causes come from profiling evidence.
+
+## `src/kernelforge/report.py:telemetry_section`
+
+Tabulates each launch's start/end nvidia-smi samples and flags clock drops using the runner's rule.
+
+## `src/kernelforge/report.py:plot_softmax`
+
+Draws one panel per dtype of effective GB/s against N, with the KernelForge and torch lines and BW_copy as a dashed reference. It returns None if matplotlib is unavailable or there is no data.
+
+## `src/kernelforge/cli.py:main`
+
+Parses the command and delegates. Exit codes: 0 ok, 1 criterion failure, 2 usage error (for example `--launches` other than 3), 3 environment problem (no GPU, or BW_copy missing).

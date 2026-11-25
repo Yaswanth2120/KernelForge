@@ -7,4 +7,4 @@ gpu-test:
 bench-all:
 	bash scripts/gpu_session.sh bench all
 report:
-	@echo "Report generation is not implemented yet"; exit 2
+	kernelforge report --raw reports/raw --out reports

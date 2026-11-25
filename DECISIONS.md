@@ -174,3 +174,26 @@ Force pushes and deletion of main are blocked. The previous plan limitation no l
   measured and stays on the looped path. Pre-registered shapes (N in 2048/4096/8192) use the
   single path under both values, so no frozen case, criterion, or tolerance changed.
 - GPU tests are parametrized on the constant and were rerun with the new value.
+
+## 2026-11-24 — K3 softmax benchmarking choices
+
+- The Triton copy kernel lives in `ops/_copy_kernels.py`, while `bench/copy_probe.py` only
+  orchestrates. AGENTS.md lists copy_probe under bench/ but also says Triton kernels live only
+  under ops/; this split satisfies both.
+- BW_copy: 1 GiB fp32 buffer, Triton copy (BLOCK 1024-8192 x warps 4/8 autotuned) and
+  `y.copy_(x)`, three launches each; BW_copy = max of the two medians-of-three.
+- Full sweep (reported, not pass/fail): N in {256, 1024, ..., 262144} plus 1000, 4097, 31337,
+  every dtype, M sized to >= 512 MiB input. Selected cases are the frozen PREREG set.
+- `tuning_seconds` records the first call's wall time, which includes compilation and autotuning
+  (one combined number; Triton does not separate them). It is excluded from timing.
+- Peak memory delta includes the output allocation (it is "over the inputs" as the spec says).
+- Accuracy for the report uses launch 0's benchmark inputs with the frozen tolerance rule.
+- Clock-drop flag: end SM clock < 97% of `clocks.max.sm`, or any throttle reason except 0x1
+  (idle), or missing telemetry. Start samples are often idle-clocked and are not flagged.
+- `kernelforge report` exits 1 when any evaluated pre-registered case fails (spec exit codes);
+  `gpu_session.sh bench` still prints the criteria table before exiting with that status.
+- git SHAs in records get a `-dirty` suffix if tracked source differs; `collect_results.sh`
+  now saves `git status` and the uncommitted diff (fixes the gap flagged on 2026-11-24).
+- Result (A100, git e72400d, three launches, no clock drops): BW_copy 1757.9 GB/s (Triton copy;
+  0.862 of datasheet). All 9 selected softmax cases PASS criterion 2 (ratios 0.984-0.993).
+  KernelForge was faster than torch.softmax in all 39 sweep cases (1.02x-2.92x).

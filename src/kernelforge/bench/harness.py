@@ -1,6 +1,8 @@
 """CPU-only timing orchestration and validated measurement records."""
+import json
 import math
 from collections.abc import Callable, Sequence
+from pathlib import Path
 from statistics import median
 from typing import Literal, Protocol
 
@@ -177,3 +179,27 @@ def aggregate_launches(records: Sequence[Measurement]):
     """Require three matching launches and preserve their evidence in a validated summary."""
     return Aggregate(**_launch_values(records),
                      launches=sorted(records, key=lambda record: record.launch_index))
+
+
+def case_key(record: Measurement):
+    """Identify one measured configuration independent of its launch index."""
+    return (record.op, record.impl, json.dumps(record.case, sort_keys=True))
+
+
+def load_launch_records(directory):
+    """Read and validate every `launch_*.jsonl` record under a suite directory."""
+    records = []
+    for path in sorted(Path(directory).glob("launch_*.jsonl")):
+        for line in path.read_text().splitlines():
+            if line.strip():
+                records.append(Measurement.model_validate_json(line))
+    return records
+
+
+def group_launches(records: Sequence[Measurement]):
+    """Group records per configuration; aggregate only groups with exactly three launches."""
+    groups = {}
+    for record in records:
+        groups.setdefault(case_key(record), []).append(record)
+    return {key: (aggregate_launches(group) if len(group) == 3 else None, group)
+            for key, group in groups.items()}

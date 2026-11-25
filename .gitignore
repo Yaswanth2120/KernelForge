@@ -8,3 +8,4 @@ build/
 dist/
 AGENTS.md
 *.tar.gz
+.DS_Store
