@@ -1,12 +1,11 @@
 # Kernel design
 
-## Softmax: GPU correctness verified, performance unmeasured
+## Softmax
 
 `tests/gpu/test_softmax.py` (130 cases) passed on an NVIDIA A100-SXM4-80GB on 2026-11-24
-(torch 2.8.0, Triton 3.4.0; `reports/raw/k2_softmax_a100/`). Autotune winners from that run
-were chosen on tiny correctness shapes and are not benchmark results. No measured crossover
-or speed claim is available.
-LayerNorm and causal attention remain unimplemented.
+(torch 2.8.0, Triton 3.4.0; `reports/raw/k2_softmax_a100/`). Benchmarks (three launches) reach
+0.984-0.993 of BW_copy on the pre-registered shapes and beat `torch.softmax` on every sweep
+shape; see the generated performance report.
 
 ### Contract and layout
 
@@ -77,8 +76,8 @@ negative-infinity row therefore still produces NaNs during final normalization, 
 
 NaN inputs enter the exponent sum and contaminate the row's normalizer. Positive-infinity
 inputs also yield a NaN normalizer via `inf - inf`, as in PyTorch. Negative-infinity entries in
-an otherwise finite row have exactly zero exponent. These cases are tested explicitly, but
-remain unverified on NVIDIA hardware.
+an otherwise finite row have exactly zero exponent. These cases are tested explicitly and pass on
+the A100.
 
 The looped path reads the input twice and writes once. Registered **effective** bandwidth still
 uses the frozen `2*M*N*element_size` accounting; that idealized metric is not a claim that this
@@ -101,9 +100,8 @@ launching a failed configuration or calling a PyTorch fallback.
 The pinned Triton implementation exposes `_init_handles()` and compiled register/spill/shared
 memory information. This version-specific dependency is deliberately isolated in the GPU module.
 Configuration status, exposed metadata, and the winning configuration are retained in
-`PRUNING_LOG`. Owner-run pytest writes them to `reports/raw/softmax_autotune.json` with its exit
-code; that file is configuration evidence, not a performance measurement. No actual valid or
-winning configuration is known yet.
+`PRUNING_LOG`; benchmark records copy the winner, and the report's autotune table lists winners
+per shape (e.g. N=8192 fp16: BLOCK 8192, 8 warps).
 
 ### Provenance and remaining work
 
@@ -119,10 +117,8 @@ requirements; tutorial code was not pasted.
 The pruning interface and resource exceptions were checked against the
 [pinned autotuner source](https://github.com/triton-lang/triton/blob/v3.4.0/python/triton/runtime/autotuner.py)
 and [compiled-kernel source](https://github.com/triton-lang/triton/blob/v3.4.0/python/triton/compiler/compiler.py).
-Source review is not a substitute for compilation or execution on the owner's GPU.
-The threshold must be justified by future measurements; neither path is accepted as correct or
-fast until owner-provided GPU output supports it. Benchmarking, accuracy tables, and performance
-criteria evaluation remain pending.
+The single/looped threshold (65536) was measured on the A100 (`reports/raw/softmax_threshold/`,
+DECISIONS.md); performance and accuracy tables are in the generated report.
 
 ## LayerNorm forward
 

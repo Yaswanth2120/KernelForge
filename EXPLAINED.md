@@ -701,3 +701,55 @@ Launches one program per (query block, batch·head), records the autotuned winne
 ## `src/kernelforge/ops/_attention_kernels.py:_is_failed`
 
 Triton records a config that failed to compile or launch with infinite time; this turns that into an "invalid" status.
+
+## `src/kernelforge/bench/harness.py:_aggregate_or_none`
+
+Aggregates a group only if it has exactly three launches that agree on every identity field; otherwise it returns None, so the report prints "not aggregated" instead of a number or a crash.
+
+## `src/kernelforge/bench/gpu_runner.py:_suite` and `_cases`
+
+Map a suite name to its cases, implementations, byte/FLOP accounting, and accuracy check, so `run_launch` has one loop for every operation.
+
+## `src/kernelforge/bench/gpu_runner.py:_sdpa`
+
+Calls PyTorch's `scaled_dot_product_attention` with `is_causal=True`, optionally inside `sdpa_kernel(...)` to force a backend (FlashAttention for the criterion, math for memory scaling).
+
+## `src/kernelforge/bench/gpu_runner.py:default_sdpa_kernel`
+
+Uses `torch.profiler` to name the CUDA kernel PyTorch's default backend actually ran, instead of guessing which backend it picked. The name is stored as metadata, not as part of the measurement's identity, because the profiler occasionally captures nothing.
+
+## `src/kernelforge/bench/gpu_runner.py:attention_operations`
+
+Builds seeded q, k, v for one case and returns KernelForge, SDPA forced to FlashAttention, and SDPA's default backend as callables over the same tensors.
+
+## `src/kernelforge/bench/gpu_runner.py:attention_accuracy`
+
+Applies the frozen tolerance rule on batch 0, heads 0-1 of a benchmark input, because the fp32 reference materializes the full S x S matrix.
+
+## `src/kernelforge/bench/gpu_runner.py:attention_memory` and `_attention_memory_case`
+
+Measure peak extra memory for KernelForge, SDPA-flash, and SDPA-math as S grows, recording an out-of-memory failure as a result. Fused kernels grow linearly with S; the math backend grows with S².
+
+## `src/kernelforge/bench/gpu_runner.py:attention_bytes` and `attention_flops`
+
+FLOPs are the frozen 2·B·H·S²·D (lower triangle only). Bytes count q, k, v read and o written; they are informational because attention is judged in TFLOPS.
+
+## `src/kernelforge/report.py:attention_criteria`
+
+Criterion 4: for each pre-registered shape, KernelForge TFLOPS divided by SDPA-FlashAttention TFLOPS (both medians of three launches) must be at least 0.50, and only A100 records are evaluated.
+
+## `src/kernelforge/report.py:attention_sweep`, `attention_accuracy_section`, `attention_memory_section`, `attention_autotune_section`, `attention_losses`
+
+Render the attention tables: TFLOPS with % of peak and % of SDPA-flash, accuracy, memory vs S (with a log-log plot), winning tiles and invalid configs, and the cases below SDPA-flash.
+
+## `src/kernelforge/report.py:profiling_section`
+
+Prints the profiling numbers (ncu outcome, roofline ridge point, kernel traces, experiment tables, spill summary) straight from `reports/raw/profiling/`; the interpretation lives in docs/PROFILING.md.
+
+## `scripts/measure_path_threshold.py`
+
+Times an op's single-block and looped paths across N in three fresh processes and applies a rule fixed in DECISIONS.md before measuring, to choose where the op switches paths.
+
+## `scripts/profile_kernels.py`
+
+Collects profiling evidence without hardware counters: an ncu probe, torch.profiler traces at a selected shape, Triton compile metadata, and three controlled experiments (row alignment, forced warps, forced attention tiles).
