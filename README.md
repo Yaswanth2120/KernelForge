@@ -36,13 +36,15 @@ remain explicit stubs that raise `NotImplementedError` on supported GPU calls.
 - [x] LayerNorm GPU correctness matrix passed (168/168 incl. both >2^31-element int64 tests, A100, commit 9852793)
 - [x] LayerNorm single/looped threshold measured on A100 (limit 32768)
 - [x] Causal attention GPU matrix passed (80/80 incl. the >2^31-element int64 test, A100)
-- [ ] LayerNorm and attention A100 measurements collected
+- [x] LayerNorm and attention A100 measurements collected (three launches each)
 
 ## Results so far (A100-SXM4-80GB, three launches; full tables in the [report](reports/performance_report.md))
 
 | criterion | cases | result |
 |---|---|---|
 | Softmax effective bandwidth >= 0.80 x BW_copy (1757.9 GB/s) | 9 pre-registered | 9/9 PASS (0.984-0.993) |
+| LayerNorm effective bandwidth >= 0.80 x BW_copy | 9 pre-registered | 9/9 PASS (0.981-0.999) |
+| Causal attention TFLOPS >= 0.50 x SDPA-FlashAttention | 12 pre-registered | 12/12 PASS (0.807-1.006) |
 
 KernelForge softmax was faster than `torch.softmax` on all 39 sweep shapes. Sweep shapes with
 N >= 65536 fall below the 0.80 ratio (not pass/fail); see the report's "Where we lose" section.

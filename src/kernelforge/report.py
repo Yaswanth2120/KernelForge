@@ -215,6 +215,198 @@ def where_we_lose(groups, op):
     return lines + (below or ["None of the measured cases."]) + [""]
 
 
+PEAK_TFLOPS = 312.0
+ATTENTION_RATIO = 0.50
+
+
+def _shape(case):
+    return f"{case['B']}x{case['H']}x{case['S']}x{case['D']}"
+
+
+def _attention_pair(groups, case):
+    ours, ours_group = groups.get(_key("causal_attention", "kernelforge", case), (None, []))
+    flash, flash_group = groups.get(_key("causal_attention", "sdpa_flash", case), (None, []))
+    return ours, flash, ours_group + flash_group
+
+
+def attention_criteria(groups):
+    """Criterion 4: KernelForge TFLOPS >= 0.50 x SDPA-FlashAttention TFLOPS on selected cases."""
+    lines = ["## Pre-registered criterion 4: attention TFLOPS >= 0.50 x SDPA-FlashAttention", "",
+             ("| B x H x S x D | dtype | KernelForge TFLOPS | SDPA-flash TFLOPS | ratio | threshold |"
+             " result | n |"), "|---|---|---|---|---|---|---|---|"]
+    failures = 0
+    for case in [{**case, "selected": True} for case in suites.selected_attention()]:
+        ours, flash, group = _attention_pair(groups, case)
+        prefix = f"| {_shape(case)} | {case['dtype']} |"
+        if ours is None or flash is None:
+            lines.append(f"{prefix} - | - | - | 0.50 | not measured | {len(group)} |")
+            continue
+        if not all(is_a100(record.env.device) for record in group):
+            lines.append(f"{prefix} {ours.tflops:.1f} | {flash.tflops:.1f} | - | 0.50 | "
+                         f"not evaluated: {group[0].env.device} is not an A100 | 3 |")
+            continue
+        ratio = ours.tflops / flash.tflops
+        passed = ratio >= ATTENTION_RATIO
+        failures += not passed
+        lines.append(f"{prefix} {ours.tflops:.1f} | {flash.tflops:.1f} | {ratio:.3f} | 0.50 | "
+                     f"{'PASS' if passed else 'FAIL'} | 3 |")
+    return lines + [""], failures
+
+
+def attention_sweep(groups):
+    """TFLOPS (2*B*H*S^2*D) for KernelForge, SDPA-flash, and SDPA's default backend."""
+    lines = ["## Causal attention sweep", "",
+             ("TFLOPS = 2*B*H*S^2*D / median time (median of three launch medians; launch range in"
+              " parentheses), with % of the 312 TFLOPS datasheet peak. Selected cases are marked *."),
+             "", ("| B x H x S x D | dtype | KernelForge TFLOPS | ms p50 (range) | % of peak | "
+             "SDPA-flash TFLOPS | KF/flash | SDPA default TFLOPS | n |"),
+             "|---|---|---|---|---|---|---|---|---|"]
+    defaults = set()
+    for case in suites.attention_sweep():
+        ours, flash, _ = _attention_pair(groups, case)
+        default, default_group = groups.get(_key("causal_attention", "sdpa_default", case),
+                                            (None, []))
+        # Older records embedded the profiled kernel in the call; newer ones keep it in autotune.
+        defaults.update(record.autotune.best_config.get("profiled_kernel", record.baseline_call)
+                        for record in default_group)
+        name = f"{_shape(case)}{'*' if case['selected'] else ''}"
+        if ours is None or flash is None:
+            lines.append(f"| {name} | {case['dtype']} | not measured | | | | | | |")
+            continue
+        default_cell = (f"{default.tflops:.1f}" if default is not None
+                        else "not aggregated" if default_group else "-")
+        lines.append(f"| {name} | {case['dtype']} | {ours.tflops:.1f} | {ours.ms_p50:.3f} "
+                     f"({ours.ms_min:.3f}-{ours.ms_max:.3f}) | "
+                     f"{100 * ours.tflops / PEAK_TFLOPS:.1f}% | {flash.tflops:.1f} | "
+                     f"{ours.tflops / flash.tflops:.3f} | {default_cell} | 3 |")
+    lines += ["", ("Default-backend kernels observed with torch.profiler (\"unknown\" = the "
+                   "profiler captured no CUDA event; such launches cannot be aggregated with "
+                   "launches that named the kernel):"), ""]
+    lines += [f"- `{call}`" for call in sorted(defaults)] or ["- none measured"]
+    return lines + [""]
+
+
+def attention_accuracy_section(raw_dir):
+    path = Path(raw_dir) / "causal_attention" / "accuracy.json"
+    lines = ["## Accuracy (causal attention, benchmark inputs)", ""]
+    if not path.exists():
+        return lines + ["Not measured.", ""]
+    lines += [("Measured on batch 0, heads 0-1 of each benchmark input (the fp32 reference "
+              "materializes S x S). Baseline: SDPA forced to FlashAttention, same dtype."), "",
+              ("| B x H x S x D | dtype | KernelForge max abs err | SDPA-flash max abs err | allowed "
+              "| result |"), "|---|---|---|---|---|---|"]
+    for row in json.loads(path.read_text()):
+        lines.append(f"| {_shape(row['case'])} | {row['case']['dtype']} | "
+                     f"{row['kernel_max_abs']:.3e} | {row['torch_max_abs']:.3e} | "
+                     f"{row['allowed_max_abs']:.3e} | {'PASS' if row['passed'] else 'FAIL'} |")
+    return lines + [""]
+
+
+def attention_memory_section(raw_dir, plots_dir):
+    """Peak memory vs S: O(S) for the fused kernels, O(S^2) for the math backend."""
+    path = Path(raw_dir) / "causal_attention" / "memory.json"
+    lines = ["## Attention memory scaling", ""]
+    if not path.exists():
+        return lines + ["Not measured.", ""]
+    rows = json.loads(path.read_text())
+    impls = ("kernelforge", "sdpa_flash", "sdpa_math")
+    table = {}
+    for row in rows:
+        table.setdefault(row["case"]["S"], {})[row["impl"]] = row["peak_mem_delta_bytes"]
+    lines += [("Peak `max_memory_allocated()` delta over q, k, v for one call; B=1, H=32, D=64, "
+              "fp16; includes the output."), "",
+              "| S | KernelForge MiB | SDPA-flash MiB | SDPA-math MiB |", "|---|---|---|---|"]
+    for seq in sorted(table):
+        cells = [_memory_cell(table[seq], impl) for impl in impls]
+        lines.append(f"| {seq} | " + " | ".join(cells) + " |")
+    plot = _plot_memory(table, plots_dir) if plots_dir else None
+    if plot is not None:
+        lines += ["", f"![Attention peak memory vs S](plots/{plot.name})"]
+    return lines + [""]
+
+
+def _memory_cell(row, impl):
+    """MiB, OOM for a recorded out-of-memory result, or - when the impl was not measured."""
+    if impl not in row:
+        return "-"
+    return "OOM" if row[impl] is None else f"{row[impl] / 2**20:.1f}"
+
+
+def _plot_memory(table, plots_dir):
+    try:
+        import matplotlib
+
+        matplotlib.use("Agg")
+        import matplotlib.pyplot as plt
+    except ImportError:
+        return None
+    figure, axis = plt.subplots(figsize=(6, 3.8))
+    for impl, color, label in (("kernelforge", KERNELFORGE_COLOR, "KernelForge"),
+                               ("sdpa_flash", TORCH_COLOR, "SDPA flash"),
+                               ("sdpa_math", "#1baf7a", "SDPA math")):
+        points = [(seq, values[impl] / 2**20) for seq, values in sorted(table.items())
+                  if values.get(impl)]
+        if points:
+            xs, ys = zip(*points)
+            axis.plot(xs, ys, color=color, linewidth=2, marker="o", markersize=5, label=label)
+    axis.set_xscale("log", base=2)
+    axis.set_yscale("log", base=2)
+    axis.set_xlabel("S (sequence length)")
+    axis.set_ylabel("peak memory delta (MiB)")
+    axis.set_title("Attention peak memory vs S (B=1, H=32, D=64, fp16)", fontsize=11)
+    axis.grid(True, color="#e5e4e0", linewidth=0.6)
+    for side in ("top", "right"):
+        axis.spines[side].set_visible(False)
+    axis.legend(frameon=False, fontsize=9)
+    figure.tight_layout()
+    Path(plots_dir).mkdir(parents=True, exist_ok=True)
+    path = Path(plots_dir) / "attention_memory.png"
+    figure.savefig(path, dpi=150)
+    plt.close(figure)
+    return path
+
+
+def attention_autotune_section(groups):
+    lines = ["## Autotune (causal attention)", "",
+             ("Space: BLOCK_M, BLOCK_N in {32, 64, 128} with BLOCK_N <= BLOCK_M, num_warps {4, 8}, "
+             "num_stages {2, 3, 4}. Invalid = failed to compile or launch (e.g. shared memory)."), "",
+             ("| B x H x S x D | dtype | winner (launch 0) | same winner in all launches | "
+             "invalid configs | first-call s (max) |"), "|---|---|---|---|---|---|"]
+    for case in suites.attention_sweep():
+        _, group = groups.get(_key("causal_attention", "kernelforge", case), (None, []))
+        if not group:
+            continue
+        winners = [record.autotune.best_config for record in group]
+        invalid = [c for c in group[0].autotune.invalid_configs if c.get("status") == "invalid"]
+        names = ", ".join(f"{c['block_m']}/{c['block_n']}/w{c['num_warps']}/s{c['num_stages']}"
+                          for c in invalid) or "none"
+        seconds = [r.autotune.tuning_seconds for r in group if r.autotune.tuning_seconds is not None]
+        seconds_cell = f"{max(seconds):.1f}" if seconds else "-"
+        lines.append(f"| {_shape(case)} | {case['dtype']} | `{json.dumps(winners[0])}` | "
+                     f"{'yes' if all(w == winners[0] for w in winners) else 'no'} | {names} | "
+                     f"{seconds_cell} |")
+    return lines + [""]
+
+
+def attention_losses(groups):
+    slower, below = [], []
+    for case in suites.attention_sweep():
+        ours, flash, _ = _attention_pair(groups, case)
+        if ours is None or flash is None:
+            continue
+        ratio = ours.tflops / flash.tflops
+        label = f"- {_shape(case)} {case['dtype']}{' (selected)' if case['selected'] else ''}"
+        if ratio < 1:
+            slower.append(f"{label}: {ours.tflops:.1f} vs {flash.tflops:.1f} TFLOPS "
+                          f"({ratio:.3f}, n=3).")
+        if ratio < ATTENTION_RATIO:
+            below.append(f"{label}: ratio {ratio:.3f}.")
+    lines = ["### Attention slower than SDPA-FlashAttention", ""]
+    lines += slower or ["None of the measured cases."]
+    lines += ["", "### Attention below 0.50 x SDPA-FlashAttention", ""]
+    return lines + (below or ["None of the measured cases."]) + [""]
+
+
 def telemetry_section(all_groups):
     """Start/end nvidia-smi samples per launch, flagging lowered clocks or throttling."""
     lines = ["## GPU telemetry per launch", "",
@@ -303,14 +495,18 @@ def render(raw_dir, plots_dir=None):
     copy_path = raw_dir / "copy_probe.json"
     copy_summary = json.loads(copy_path.read_text()) if copy_path.exists() else None
     groups = {op: load_groups(raw_dir, op) for op in ROW_OPS}
+    attention = load_groups(raw_dir, "causal_attention")
     lines = ["# Performance report", "",
              "Generated by `kernelforge report` from `reports/raw/`; do not edit by hand.", ""]
-    lines += environment_section(groups, copy_summary)
+    lines += environment_section({**groups, "causal_attention": attention}, copy_summary)
     failures = 0
     for op in ROW_OPS:
         criteria, failed = row_criteria(groups[op], op)
         lines += criteria
         failures += failed
+    criteria, failed = attention_criteria(attention)
+    lines += criteria
+    failures += failed
     lines += copy_section(copy_summary)
     for op in ROW_OPS:
         lines += row_sweep(groups[op], op)
@@ -319,15 +515,17 @@ def render(raw_dir, plots_dir=None):
             lines += [f"![{ROW_OPS[op]['title']} effective bandwidth](plots/{plot.name})", ""]
         lines += accuracy_section(raw_dir, op) + memory_section(groups[op], op)
         lines += autotune_section(groups[op], op)
+    lines += attention_sweep(attention) + attention_accuracy_section(raw_dir)
+    lines += attention_memory_section(raw_dir, plots_dir) + attention_autotune_section(attention)
     lines += ["## Where we lose and why", ""]
     for op in ROW_OPS:
         lines += where_we_lose(groups[op], op)
+    lines += attention_losses(attention)
     lines += [("Explanations require profiling evidence; see docs/PROFILING.md (K7). Until then "
                "the cause is recorded as not yet understood."), ""]
-    lines += telemetry_section({"copy": load_groups(raw_dir, "copy"), **groups})
-    lines += ["## Not yet measured", "", ("Causal attention (K6) and profiling (K7) sections are "
-              "added when their measurements exist."), "",
-              "## Reproduction", "", "```sh", "bash scripts/gpu_session.sh setup",
+    lines += telemetry_section({"copy": load_groups(raw_dir, "copy"), **groups,
+                                "causal_attention": attention})
+    lines += ["## Reproduction", "", "```sh", "bash scripts/gpu_session.sh setup",
               "bash scripts/gpu_session.sh bench all",
               "kernelforge report --raw reports/raw --out reports", "```", ""]
     return "\n".join(lines), failures

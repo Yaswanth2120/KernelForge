@@ -24,7 +24,8 @@ def bench(fn):
 
     fn()
     torch.cuda.synchronize()
-    return triton.testing.do_bench(fn, quantiles=[0.5])[0]
+    # With a single quantile, do_bench returns a float rather than a list.
+    return triton.testing.do_bench(fn, quantiles=[0.5])
 
 
 def rows_for(n, elem):

@@ -293,3 +293,24 @@ Force pushes and deletion of main are blocked. The previous plan limitation no l
   80/80 attention GPU tests have passed (`reports/raw/k5_attention_a100/`).
 - Baselines: output vs `F.scaled_dot_product_attention(is_causal=True)` in the same dtype;
   LSE vs `torch.ops.aten._scaled_dot_product_flash_attention(...)[1]` (natural log, fp32).
+
+## 2026-11-24 — K6 attention benchmark result
+
+- A100-SXM4-80GB, commit e85fdae, three launches. Criterion 4: all 12 pre-registered cases PASS,
+  KernelForge/SDPA-flash TFLOPS 0.807-1.006 (D=64: 0.961-1.006; D=128: 0.807-0.853).
+  Sweep: 0.768-1.219 (S=1000 D=64 1.219: SDPA-flash slower on that irregular S).
+  Peak 174.3 TFLOPS (55.9% of the 312 TFLOPS datasheet figure).
+- Clock-drop flag on all three launches: end SM clock 1350-1380 MHz (max 1410) with throttle
+  reason 0x4 (NVML SW power cap) at 390-408 W against the 400 W limit, 48-52 C. Attention is
+  compute bound and power limited at steady state. KernelForge and SDPA run back to back per case
+  within each launch, so ratios compare under the same cap; absolute TFLOPS are cap-limited.
+  The flag is reported, not suppressed, and the run was not repeated to avoid it.
+- Memory scaling (B=1, H=32, D=64, fp16): KernelForge 4 -> 64 MiB and SDPA-flash 4.1 -> 66 MiB
+  for S 1024 -> 16384 (linear); SDPA-math 324 MiB -> 73.5 GiB (quadratic).
+- Design mistake found and fixed: the sdpa_default record embedded the torch.profiler kernel
+  name in `baseline_call`; the profiler captured no CUDA event in 3 of 96 calls ("unknown"),
+  so two sdpa_default groups had inconsistent calls and the report crashed. Raw data was not
+  edited. The aggregator now leaves inconsistent groups unaggregated ("not aggregated"; two
+  informational default-backend cells), and future runs store the kernel name in metadata.
+  Every named capture was PyTorch's flash_fwd_kernel.
+- Accuracy on benchmark inputs (batch 0, heads 0-1): 32/32 PASS.

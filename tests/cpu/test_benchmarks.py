@@ -196,3 +196,51 @@ def test_loader_ignores_sync_conflict_copies(tmp_path):
     duplicate = (tmp_path / 'copy' / 'launch_1.jsonl').read_text()
     (tmp_path / 'copy' / 'launch_1 2.jsonl').write_text(duplicate)
     assert len(load_launch_records(tmp_path / 'copy')) == 3
+
+
+def attention_record(case, impl, ms, index, env=A100):
+    return benchmark(lambda: None, FixedTimer(ms), op='causal_attention', impl=impl, case=case,
+                     launch_index=index, env=env, byte_accounting=gpu_runner.attention_bytes,
+                     flop_accounting=gpu_runner.attention_flops, baseline_call=f'{impl}(q, k, v)')
+
+
+def test_attention_sweep_contains_selected_cases():
+    sweep = suites.attention_sweep()
+    selected = [{k: v for k, v in c.items() if k != 'selected'} for c in sweep if c['selected']]
+    assert selected == suites.selected_attention()
+    assert len({json.dumps(c, sort_keys=True) for c in sweep}) == len(sweep)
+
+
+@pytest.mark.parametrize('ours_ms,expected_failures', [(1.9, 0), (2.1, 12)])
+def test_report_evaluates_attention_criterion(tmp_path, ours_ms, expected_failures):
+    # KernelForge at 2x flash's time is exactly 0.5x its TFLOPS; 1.9 passes, 2.1 fails.
+    per_launch = [[record for case in suites.attention_sweep() for record in (
+        attention_record(case, 'kernelforge', ours_ms, i), attention_record(case, 'sdpa_flash', 1.0, i),
+        attention_record(case, 'sdpa_default', 1.0, i))] for i in range(3)]
+    write_launches(tmp_path / 'causal_attention', per_launch)
+    (tmp_path / 'causal_attention' / 'memory.json').write_text(json.dumps([
+        {'case': {'S': 1024}, 'impl': 'kernelforge', 'peak_mem_delta_bytes': 2**20},
+        {'case': {'S': 1024}, 'impl': 'sdpa_math', 'peak_mem_delta_bytes': None,
+         'error': 'OutOfMemoryError'}]))
+    markdown, failures = report.render(tmp_path)
+    assert failures == expected_failures
+    criterion = markdown.split('## Pre-registered criterion 4')[1].split('## Memory-copy')[0]
+    assert criterion.count('| 3 |') == 12
+    assert '| 1024 | 1.0 | - | OOM |' in markdown
+
+
+def test_attention_flops_accounting():
+    # 2 * B * H * S^2 * D = 2 * 8 * 32 * 2048^2 * 64.
+    case = {'B': 8, 'H': 32, 'S': 2048, 'D': 64, 'dtype': 'fp16'}
+    assert gpu_runner.attention_flops(case) == 2 * 8 * 32 * 2048**2 * 64
+    assert gpu_runner.attention_bytes(case) == 4 * 8 * 32 * 2048 * 64 * 2
+
+
+def test_inconsistent_launches_are_not_aggregated():
+    from kernelforge.bench.harness import group_launches
+
+    case = {'B': 1, 'H': 1, 'S': 64, 'D': 64, 'dtype': 'fp16', 'selected': False}
+    records = [attention_record(case, 'sdpa_default', 1.0, i) for i in range(3)]
+    records[0] = records[0].model_copy(update={'baseline_call': 'different(q, k, v)'})
+    (aggregate, group), = group_launches(records).values()
+    assert aggregate is None and len(group) == 3
